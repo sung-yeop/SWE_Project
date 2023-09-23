@@ -1,0 +1,71 @@
+<!DOCTYPE html>
+<html>
+
+<head lang="ko">
+    <meta charset="UTF-8">
+    <title>연습</title>
+</head>
+
+<body>
+    <!-- text 데이터를 입력받는 창 -->
+    <form>
+        <fieldset>
+            <legend><b>입력</b></legend>
+            <ul>
+                <li>
+                    <label for="map">Map : </label>
+                    <input type="text" id="map">
+                </li>
+                <li>
+                    <label for="start">Start : </label>
+                    <input type="text" id="start">
+                </li>
+                <li>
+                    <label for="spot">Spot : </label>
+                    <input type="text" id="spot">
+                </li>
+                <li>
+                    <label for="hazard">Hazard : </label>
+                    <input type="text" id="hazard">
+                </li>
+            </ul>
+        </fieldset>
+
+        <!-- 제출 버튼 -->
+        <button type="button" onclick="submit()">제출</button>
+    </form>
+    <script>
+        function submit() {
+            // 입력 데이터 가져오기
+            var map = document.getElementById("map").value;
+            var start = document.getElementById("start").value;
+            var spot = document.getElementById("spot").value;
+            var hazard = document.getElementById("hazard").value;
+
+            // 데이터를 JavaScript 객체로 구성
+            var data = {
+                "map": map,
+                "start": start,
+                "spot": spot,
+                "hazard": hazard
+            };
+
+            // json data로 전환
+            var jsonData = JSON.stringify(data);
+
+            fetch('xx', { //xx에 백엔드의 엔드포인트 URL
+                method: 'POST',
+                headers: {
+                    'Content-Type': 'application/json'
+                },
+                body: jsonData
+            })
+                .then(response => response.json())
+                .then(result => {
+                    console.log(result); // 백엔드에서 보내는 응답을 콘솔에 출력
+                })
+        }   
+    </script>
+</body>
+
+</html>
