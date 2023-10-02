@@ -1,36 +1,52 @@
 package hello.hello.spring.controller;
 
-import org.springframework.stereotype.Controller;
-import org.springframework.ui.Model;
+import hello.hello.spring.Vector2;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.bind.annotation.ResponseBody;
+import java.util.List;
 
-public class MapController { @GetMapping("map")
-@ResponseBody
-public Map createMap(@RequestParam("Map" ) String map ,
-                     @RequestParam("Start" ) String start ,
-                     @RequestParam("Spot" ) String spot ,
-                     @RequestParam("Hazard" ) String hazard){
-    return new Map(map, start, spot, hazard);
-}
+public class MapController {
+
+    public static Map map;
+
+    public static class Map {
+
+        private Vector2 size = new Vector2(0,0);
+        private List<Vector2> hazardList;
+        private Vector2 startPoint;
+        private List<Vector2> spotList;
 
 
-    static class Map{
-        public String InitMap;
-        public String InitStart;
-        public String InitSpot;
-        public String InitHazard;
-
-        public Map(String map , String start, String spot, String hazard){
-            InitMap = map;
-            InitStart = start;
-            InitSpot = spot;
-            InitHazard = hazard;
+        public Map(Vector2 size, Vector2 startPoint , List<Vector2> spots , List<Vector2> hazards) {
+            this.size = size;
+            this.startPoint = startPoint;
+            spotList = spots;
+            hazardList = hazards;
         }
 
-        public void Move(){
 
+        public Vector2 GetSize(){
+            return size;
         }
+
+        public boolean CheckHazard(Vector2 position){
+            return hazardList.contains(position);
+        }
+        public boolean CheckSpot(Vector2 position){
+            return spotList.contains(position);
+        }
+
+        public void AddHazard(Vector2 position){
+            if(!hazardList.contains(position))
+                hazardList.add(position);
+        }
+
+        public void AddSpot(Vector2 position){
+            if(!spotList.contains(position))
+                spotList.add(position);
+        }
+
     }
 }
+
