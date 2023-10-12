@@ -1,4 +1,3 @@
-package hello.hello.spring;
 public class Vector2
 {
     // Members
@@ -20,4 +19,5 @@ public class Vector2
     public boolean equals(Vector2 other) {
         return (this.x == other.x && this.y == other.y);
     }
+
 }
