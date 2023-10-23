@@ -1,8 +1,6 @@
 package SWE_Project.backend.common;
 
-
 import java.util.ArrayList;
-import java.util.Arrays;
 import java.util.List;
 import java.util.StringTokenizer;
 import lombok.extern.slf4j.Slf4j;
@@ -22,18 +20,18 @@ public class Vector {
         return y;
     }
 
-    public Vector(){
+    public Vector() {
 
     }
 
     //초기 생성시 데이터 저장
-    public Vector(int x, int y){
+    public Vector(int x, int y) {
         this.x = x;
         this.y = y;
     }
 
     // str = ((1 1)(1 3))
-    public List<Vector> extractVector(String str){
+    public List<Vector> extractVector(String str) {
         List<Vector> v = new ArrayList<>();
         List<String> replace = replace(str);
 

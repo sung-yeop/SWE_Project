@@ -3,7 +3,6 @@ package SWE_Project.backend.addon;
 import SWE_Project.backend.common.Vector;
 import SWE_Project.backend.map.Map;
 import SWE_Project.backend.map.MapController;
-import SWE_Project.backend.movement.Direction;
 import SWE_Project.backend.movement.RobotMovementInterface;
 import SWE_Project.backend.sensor.HazardSensor;
 import SWE_Project.backend.sensor.PositioningSensor;
@@ -16,15 +15,18 @@ import lombok.Getter;
 @Getter
 public class AddOn {
 
+    private RobotMovementInterface robotMovementInterface = new RobotMovementInterface();
+
     // 애초에 길찾기라는 것이 초기 정보는 모두 알고있어야 진행이 가능하므로 map데이터를 우선 AddOn에 가져온다.
     private MapController mapController = Map.getInstance();
     private HazardSensor hazardSensor = new HazardSensor();
     private SpotSensor spotSensor = new SpotSensor();
-    private PositioningSensor positioningSensor = new PositioningSensor(mapController.getPosition());
-    private RobotMovementInterface robotMovementInterface = new RobotMovementInterface(mapController.getPosition());
+    private PositioningSensor positioningSensor = new PositioningSensor(mapController.getPosition(),
+            robotMovementInterface.getRobot().getDirection());
+
 
     // 위에서 제공된 mapController 객체를 통해 길찾기 로직을 진행하여 경로를 확인한다.
-    public List<Vector> pathFinding(){
+    public List<Vector> pathFinding() {
         List<Vector> path = new ArrayList<>();
 
         //길찾기 로직
@@ -54,8 +56,9 @@ public class AddOn {
     }
 
     // 센서들의 작동을 묶어서 결과를 리턴하는 메서드
-    public SensorResult sensor(){
-        boolean hazard = hazardSensor.IsHazard(positioningSensor.getPosition(), positioningSensor.getDirection(),
+    public SensorResult sensor() {
+        boolean hazard = hazardSensor.IsHazard(positioningSensor.getPosition(),
+                robotMovementInterface.getRobot().getDirection(),
                 mapController.getHazardList());
 
         // spot 센서가 만들어지면 spot에 대한 판독 기능도 추가 필요
