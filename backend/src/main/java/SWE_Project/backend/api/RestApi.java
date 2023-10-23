@@ -1,23 +1,21 @@
 package SWE_Project.backend.api;
 
-import SWE_Project.backend.addon.AddOn;
 import SWE_Project.backend.common.Vector;
 import SWE_Project.backend.map.Map;
 import SWE_Project.backend.map.MapController;
 import java.util.List;
-import java.util.stream.Collectors;
 import lombok.Data;
 import lombok.Getter;
 import lombok.RequiredArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.validation.annotation.Validated;
-import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RestController;
 
 @Getter
-@RestController @Slf4j
+@RestController
+@Slf4j
 @RequiredArgsConstructor
 public class RestApi {
 
@@ -53,7 +51,7 @@ public class RestApi {
 
 
     @Data
-    static class response{
+    static class response {
         private List<Vector> size;
         private List<Vector> start;
         private List<Vector> spots;

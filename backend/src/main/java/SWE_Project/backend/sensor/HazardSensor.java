@@ -1,12 +1,11 @@
 package SWE_Project.backend.sensor;
 
 import SWE_Project.backend.common.Vector;
-import SWE_Project.backend.map.MapController;
 import SWE_Project.backend.movement.Direction;
-import java.util.ArrayList;
 import java.util.List;
 
 public class HazardSensor {
+
     public boolean IsHazard(Vector position, Direction dir, List<Vector> hazardList) {
         Vector compareVector = new Vector(position.getX(), position.getY());
         switch (dir) {
@@ -23,10 +22,11 @@ public class HazardSensor {
                 compareVector.x += 1;
                 break;
         }
-        if(!hazardList.isEmpty()) {
+        if (!hazardList.isEmpty()) {
             for (Vector hazard : hazardList) {
-                if (compareVector.equals(hazard))
+                if (compareVector.equals(hazard)) {
                     return true;
+                }
             }
         }
         return false;
