@@ -34,27 +34,35 @@ public class AStar {
 
         while (!openList.isEmpty()) {
             Vector current = openList.poll();
+
             closedList.add(current);
+
+            current.addNeighbors(size, mapInit);
+
+            if (!fMaps.containsKey(current)) {
+                fMaps.put(current, hscore(current, end) + gscore(start, current));
+            }
 
             if (current.equals(end)) {
                 break;
             }
 
-            current.addNeighbors(hazards, size, mapInit);
-
+            b:
             for (Vector neighbor : current.getNeighbors()) {
-
-                if (closedList.contains(neighbor) || openList.contains(neighbor)) {
-                    continue;
-
+                if (contain(neighbor, hazards)) {
+                    continue b;
                 } else if (!openList.contains(neighbor)) {
-                    fMaps.put(neighbor, hscore(current, neighbor) + gscore(current, neighbor));
+                    fMaps.put(neighbor, hscore(neighbor, end) + gscore(current, neighbor));
                     openList.add(neighbor);
 
                     neighbor.setParent(current);
 
+                    if (fMaps.get(current) > fMaps.get(neighbor)) {
+                        current = neighbor;
+                    }
                 }
             }
+
 
             if (openList.isEmpty()) {
                 System.out.println("경로 없음");
@@ -64,6 +72,39 @@ public class AStar {
 
 
         return closedList;
+    }
+
+    private boolean contain(Vector neighbor, List<Vector> hazards) {
+        int flag_openList = 0;
+        int flag_closedList = 0;
+        int flag_hazards = 0;
+
+        for (Vector vector : openList) {
+            if (vector == neighbor) {
+                flag_openList = 1;
+                break;
+            }
+        }
+
+        for (Vector vector : closedList) {
+            if (vector == neighbor) {
+                flag_closedList = 1;
+                break;
+            }
+        }
+
+        for (Vector vector : hazards) {
+            if (vector.getX() == neighbor.getX() && vector.getY() == neighbor.getY()) {
+                flag_hazards = 1;
+                break;
+            }
+        }
+
+        if (flag_openList == 1 || flag_closedList == 1 || flag_hazards == 1) {
+            return true;
+        } else {
+            return false;
+        }
     }
 
     private int gscore(Vector start, Vector now) {

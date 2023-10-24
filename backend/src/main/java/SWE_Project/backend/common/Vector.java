@@ -79,7 +79,7 @@ public class Vector {
     }
 
     // 현재 벡터에 알아서 네이버 값을 추가하는 메서드
-    public void addNeighbors(List<Vector> hazards, Vector size, Vector[][] mapInit) {
+    public void addNeighbors(Vector size, Vector[][] mapInit) {
 
         int x = getX() - 1;
         int y = getY() - 1;
@@ -88,7 +88,7 @@ public class Vector {
         for (int i = y; i < y + 3; i++) {
             for (int j = x; j < x + 3; j++) {
                 if (!(j < 0 || i < 0 || j >= size.getX() || i >= size.getY() || (j == getX() && i == getY()))
-                        && !hazards.contains(mapInit[j][i]) && !(j == getX() - 1 && i == getY() - 1) &&
+                        && !(j == getX() - 1 && i == getY() - 1) &&
                         !(j == getX() - 1 && i == getY() + 1) && !(j == getX() + 1 && i == getY() + 1) &&
                         !(j == getX() + 1 && i == getY() - 1)) {
                     neighbors.add(mapInit[j][i]);
@@ -96,4 +96,6 @@ public class Vector {
             }
         }
     }
+
+
 }

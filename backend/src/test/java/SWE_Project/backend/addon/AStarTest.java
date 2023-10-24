@@ -21,7 +21,7 @@ class AStarTest {
 
         //when
         Vector v = new Vector(0, 0);
-        v.addNeighbors(mapController.getHazardList(), mapController.getSize(), mapInit);
+        v.addNeighbors(mapController.getSize(), mapInit);
 
         //then
         ArrayList<Vector> neighbors = v.getNeighbors();
@@ -33,19 +33,23 @@ class AStarTest {
     @Test
     public void 길찾기_로직_테스트() {
         //given
-        mapController.setSize(new Vector(4, 5));
-        mapController.setStartSpot(new Vector(1, 0));
+        mapController.setSize(new Vector(8, 11));
+        mapController.setStartSpot(new Vector(3, 4));
         List<Vector> spotlist = new ArrayList<>();
-        spotlist.add(new Vector(3, 4));
+        spotlist.add(new Vector(7, 8));
         mapController.setSpotList(spotlist);
         List<Vector> hazardlist = new ArrayList<>();
-        hazardlist.add(new Vector(3, 2));
+        hazardlist.add(new Vector(3, 5));
+        hazardlist.add(new Vector(7, 4));
         mapController.setHazardList(hazardlist);
 
 
         AStar aStar = new AStar(mapController.getSize(), mapController.createMapInit());
 
-        ArrayList<Vector> path = aStar.search(mapController.getStartSpot(), mapController.getSpotList().get(0), mapController.getHazardList());
-
+        ArrayList<Vector> path = aStar.search(mapController.getStartSpot(), mapController.getSpotList().get(0)
+                , mapController.getHazardList());
+        for (Vector vector : path) {
+            System.out.println("( " + vector.getX() + ", " + vector.getY() + " )");
+        }
     }
 }
