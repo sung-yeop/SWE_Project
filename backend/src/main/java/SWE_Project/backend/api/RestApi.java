@@ -1,7 +1,7 @@
 package SWE_Project.backend.api;
 
 import SWE_Project.backend.common.Vector;
-import SWE_Project.backend.map.Controller;
+import SWE_Project.backend.controller.Controller;
 import lombok.AllArgsConstructor;
 import lombok.Data;
 import lombok.Getter;
