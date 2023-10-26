@@ -1,7 +1,8 @@
-package SWE_Project.backend.map;
+package SWE_Project.backend.controller;
 
 import SWE_Project.backend.addon.AddOn;
 import SWE_Project.backend.common.Vector;
+import SWE_Project.backend.map.Map;
 import lombok.Getter;
 import lombok.Setter;
 
