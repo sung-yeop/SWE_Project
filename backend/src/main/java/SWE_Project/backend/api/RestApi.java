@@ -1,17 +1,20 @@
 package SWE_Project.backend.api;
 
 import SWE_Project.backend.common.Vector;
-import SWE_Project.backend.map.Map;
-import SWE_Project.backend.map.MapController;
-import java.util.List;
+import SWE_Project.backend.map.Controller;
+import lombok.AllArgsConstructor;
 import lombok.Data;
 import lombok.Getter;
 import lombok.RequiredArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.validation.annotation.Validated;
+import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RestController;
+
+import java.util.List;
+import java.util.stream.Collectors;
 
 @Getter
 @RestController
@@ -19,26 +22,52 @@ import org.springframework.web.bind.annotation.RestController;
 @RequiredArgsConstructor
 public class RestApi {
 
-    private MapController mapController = Map.getInstance();
+    private Controller controller = new Controller();
 
     @PostMapping("api/mapInit")
     public response mapInit(@RequestBody @Validated createRequest request) {
         response result;
-        Vector s = new Vector();
+        Vector temp = new Vector();
 
-        List<Vector> size = s.extractVector(request.getSize());
-        List<Vector> startPoint = s.extractVector(request.getStart());
-        List<Vector> spotPoint = s.extractVector(request.getSpot());
-        List<Vector> hazardPoint = s.extractVector(request.getHazard());
+        List<Vector> size = temp.extractVector(request.getSize());
+        List<Vector> startPoint = temp.extractVector(request.getStart());
+        List<Vector> spotPoint = temp.extractVector(request.getSpot());
+        List<Vector> hazardPoint = temp.extractVector(request.getHazard());
 
-        result = new response(size, startPoint, spotPoint, hazardPoint);
+        controller.mapInit(size.get(0), startPoint.get(0), spotPoint, hazardPoint);
+        controller.getAddOn().getSensorController().setPos(startPoint.get(0));
 
-        mapController.setSize(size.get(0));
-        mapController.setStartSpot(startPoint.get(0));
-        mapController.setSpotList(spotPoint);
-        mapController.setHazardList(hazardPoint);
+        List<VectorDto> s = size.stream().map(m -> new VectorDto(m.getX(), m.getY()))
+                .collect(Collectors.toList());
+        List<VectorDto> sp = startPoint.stream().map(m -> new VectorDto(m.getX(), m.getY()))
+                .collect(Collectors.toList());
+        List<VectorDto> spp = spotPoint.stream().map(m -> new VectorDto(m.getX(), m.getY()))
+                .collect(Collectors.toList());
+        List<VectorDto> hp = hazardPoint.stream().map(m -> new VectorDto(m.getX(), m.getY()))
+                .collect(Collectors.toList());
 
-        return result;
+        return new response(s, sp, spp, hp);
+    }
+
+    @GetMapping("/api/pathfinding")
+    public Result path() {
+        List<Vector> path = controller.pathFinding(controller.getMap());
+        List<PathDto> result = path.stream().map(m -> new PathDto(m.getX(), m.getY())).collect(Collectors.toList());
+
+        return new Result(result);
+    }
+
+    @Data
+    @AllArgsConstructor
+    static class Result<T> {
+        private T path;
+    }
+
+    @Data
+    @AllArgsConstructor
+    static class PathDto {
+        private int x;
+        private int y;
     }
 
     @Data
@@ -52,17 +81,26 @@ public class RestApi {
 
     @Data
     static class response {
-        private List<Vector> size;
-        private List<Vector> start;
-        private List<Vector> spots;
-        private List<Vector> hazards;
+        private List<VectorDto> size;
+        private List<VectorDto> start;
+        private List<VectorDto> spots;
+        private List<VectorDto> hazards;
 
-        public response(List<Vector> size, List<Vector> start, List<Vector> spots, List<Vector> hazards) {
+        public response(List<VectorDto> size, List<VectorDto> start, List<VectorDto> spots, List<VectorDto> hazards) {
             this.size = size;
             this.start = start;
             this.spots = spots;
             this.hazards = hazards;
         }
+    }
+
+    @Data
+    @AllArgsConstructor
+    static class VectorDto {
+
+        private int x;
+        private int y;
+
     }
 
 }

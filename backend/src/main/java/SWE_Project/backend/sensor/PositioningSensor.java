@@ -2,6 +2,7 @@ package SWE_Project.backend.sensor;
 
 import SWE_Project.backend.common.Vector;
 import SWE_Project.backend.movement.Direction;
+
 import java.util.HashMap;
 import java.util.Map;
 
@@ -13,13 +14,22 @@ public class PositioningSensor {
     private Map<String, Vector> position = new HashMap<>();
     private Direction direction;
 
-    public PositioningSensor(Vector position, Direction dir) {
-        this.position.put("real", position);
-        this.position.put("logic", position);
+    public PositioningSensor(Direction dir) {
+        if (position == null) {
+            this.position.put("real", new Vector(0, 0));
+            this.position.put("logic", new Vector(0, 0));
+        }
         this.direction = dir;
     }
 
     public Vector getPosition() {
+        return position.get("real");
+    }
+
+    public Vector updatePosition(Vector pos) {
+        this.position.put("real", pos);
+        this.position.put("logic", pos);
+
         return position.get("real");
     }
 

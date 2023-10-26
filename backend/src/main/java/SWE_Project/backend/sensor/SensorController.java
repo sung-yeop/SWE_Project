@@ -11,11 +11,12 @@ public class SensorController {
 
     private HazardSensor hazardSensor = new HazardSensor();
     private SpotSensor spotSensor = new SpotSensor();
-    private PositioningSensor positioningSensor;
+    private PositioningSensor positioningSensor = new PositioningSensor(Direction.UP);
 
-    public SensorController(Vector vector, Direction direction) {
-        this.positioningSensor = new PositioningSensor(vector, direction);
+    public void setPos(Vector vector) {
+        Vector v = positioningSensor.updatePosition(vector);
     }
+
 
     public SensorResult sensor(Direction direction, List<Vector> hazards, List<Vector> spots) {
         Vector target = null;
