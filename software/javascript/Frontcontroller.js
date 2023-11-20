@@ -60,10 +60,11 @@ function proceed(event) {
     })
         .then(response => response.json())
         .then(result => {
-            path = result; // 백엔드에서 보내는 결과로 path 수정
+            path = result.replace(/[^\d\s]/g, '').trim().split(/\s+/).map(Number);; // 백엔드에서 보내는 결과로 path 수정
         }) */
         
     /* rotate(mapData[0], mapData[1], path); */
+    path = path.slice(0, 1) + path.slice(9);
     mapData[1] = drawAfterMove(mapData[0], path);
     drawPath(mapData[0], path);
 }
