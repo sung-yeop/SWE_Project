@@ -64,8 +64,8 @@ function proceed(event) {
         }) */
         
     /* rotate(mapData[0], mapData[1], path); */
-    path = path.slice(0, 1) + path.slice(9);
     mapData[1] = drawAfterMove(mapData[0], path);
+    path = path.slice(0, 1) + path.slice(9);
     drawPath(mapData[0], path);
 }
 
