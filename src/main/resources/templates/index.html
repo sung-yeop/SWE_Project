@@ -1,0 +1,59 @@
+<!DOCTYPE html>
+<html>
+
+<head lang="ko">
+    <meta charset="UTF-8">
+    <title>로봇 움직이기</title>
+    <link rel="stylesheet" href="../static/css/css.css">
+</head>
+
+<body>
+<div id="float">
+    <!-- text 데이터를 입력받는 창 -->
+    <div id="getData">
+        <form onsubmit="initialize(event)">
+            <ul>
+                <li>
+                    <label for="map">Map&nbsp;&nbsp;&nbsp; : </label>
+                    <input type="text" id="map" autofocus required>
+                </li>
+                <li>
+                    <label for="start">Start&nbsp;&nbsp;&nbsp; : </label>
+                    <input type="text" id="start" required>
+                </li>
+                <li>
+                    <label for="spot">Spot&nbsp;&nbsp;&nbsp; : </label>
+                    <input type="text" id="spot" required>
+                </li>
+                <li>
+                    <label for="hazard">Hazard : </label>
+                    <input type="text" id="hazard" required>
+                </li>
+            </ul>
+
+            <!-- 제출 버튼 -->
+            <button type="button" onclick="initialize(event)">제출</button>
+        </form>
+    </div>
+    <!-- 정보를 알려주는 창 -->
+    <div id="information">
+        <p>정보를 입력하세요.</p>
+    </div>
+    <div>
+        <img src="../static/images/mike.png" width="100" height="100" alt="마이크" id="mike">
+        <button type="button" onclick="proceed(event)" id="move">이동</button>
+    </div>
+</div>
+<!-- 격자점 -->
+<div class="grid" id="myGrid">
+    <div id="robot"><img src="../static/images/robot.png" alt="로봇"></div>
+    <img src="../static/images/predefinedSpot.png" id="predefinedSpot" class="predefinedSpot">
+    <img src="../static/images/hazard.png" id="hazard15" class="hazard">
+    <img src="../static/images/nextpoint.png" id="path" class="path">
+</div>
+<hr id="line">
+
+<script src="../static/javascript/Frontcontroller.js"></script>
+</body>
+
+</html>
