@@ -52,10 +52,10 @@ public class Controller {
     }
 
     private void createMap(createMapRequest request) {
-        map = new Map(convertStringToVector(request.getSize()).stream().findFirst().get(),
+        map = new Map(convertStringToVector(request.getMap()).stream().findFirst().get(),
                 convertStringToVector(request.getStart()).stream().findFirst().get(),
-                convertStringToVector(request.getSpots()),
-                convertStringToVector(request.getHazards()),
+                convertStringToVector(request.getSpot()),
+                convertStringToVector(request.getHazard()),
                 convertStringToVector(request.getColorBlobs()));
     }
 
