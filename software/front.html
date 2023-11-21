@@ -36,11 +36,11 @@
             </form>
         </div>
         <!-- 정보를 알려주는 창 -->
-        <div id="information">
-            <p>정보를 입력하세요.</p>
+        <div>
+            <p id="information">정보를 입력하세요.</p>
         </div>
         <div>
-            <img src="images/mike.png" width="100" height="100" alt="마이크" id="mike">
+            <img src="images/mike.png" width="100" height="100" alt="마이크" id="mike" onclick="update(event)">
             <button type="button" onclick="proceed(event)" id="move">이동</button>
         </div>
     </div>
@@ -50,6 +50,7 @@
         <img src="images/predefinedSpot.png" id="predefinedSpot" class="predefinedSpot">
         <img src="images/hazard.png" id="hazard15" class="hazard">
         <img src="images/nextpoint.png" id="path" class="path">
+        <img src="images/colorBlob.png" id="colorBlob" class="colorBlob">
     </div>
     <hr id="line">
 
