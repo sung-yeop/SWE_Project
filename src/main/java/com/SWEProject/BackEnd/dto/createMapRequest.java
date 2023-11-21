@@ -4,9 +4,9 @@ import lombok.Data;
 
 @Data
 public class createMapRequest {
-    private String size;
+    private String map;
     private String start;
-    private String hazards;
-    private String spots;
-    private String colorBlobs;
+    private String hazard;
+    private String spot;
+    private String colorBlob;
 }

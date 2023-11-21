@@ -1,12 +1,19 @@
-var predefinedSpot, hazard0, mobileRobot, colorBlob;
-
-function setMap(mapText, startText, spotText, hazardText) {
+//setMap********************************************************
+function setMap(mapText, startText, spotText, hazardText, colorBlob) {
     // 각각의 텍스트를 정수 배열로 변환
-    predefinedSpot = mapText.replace(/[^\d\s]/g, '').trim().split(/\s+/).map(Number);
-    mobileRobot = startText.replace(/[^\d\s]/g, '').trim().split(/\s+/).map(Number);
-    colorBlob = spotText.replace(/[^\d\s]/g, '').trim().split(/\s+/).map(Number);
-    hazard0 = hazardText.replace(/[^\d\s]/g, '').trim().split(/\s+/).map(Number);
+    var predefinedSpot = mapText.match(/\d+/g).map(Number);
+    var mobileRobot = startText.match(/\d+/g).map(Number);
+    var spot = spotText.match(/\d+/g).map(Number);
+    var hazard0 = hazardText.match(/\d+/g).map(Number);
+    var colorBlob1 = colorBlob.match(/\d+/g).map(Number);
 
-    var arr1 = [predefinedSpot, mobileRobot, colorBlob, hazard0];
+    var arr1 = [predefinedSpot, mobileRobot, spot, hazard0, colorBlob1];
     return arr1;
+}
+
+//extractIntegers********************************************************
+function extractIntegers(vector) {
+    return vector
+        .match(/\d+/g) // 정규 표현식을 사용해 숫자만 추출
+        .join(', ');   // 추출된 숫자를 문자열로 조합하여 반환
 }

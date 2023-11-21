@@ -30,9 +30,13 @@ function drawGrid(mapdata) {
 //drawGrid*********************************************************************************
 
 //drawUnit*********************************************************************************
-function drawUnit(mapdata, start, spot, hazard) {
-    cols = mapdata[0];
-    rows = mapdata[1];
+function drawUnit(mapdata) {
+    cols = mapdata[0][0];
+    rows = mapdata[0][1];
+    start = mapdata[1];
+    spot = mapdata[2];
+    hazard = mapdata[3];
+    colorBlob= mapdata[4];
 
     var mapgrid = document.getElementById("myGrid");
     var cellwidth = mapgrid.offsetWidth / cols;
@@ -86,8 +90,74 @@ function drawUnit(mapdata, start, spot, hazard) {
             mapgrid.appendChild(clonedhazard);
         }
     }
+
+    var colorBlobpos = document.getElementById("colorBlob");
+    colorBlobpos.style.display = "block";
+    colorBlobwidth = colorBlobpos.offsetWidth / 2;
+    colorBlobheight = colorBlobpos.offsetHeight / 2;
+    colorBlobpos.style.left = -colorBlobwidth + cellwidth * colorBlob[0] + "px";
+    colorBlobpos.style.top = -colorBlobheight + cellheight * (rows - colorBlob[1]) + "px";
+
+    var colorBloblen = colorBlob.length / 2;
+    if (colorBloblen > 1) {
+        for (var i = 1; i < colorBloblen; i++) {
+            var clonedcolorBlob = document.createElement('img');
+            clonedcolorBlob.src = colorBlobpos.src;
+            clonedcolorBlob.classList.add('colorBlob');
+            clonedcolorBlob.style.display = "block";
+            clonedcolorBlob.style.left = -colorBlobwidth + cellwidth * colorBlob[i * 2] + "px";
+            clonedcolorBlob.style.top = -colorBlobheight + cellheight * (rows - colorBlob[i * 2 + 1]) + "px";
+            mapgrid.appendChild(clonedcolorBlob);
+        }
+    }
+
 }
 //drawUnit*********************************************************************************
+//drawVoice*********************************************************************************
+function drawVoice(mapdata, colorBlob, hazard) {
+    cols = mapdata[0][0];
+    rows = mapdata[0][1];
+
+    var mapgrid = document.getElementById("myGrid");
+    var cellwidth = mapgrid.offsetWidth / cols;
+    var cellheight = mapgrid.offsetHeight / rows;
+
+    var colorBlobpos = document.getElementById("colorBlob");
+    colorBlobwidth = colorBlobpos.offsetWidth / 2;
+    colorBlobheight = colorBlobpos.offsetHeight / 2;
+
+    var colorBloblen = colorBlob.length / 2;
+    if (colorBloblen >= 1) {
+        for (var i = 0; i < colorBloblen; i++) {
+            var clonedcolorBlob = document.createElement('img');
+            clonedcolorBlob.src = colorBlobpos.src;
+            clonedcolorBlob.classList.add('colorBlob');
+            clonedcolorBlob.style.display = "block";
+            clonedcolorBlob.style.left = -colorBlobwidth + cellwidth * colorBlob[i * 2] + "px";
+            clonedcolorBlob.style.top = -colorBlobheight + cellheight * (rows - colorBlob[i * 2 + 1]) + "px";
+            mapgrid.appendChild(clonedcolorBlob);
+        }
+    }
+
+    var hazardpos = document.getElementById("hazard15");
+    hazardwidth = hazardpos.offsetWidth / 2;
+    hazardheight = hazardpos.offsetHeight / 2;
+
+    var hazardlen = hazard.length / 2;
+    if (hazardlen >= 1) {
+        for (var i = 0; i < hazardlen; i++) {
+            var clonedhazard = document.createElement('img');
+            clonedhazard.src = hazardpos.src;
+            clonedhazard.classList.add('hazard');
+            clonedhazard.style.display = "block";
+            clonedhazard.style.left = -hazardwidth + cellwidth * hazard[i * 2] + "px";
+            clonedhazard.style.top = -hazardheight + cellheight * (rows - hazard[i * 2 + 1]) + "px";
+            mapgrid.appendChild(clonedhazard);
+        }
+    }
+
+}
+//drawVoice*********************************************************************************
 //drawPath*********************************************************************************
 function drawPath(mapdata, path) {
     //var path = [(3, 1), (4, 1), (5, 1), (6, 1), (6, 2), (6, 3), (6, 4), (6, 5)];

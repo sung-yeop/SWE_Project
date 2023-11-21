@@ -14,7 +14,7 @@ import java.util.stream.Collectors;
 public class Converter {
 
     private final static String vectorFormatRegex = "(\\d{1,10} \\d{1,10})";
-    private final static String vectorFormat = "(%d %d)";
+    private final static String vectorFormat = "(%d, %d)";
 
     public static String convertVectorToString(Vector vector) {
         return String.format(vectorFormat, vector.getX(), vector.getY());
