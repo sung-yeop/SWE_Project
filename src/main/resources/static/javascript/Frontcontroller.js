@@ -3,7 +3,7 @@ document.write('<script src="javascript/DrawMap.js"></script>');
 document.write('<script src="javascript/DrawRobot.js"></script>');
 //mapData*********************************************************************************
 var mapData;
-var path;
+let path;
 // = "[(3, 1), (4, 1), (5, 1), (6, 1), (6, 2), (6, 3), (6, 4), (6, 5), (6, 5), (6, 5), (6, 5)]";
 var count = 0;
 //initialize*********************************************************************************
@@ -37,14 +37,14 @@ function initialize(event) {
     })
         .then(response => response.json())
         .then(result => {
-            path = result.path.map(item => `(${extractIntegers(item.vector)})`).join(', ');
-        })
+            path = result.path;
 
-    //setMap을 통하여 텍스트를 정수 배열로 전환
-    mapData = setMap(map, start, spot, hazard, colorBlob);
-    drawGrid(mapData[0]);
-    drawPath(mapData[0], path);
-    drawUnit(mapData);
+            //setMap을 통하여 텍스트를 정수 배열로 전환
+            mapData = setMap(map, start, spot, hazard, colorBlob);
+            drawGrid(mapData[0]);
+            drawPath(mapData[0], path);
+            drawUnit(mapData);
+        })
 }
 //initialize*********************************************************************************
 //proceed*********************************************************************************
@@ -65,16 +65,16 @@ function proceed(event) {
     })
         .then(response => response.json())
         .then(result => {
-            pos = result.currentPosition.map(item => `(${extractIntegers(item.vector)})`).join(', ');
+            pos = result.currentPosition;
             if (result.path != null) {
-                path = result.path.map(item => `(${extractIntegers(item.vector)})`).join(', ');
+                path = result.path;
             }
+            mapData[1] = drawAfterMove(mapData[0], pos);
+            path = path.slice(0, 1) + path.slice(9);
+            drawPath(mapData[0], path);
         })
 
     /* rotate(mapData[0], mapData[1], path); */
-    mapData[1] = drawAfterMove(mapData[0], pos);
-    path = path.slice(0, 1) + path.slice(9);
-    drawPath(mapData[0], path);
 }
 //update*********************************************************************************
 function update(event) {

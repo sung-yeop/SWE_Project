@@ -29,18 +29,20 @@ public class Controller {
     private List<Vector> path;
 
     @PostMapping("/api/init/")
-    public ResponsePathDto init(@RequestBody @Validated createMapRequest request) {
+    public ResponseStringDto init(@RequestBody @Validated createMapRequest request) {
 
         createMap(request);
 
         addOn = new AddOn(map.getStartPoint());
         path = addOn.pathFind(map);
+        path.remove(path.stream().findFirst().get());
 
         log.info("init");
 
-        return new ResponsePathDto(
-                this.path.stream().map(vector -> new ResponseVectorDto(convertVectorToString(vector)))
-                        .collect(Collectors.toList()));
+        String output = "[" + this.path.stream()
+                .map(vector -> convertVectorToString(vector)).collect(Collectors.joining(", ")) + "]";
+
+        return new ResponseStringDto(output);
     }
 
     private void createMap(createMapRequest request) {
@@ -51,7 +53,7 @@ public class Controller {
                 convertStringToVector(request.getColorBlob()));
     }
 
-    @GetMapping("/api/move/")
+    @PostMapping("/api/move/")
     public ResponseDataDto move(@RequestBody @Validated moveRequest request) {
         Vector nextPosition = convertStringToVector(request.getPath()).get(0);
 
@@ -62,33 +64,35 @@ public class Controller {
 
     private ResponseDataDto problemWithCourse(Vector nextPosition) {
         boolean moveFlag = true;
-        List<ResponseVectorDto> responsePathDtos = null;
-        List<ResponseVectorDto> responseHazardList = null;
-        List<ResponseVectorDto> responseSpotList = null;
-        List<ResponseVectorDto> responseColorblobList = null;
-        ResponseVectorDto responseCurrentPosition = null;
+        String responsePathDtos = null;
+        String responseHazardList = null;
+        String responseColorblobList = null;
+        String responseCurrentPosition = null;
+//        List<ResponseVectorDto> responsePathDtos = null;
+//        List<ResponseVectorDto> responseHazardList = null;
+//        List<ResponseVectorDto> responseSpotList = null;
+//        List<ResponseVectorDto> responseColorblobList = null;
+//        ResponseVectorDto responseCurrentPosition = null;
 
         addOn.directionSetting(nextPosition); //목표 지점으로 방향 전환
 
         //이후 센서 작동
         if (addOn.moveWithHazardSense(map)) {
-            responseHazardList = map.getHazardList().stream()
-                    .map(v -> new ResponseVectorDto(convertVectorToString(v))).collect(Collectors.toList());
-
+            responseHazardList = "[" + map.getHazardList().stream()
+                    .map(v -> convertVectorToString(v)).collect(Collectors.joining(", ")) + "]";
 
             if (path.stream().anyMatch(m -> map.getHazardList().stream().anyMatch(v -> v.equals(m)))) {
                 path = addOn.pathFind(map);
-                responsePathDtos = path.stream()
-                        .map(v -> new ResponseVectorDto(convertVectorToString(v)))
-                        .collect(Collectors.toList());
-                responsePathDtos.remove(responsePathDtos.stream().findFirst().get()); // 다음 이동 경로에서 현재 위치 제거
+                path.remove(path.stream().findFirst().get());
+                responsePathDtos = "[" + path.stream().map(v -> convertVectorToString(v))
+                        .collect(Collectors.joining(", ")) + "]";
                 moveFlag = false;
             }
         }
 
         if (addOn.moveWithColorBlobSense(map)) {
-            responseColorblobList = map.getColorblobList().stream()
-                    .map(v -> new ResponseVectorDto(convertVectorToString(v))).collect(Collectors.toList());
+            responseColorblobList = "[" + map.getColorblobList().stream().map(v -> convertVectorToString(v))
+                    .collect(Collectors.joining(", ")) + "]";
         }
 
 
@@ -98,15 +102,14 @@ public class Controller {
         }
 
         //움직임 이후 문제가 존재하는지 확인
-        if (addOn.moveWithError(nextPosition)) {
+        if (addOn.moveWithError(nextPosition) && moveFlag) {
             path = addOn.pathFind(map);
-            responsePathDtos = path.stream()
-                    .map(v -> new ResponseVectorDto(convertVectorToString(v)))
-                    .collect(Collectors.toList());
-            responsePathDtos.remove(responsePathDtos.stream().findFirst().get());
+            path.remove(path.stream().findFirst().get());
+            responsePathDtos = "[" + path.stream().map(v -> convertVectorToString(v))
+                    .collect(Collectors.joining(", ")) + "]";
         }
 
-        responseCurrentPosition = new ResponseVectorDto(convertVectorToString(addOn.getCurrentPosition()));
+        responseCurrentPosition = (convertVectorToString(addOn.getCurrentPosition()));
 
         return new ResponseDataDto(responsePathDtos,
                 responseHazardList, responseColorblobList, responseCurrentPosition);
