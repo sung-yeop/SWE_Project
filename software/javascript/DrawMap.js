@@ -36,6 +36,7 @@ function drawUnit(mapdata) {
     start = mapdata[1];
     spot = mapdata[2];
     hazard = mapdata[3];
+    colorBlob= mapdata[4];
 
     var mapgrid = document.getElementById("myGrid");
     var cellwidth = mapgrid.offsetWidth / cols;
@@ -90,6 +91,26 @@ function drawUnit(mapdata) {
         }
     }
 
+    var colorBlobpos = document.getElementById("colorBlob");
+    colorBlobpos.style.display = "block";
+    colorBlobwidth = colorBlobpos.offsetWidth / 2;
+    colorBlobheight = colorBlobpos.offsetHeight / 2;
+    colorBlobpos.style.left = -colorBlobwidth + cellwidth * colorBlob[0] + "px";
+    colorBlobpos.style.top = -colorBlobheight + cellheight * (rows - colorBlob[1]) + "px";
+
+    var colorBloblen = colorBlob.length / 2;
+    if (colorBloblen > 1) {
+        for (var i = 1; i < colorBloblen; i++) {
+            var clonedcolorBlob = document.createElement('img');
+            clonedcolorBlob.src = colorBlobpos.src;
+            clonedcolorBlob.classList.add('colorBlob');
+            clonedcolorBlob.style.display = "block";
+            clonedcolorBlob.style.left = -colorBlobwidth + cellwidth * colorBlob[i * 2] + "px";
+            clonedcolorBlob.style.top = -colorBlobheight + cellheight * (rows - colorBlob[i * 2 + 1]) + "px";
+            mapgrid.appendChild(clonedcolorBlob);
+        }
+    }
+
 }
 //drawUnit*********************************************************************************
 //drawVoice*********************************************************************************
@@ -102,15 +123,12 @@ function drawVoice(mapdata, colorBlob, hazard) {
     var cellheight = mapgrid.offsetHeight / rows;
 
     var colorBlobpos = document.getElementById("colorBlob");
-    colorBlobpos.style.display = "block";
     colorBlobwidth = colorBlobpos.offsetWidth / 2;
     colorBlobheight = colorBlobpos.offsetHeight / 2;
-    colorBlobpos.style.left = -colorBlobwidth + cellwidth * colorBlob[0] + "px";
-    colorBlobpos.style.top = -colorBlobheight + cellheight * (rows - colorBlob[1]) + "px";
 
     var colorBloblen = colorBlob.length / 2;
-    if (colorBloblen > 1) {
-        for (var i = 1; i < colorBloblen; i++) {
+    if (colorBloblen >= 1) {
+        for (var i = 0; i < colorBloblen; i++) {
             var clonedcolorBlob = document.createElement('img');
             clonedcolorBlob.src = colorBlobpos.src;
             clonedcolorBlob.classList.add('colorBlob');
