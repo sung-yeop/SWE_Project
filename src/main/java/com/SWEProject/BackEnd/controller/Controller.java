@@ -28,7 +28,7 @@ public class Controller {
     private Map map;
     private List<Vector> path;
 
-    @PostMapping("api/init")
+    @PostMapping("/api/init/")
     public ResponsePathDto init(@RequestBody @Validated createMapRequest request) {
 
         createMap(request);
@@ -51,9 +51,9 @@ public class Controller {
                 convertStringToVector(request.getColorBlob()));
     }
 
-    @GetMapping("api/move")
+    @GetMapping("/api/move/")
     public ResponseDataDto move(@RequestBody @Validated moveRequest request) {
-        Vector nextPosition = convertStringToVector(request.getNextPosition()).get(0);
+        Vector nextPosition = convertStringToVector(request.getPath()).get(0);
 
         //nextPosition에 맞춰서 로봇을 회전시키는 로직 추가 필요
 
