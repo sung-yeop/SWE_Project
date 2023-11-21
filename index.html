@@ -32,9 +32,14 @@
 	const $ = (el) => document.querySelector(el);
 	
 	const store = {
-		texts : '',
+		texts: '',
+		type: '',
+		pos: '',
 		isRecognizing: true
 	};
+
+
+
 
 	(() => {
 		/* Speech API start */
@@ -58,6 +63,24 @@
 				store.texts = Array.from(e.results)
 								.map(results => results[0].transcript).join("");
 
+				const textArr = store.texts.split(" ");
+				store.type = textArr[0];
+				store.pos = textArr[2];
+
+				// 오류 수정
+                store.pos = store.pos.replace(/일/gi, "1");
+                store.pos = store.pos.replace(/이/gi, "2");
+                store.pos = store.pos.replace(/삼/gi, "3");
+                store.pos = store.pos.replace(/사/gi, "4");
+                store.pos = store.pos.replace(/오/gi, "5");
+                store.pos = store.pos.replace(/우/gi, "5");
+                store.pos = store.pos.replace(/육/gi, "6");
+                store.pos = store.pos.replace(/칠/gi, "7");
+                store.pos = store.pos.replace(/팔/gi, "8");
+                store.pos = store.pos.replace(/구/gi, "9");
+
+
+				store.texts = store.type + textArr[1] + store.pos;
 				console.log(store.texts)
 				$('input').value = store.texts;
 			};
