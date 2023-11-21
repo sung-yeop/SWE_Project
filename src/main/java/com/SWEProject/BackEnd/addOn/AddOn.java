@@ -68,6 +68,14 @@ public class AddOn {
         return false;
     }
 
+    // 문제가 있으면 True
+    public boolean moveWithError(Vector intendPosition){
+        if (sim.checkPosition(intendPosition)) {
+            return true;
+        }
+        return false;
+    }
+
     public void move(Vector nextPosition) {
         sim.move(nextPosition);
     }
