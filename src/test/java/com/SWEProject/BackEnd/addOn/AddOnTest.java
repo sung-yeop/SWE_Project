@@ -1,5 +1,6 @@
 package com.SWEProject.BackEnd.addOn;
 
+import com.SWEProject.BackEnd.constants.Direction;
 import com.SWEProject.BackEnd.domain.Map;
 import com.SWEProject.BackEnd.domain.Vector;
 import com.SWEProject.BackEnd.model.AStar;
@@ -32,7 +33,7 @@ class AddOnTest {
 
         colorBlobs.add(Vector.of(10, 10));
 
-        map = new Map(Vector.of(11, 11), Vector.of(2, 3), spots, hazards, colorBlobs);
+        map = new Map(Vector.of(11, 11), Vector.of(2, 3), hazards, spots, colorBlobs);
         addOn = new AddOn(map.getStartPoint());
     }
 
