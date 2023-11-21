@@ -20,15 +20,15 @@ public class Sensor {
         hiddenColorblobs = new ArrayList<Vector>();
     }
 
-    public void AddHazard(Vector position) {
+    public void addHazard(Vector position) {
         hiddenHazards.add(position);
     }
 
-    public void AddSpot(Vector position) {
+    public void addSpot(Vector position) {
         hiddenColorblobs.add(position);
     }
 
-    public Vector GetHazardSensor(Vector position, Direction dir) {
+    public Vector getHazardSensor(Vector position, Direction dir) {
         Vector compareVector = new Vector(position.x, position.y);
         switch (dir) {
             case Up:

@@ -14,40 +14,35 @@ public class Sim {
     private MovementSystem movementSystem;
 
 
-    public Sim(Vector startPoint, Direction direction) {
+    public Sim(Vector startPoint) {
         sensor = new Sensor();
         movementSystem = new MovementSystem(startPoint);
     }
 
-    public void Move(Vector intendedPosition) {
-        movementSystem.Move(intendedPosition);
-    }
-
-    //추가
-    public void setDirection(Direction direction) {
-        movementSystem.setDirection(direction);
+    public void move(Vector intendedPosition) {
+        movementSystem.move(intendedPosition);
     }
 
     public Vector getPosition() {
-        return movementSystem.GetCurrentPosition();
+        return movementSystem.getCurrentPosition();
     }
 
-    public Vector CheckHazard() {
-        Vector position = movementSystem.GetCurrentPosition();
-        Direction direction = movementSystem.GetDirection();
+    public Vector checkHazard() {
+        Vector position = movementSystem.getCurrentPosition();
+        Direction direction = movementSystem.getDirection();
 
-        return sensor.GetHazardSensor(position, direction);
+        return sensor.getHazardSensor(position, direction);
     }
 
-    public Vector CheckColorblob() {
-        Vector position = movementSystem.GetCurrentPosition();
+    public Vector checkColorblob() {
+        Vector position = movementSystem.getCurrentPosition();
 
         return sensor.GetColorblobSensor(position);
     }
 
-    public boolean CheckPosition(Vector intendedPosition) {
+    public boolean checkPosition(Vector intendedPosition) {
 
-        Vector currentPosition = movementSystem.GetCurrentPosition();
+        Vector currentPosition = movementSystem.getCurrentPosition();
 
         return sensor.GetPositioningSensor(currentPosition, intendedPosition);
     }
