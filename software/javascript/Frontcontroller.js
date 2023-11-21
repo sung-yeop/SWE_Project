@@ -65,7 +65,7 @@ function proceed(event) {
         .then(response => response.json())
         .then(result => {
             pos = result.currentPosition.map(item => `(${extractIntegers(item.vector)})`).join(', ');
-            if (result.path != NULL) {
+            if (result.path != null) {
                 path = result.path.map(item => `(${extractIntegers(item.vector)})`).join(', ');
             } 
         }) */
