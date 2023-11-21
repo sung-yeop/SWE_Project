@@ -36,7 +36,7 @@ function initialize(event) {
     })
         .then(response => response.json())
         .then(result => {
-            path = result.path.map(item => `(${extractIntegers(item.vector)})`).join(', ');
+            path = result.path;
         }) */
 
     //setMap을 통하여 텍스트를 정수 배열로 전환
@@ -64,9 +64,9 @@ function proceed(event) {
     })
         .then(response => response.json())
         .then(result => {
-            pos = result.currentPosition.map(item => `(${extractIntegers(item.vector)})`).join(', ');
+            pos = result.currentPosition;
             if (result.path != null) {
-                path = result.path.map(item => `(${extractIntegers(item.vector)})`).join(', ');
+                path = result.path;
             } 
         }) */
 
