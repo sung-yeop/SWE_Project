@@ -17,7 +17,7 @@
   background-color: #fff;
   text-align: center;
   margin-left: 50px;
-  line-height: 100px;
+  line-height: 170px;
   font-size: 30px;
 }
 
@@ -26,6 +26,7 @@
   height: 100px;
   float: left;
   margin-left: 85px;
+  transition: transform 0.5s ease; 
 }
 
 #move{
@@ -101,4 +102,12 @@
   height: 20px;
   display: none;
   z-index: 9000;
+}
+
+.colorBlob{
+  position: absolute;
+  width: 60px;
+  height: 60px;
+  display: none;
+  z-index: 9998;
 }
