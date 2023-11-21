@@ -20,12 +20,12 @@ public class Map {
     private List<Vector> colorblobList;
 
 
-    public Map(Vector size, Vector startPoint, List<Vector> spots, List<Vector> hazards, List<Vector> colorblobList) {
+    public Map(Vector size, Vector startPoint, List<Vector> hazardList, List<Vector> spotList, List<Vector> colorblobList) {
         this.size = size;
+        this.hazardList = hazardList;
         this.startPoint = startPoint;
+        this.spotList = spotList;
         this.colorblobList = colorblobList;
-        this.spotList = spots;
-        this.hazardList = hazards;
     }
 
     public Queue<Vector> createMap() {

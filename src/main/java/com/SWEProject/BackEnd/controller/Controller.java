@@ -3,11 +3,9 @@ package com.SWEProject.BackEnd.controller;
 import com.SWEProject.BackEnd.addOn.AddOn;
 import com.SWEProject.BackEnd.domain.Map;
 import com.SWEProject.BackEnd.domain.Vector;
-import com.SWEProject.BackEnd.dto.ResponsePathDto;
-import com.SWEProject.BackEnd.dto.ResponseVectorDto;
-import com.SWEProject.BackEnd.dto.createMapRequest;
-import com.SWEProject.BackEnd.dto.moveRequest;
+import com.SWEProject.BackEnd.dto.*;
 import lombok.RequiredArgsConstructor;
+import lombok.extern.slf4j.Slf4j;
 import org.springframework.validation.annotation.Validated;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PostMapping;
@@ -22,6 +20,7 @@ import static com.SWEProject.BackEnd.model.Converter.convertVectorToString;
 
 @RestController
 @RequiredArgsConstructor
+@Slf4j
 public class Controller {
 
     private AddOn addOn;
@@ -29,38 +28,30 @@ public class Controller {
     private List<Vector> path;
 
     @PostMapping("api/init")
-    public void init(@RequestBody @Validated createMapRequest request) {
+    public ResponsePathDto init(@RequestBody @Validated createMapRequest request) {
 
         createMap(request);
 
         addOn = new AddOn(map.getStartPoint());
         path = addOn.pathFind(map);
 
-//        ResponseVectorDto responseCurrentPosDto = new ResponseVectorDto(
-//                convertVectorToString(map.getStartPoint()));
-//        List<ResponseVectorDto> responsePathDto = path.stream()
-//                .map(v -> new ResponseVectorDto(convertVectorToString(v))).collect(Collectors.toList());
-//        List<ResponseVectorDto> responseHazardsDto = map.getHazardList().stream()
-//                .map(v -> new ResponseVectorDto(convertVectorToString(v))).collect(Collectors.toList());
-//        List<ResponseVectorDto> responseSpotsDto = map.getSpotList().stream()
-//                .map(v -> new ResponseVectorDto(convertVectorToString(v))).collect(Collectors.toList());
-//        List<ResponseVectorDto> responseColorBlobsDto = map.getColorblobList().stream()
-//                .map(v -> new ResponseVectorDto(convertVectorToString(v))).collect(Collectors.toList());
-//
-//        return new ResponsePathDto(responsePathDto, responseHazardsDto, responseColorBlobsDto,
-//                responseSpotsDto, responseCurrentPosDto);
+        log.info("init");
+
+        return new ResponsePathDto(
+                this.path.stream().map(vector -> new ResponseVectorDto(convertVectorToString(vector)))
+                        .collect(Collectors.toList()));
     }
 
     private void createMap(createMapRequest request) {
         map = new Map(convertStringToVector(request.getMap()).stream().findFirst().get(),
                 convertStringToVector(request.getStart()).stream().findFirst().get(),
-                convertStringToVector(request.getSpot()),
                 convertStringToVector(request.getHazard()),
-                convertStringToVector(request.getColorBlobs()));
+                convertStringToVector(request.getSpot()),
+                convertStringToVector(request.getColorBlob()));
     }
 
     @GetMapping("api/move")
-    public ResponsePathDto move(@RequestBody @Validated moveRequest request) {
+    public ResponseDataDto move(@RequestBody @Validated moveRequest request) {
         Vector nextPosition = convertStringToVector(request.getNextPosition()).get(0);
 
         //nextPosition에 맞춰서 로봇을 회전시키는 로직 추가 필요
@@ -68,7 +59,7 @@ public class Controller {
         return problemWithCourse(nextPosition);
     }
 
-    private ResponsePathDto problemWithCourse(Vector nextPosition) {
+    private ResponseDataDto problemWithCourse(Vector nextPosition) {
         boolean moveFlag = true;
         List<ResponseVectorDto> responsePathDtos = null;
         List<ResponseVectorDto> responseHazardList = null;
@@ -103,7 +94,7 @@ public class Controller {
 
         responseCurrentPosition = new ResponseVectorDto(convertVectorToString(addOn.getCurrentPosition()));
 
-        return new ResponsePathDto(responsePathDtos,
+        return new ResponseDataDto(responsePathDtos,
                 responseHazardList, responseColorblobList, responseSpotList, responseCurrentPosition);
     }
 }

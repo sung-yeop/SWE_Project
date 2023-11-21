@@ -8,5 +8,5 @@ public class createMapRequest {
     private String start;
     private String hazard;
     private String spot;
-    private String colorBlobs;
+    private String colorBlob;
 }

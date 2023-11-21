@@ -14,7 +14,7 @@ public class Sim {
     private MovementSystem movementSystem;
 
 
-    public Sim(Vector startPoint) {
+    public Sim(Vector startPoint, Direction direction) {
         sensor = new Sensor();
         movementSystem = new MovementSystem(startPoint);
     }
