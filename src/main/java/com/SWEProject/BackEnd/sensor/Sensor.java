@@ -90,6 +90,6 @@ public class Sensor {
 
 
     public boolean GetPositioningSensor(Vector currentPosition, Vector intendedPosition) {
-        return currentPosition != intendedPosition;
+        return !currentPosition.equals(intendedPosition);
     }
 }

@@ -1,0 +1,7 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<testsuite name="com.SWEProject.BackEnd.sim.SimTest" tests="1" skipped="0" failures="0" errors="0" timestamp="2023-11-21T08:37:43" hostname="jeongseong-yeobs-MacBook-Pro.local" time="0.082">
+  <properties/>
+  <testcase name="TURN_테스트()" classname="com.SWEProject.BackEnd.sim.SimTest" time="0.082"/>
+  <system-out><![CDATA[]]></system-out>
+  <system-err><![CDATA[]]></system-err>
+</testsuite>

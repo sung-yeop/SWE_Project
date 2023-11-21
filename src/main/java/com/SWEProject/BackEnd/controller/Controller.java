@@ -68,6 +68,9 @@ public class Controller {
         List<ResponseVectorDto> responseColorblobList = null;
         ResponseVectorDto responseCurrentPosition = null;
 
+        addOn.directionSetting(nextPosition); //목표 지점으로 방향 전환
+
+        //이후 센서 작동
         if (addOn.moveWithHazardSense(map)) {
             responseHazardList = map.getHazardList().stream()
                     .map(v -> new ResponseVectorDto(convertVectorToString(v))).collect(Collectors.toList());
@@ -88,15 +91,25 @@ public class Controller {
                     .map(v -> new ResponseVectorDto(convertVectorToString(v))).collect(Collectors.toList());
         }
 
+
+        //문제 없으면 이동
         if (moveFlag) {
-            addOn.move(nextPosition);
-            // TODO : nextPosition이 필요하지 않도록 로직 수정 필요
+            addOn.move();
+        }
+
+        //움직임 이후 문제가 존재하는지 확인
+        if (addOn.moveWithError(nextPosition)) {
+            path = addOn.pathFind(map);
+            responsePathDtos = path.stream()
+                    .map(v -> new ResponseVectorDto(convertVectorToString(v)))
+                    .collect(Collectors.toList());
+            responsePathDtos.remove(responsePathDtos.stream().findFirst().get());
         }
 
         responseCurrentPosition = new ResponseVectorDto(convertVectorToString(addOn.getCurrentPosition()));
 
         return new ResponseDataDto(responsePathDtos,
-                responseHazardList, responseColorblobList, responseSpotList, responseCurrentPosition);
+                responseHazardList, responseColorblobList, responseCurrentPosition);
     }
 }
 

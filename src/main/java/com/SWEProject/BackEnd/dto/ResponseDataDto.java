@@ -10,12 +10,11 @@ public class ResponseDataDto {
     private List<ResponseVectorDto> path;
     private List<ResponseVectorDto> hazardList;
     private List<ResponseVectorDto> colorBlobList;
-    private List<ResponseVectorDto> spotList;
     private ResponseVectorDto currentPosition;
 
 
     public ResponseDataDto(List<ResponseVectorDto> path, List<ResponseVectorDto> hazardList
-            , List<ResponseVectorDto> colorBlobList, List<ResponseVectorDto> spotList, ResponseVectorDto currentPosition) {
+            , List<ResponseVectorDto> colorBlobList, ResponseVectorDto currentPosition) {
         this.path = path;
         this.hazardList = hazardList;
         this.colorBlobList = colorBlobList;

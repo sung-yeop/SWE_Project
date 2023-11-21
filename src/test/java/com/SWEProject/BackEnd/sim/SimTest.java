@@ -20,12 +20,13 @@ class SimTest {
 
     @Test
     void TURN_테스트() {
-        sim.move(Vector.of(3, 3)); //오른쪽 이동
+        sim.directionSetting(Vector.of(3, 3));
+        sim.move(); //오른쪽 이동
 
         assertThat(sim.getPosition().equals(Vector.of(3, 3)));
         assertThat(sim.getDirection()).isEqualTo(Direction.Right);
 
-        sim.move(Vector.of(3, 2));//아래로 이동
+        sim.directionSetting(Vector.of(3, 2));//아래로 이동
         assertThat(sim.getPosition().equals(Vector.of(3, 2)));
         assertThat(sim.getDirection()).isEqualTo(Direction.Down);
 

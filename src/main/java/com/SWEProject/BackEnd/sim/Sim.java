@@ -21,7 +21,7 @@ public class Sim {
         movementSystem = new MovementSystem(startPoint);
     }
 
-    public void move(Vector intendedPosition) {
+    public void directionSetting(Vector intendedPosition) {
         Vector currentPosition = movementSystem.getCurrentPosition();
 
         Vector update = Vector.of(intendedPosition.getX() - currentPosition.getX()
@@ -50,7 +50,9 @@ public class Sim {
                 movementSystem.turn();
             }
         }
+    }
 
+    public void move(){
         movementSystem.move();
     }
 

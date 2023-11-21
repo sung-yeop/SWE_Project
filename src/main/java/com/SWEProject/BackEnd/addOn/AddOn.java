@@ -76,8 +76,12 @@ public class AddOn {
         return false;
     }
 
-    public void move(Vector nextPosition) {
-        sim.move(nextPosition);
+    public void directionSetting(Vector nextPosition) {
+        sim.directionSetting(nextPosition);
+    }
+
+    public void move(){
+        sim.move();
     }
 
 
