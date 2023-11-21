@@ -19,8 +19,8 @@ function initialize(event) {
         "map": map,
         "start": start,
         "spot": spot,
-        "colorBlob": colorBlob,
-        "hazard": hazard
+        "hazard": hazard,
+        "colorBlob": colorBlob
     };
 
     //json data로 전환
@@ -53,7 +53,7 @@ function proceed(event) {
     document.getElementById('information').innerHTML = '이동중';
 
     //지금 가지고 있는 길 정보가 옳바른지 확인한다.
-    var jsonData = JSON.stringify(path);
+    var jsonData = JSON.stringify(path.slice(1, 7));
 
     /* fetch(' /api/move/', { //xx에 백엔드의 엔드포인트 URL
         method: 'POST',
