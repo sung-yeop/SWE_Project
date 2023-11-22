@@ -77,6 +77,7 @@ function proceed(event) {
             if (result.colorBlobList != null) {
                 mapData[4] = mapData[4].concat(result.colorBlobList.match(/\d+/g).map(Number));
             }
+            drawUnit(mapData);
             drawAfterMove(mapData[0], pos);
             var firstBracketIndex = path.indexOf('(');
             var secondBracketIndex = path.indexOf(')', firstBracketIndex + 1);
@@ -84,7 +85,6 @@ function proceed(event) {
                 path= path.substring(0, firstBracketIndex) + path.substring(secondBracketIndex);
             }
             drawPath(mapData[0], path);
-            drawUnit(mapData);
         })
     // rotate(mapData[0], mapData[1], path);
 }
