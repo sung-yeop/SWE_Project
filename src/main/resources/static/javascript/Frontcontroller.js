@@ -83,7 +83,6 @@ function proceed(event) {
             if (firstBracketIndex !== -1 && secondBracketIndex !== -1) {
                 path= path.substring(0, firstBracketIndex) + path.substring(secondBracketIndex);
             }
-            console.log(path);
             drawPath(mapData[0], path);
             drawUnit(mapData);
         })
