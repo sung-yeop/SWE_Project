@@ -5,6 +5,7 @@ import com.SWEProject.BackEnd.domain.Map;
 import com.SWEProject.BackEnd.domain.Vector;
 import com.SWEProject.BackEnd.model.AStar;
 import com.SWEProject.BackEnd.sim.Sim;
+import lombok.extern.slf4j.Slf4j;
 import org.springframework.stereotype.Service;
 
 import java.util.ArrayList;
@@ -12,6 +13,7 @@ import java.util.List;
 import java.util.stream.Collectors;
 
 @Service
+@Slf4j
 public class AddOn {
 
     private Sim sim;
@@ -48,6 +50,9 @@ public class AddOn {
                 result.add(end);
             }
         }
+        List<Vector> output = result.stream().filter(v -> v.getNeighbors().stream().count() > 4).collect(Collectors.toList());
+        log.info("4개 이상 neightbor : " + output.stream().map(String::valueOf).collect(Collectors.joining(", ")) + "\n");
+
         return result;
     }
 

@@ -60,6 +60,15 @@ public class Vector {
 
     // 현재 벡터에 알아서 네이버 값을 추가하는 메서드
     public void addNeighbors(Vector size, Vector[][] mapInit) {
+        if (this.neighbors.size() == 4){
+            return;
+        }
+//
+//        if((((x > 0 && x < size.x-1 || y > 0 && y <size.y-1))
+//                && this.neighbors.size() == 2 || this.neighbors.size() == 3)){
+//            return;
+//        }
+
         int x = getX() - 1;
         int y = getY() - 1;
 
@@ -73,5 +82,18 @@ public class Vector {
                 }
             }
         }
+
+//        if (x - 1 > 0 && !neighbors.stream().anyMatch(vector -> vector.equals(mapInit[x - 1][y]))) {
+//            neighbors.add(mapInit[x - 1][y]);
+//        }
+//        if (x + 1 < size.getX() - 1 && !neighbors.stream().anyMatch(vector -> vector.equals(mapInit[x + 1][y]))) {
+//            neighbors.add(mapInit[x + 1][y]);
+//        }
+//        if (y + 1 < size.getY() - 1 && !neighbors.stream().anyMatch(vector -> vector.equals(mapInit[x][y + 1]))) {
+//            neighbors.add(mapInit[x][y + 1]);
+//        }
+//        if (y - 1 > 0 && !neighbors.stream().anyMatch(vector -> vector.equals(mapInit[x][y - 1]))) {
+//            neighbors.add(mapInit[x][y - 1]);
+//        }
     }
 }

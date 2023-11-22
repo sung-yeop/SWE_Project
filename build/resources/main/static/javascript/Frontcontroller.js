@@ -54,8 +54,8 @@ function proceed(event) {
     document.getElementById('information').innerHTML = '이동중';
 
     //지금 가지고 있는 길 정보가 옳바른지 확인한다.
-    // var jsonData = JSON.stringify(path.slice(1, 7));
-    var jsonData = JSON.stringify({path: path.slice(0, 12)});
+    var jsonData = JSON.stringify({"path" : path.match(/\([^)]+\)/g)[0]});
+    // var jsonData = JSON.stringify({path: path.slice()});
 
 
     fetch('/api/move/', { //xx에 백엔드의 엔드포인트 URL
@@ -72,7 +72,12 @@ function proceed(event) {
                 path = result.path;
             }
             mapData[1] = drawAfterMove(mapData[0], pos);
-            path = path.slice(0, 1) + path.slice(9);
+            var firstBracketIndex = path.indexOf('(');
+            var secondBracketIndex = path.indexOf(')', firstBracketIndex + 1);
+            if (firstBracketIndex !== -1 && secondBracketIndex !== -1) {
+                path= path.substring(0, firstBracketIndex) + path.substring(secondBracketIndex);
+            }
+            console.log(path);
             drawPath(mapData[0], path);
         })
     // rotate(mapData[0], mapData[1], path);
