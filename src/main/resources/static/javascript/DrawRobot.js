@@ -15,7 +15,6 @@ function drawAfterMove(mapdata, path) {
     robotpos.style.left = -robotwidth + cellwidth * patharr[0] + "px";
     robotpos.style.top = -robotheight + cellheight * (rows - patharr[1]) + "px";
 
-    return [patharr[0], patharr[1]];
 }
 //drawAfterMove*********************************************************************************
 //rotate*********************************************************************************

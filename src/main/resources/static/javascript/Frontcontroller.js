@@ -71,13 +71,19 @@ function proceed(event) {
             if (result.path != null) {
                 path = result.path;
             }
-            mapData[1] = drawAfterMove(mapData[0], pos);
+            if (result.hazardList != null) {
+                mapData[3] = mapData[3].concat(result.hazardList.match(/\d+/g).map(Number));
+            }
+            if (result.colorBlobList != null) {
+                mapData[4] = mapData[4].concat(result.colorBlobList.match(/\d+/g).map(Number));
+            }
+            drawUnit(mapData);
+            drawAfterMove(mapData[0], pos);
             var firstBracketIndex = path.indexOf('(');
             var secondBracketIndex = path.indexOf(')', firstBracketIndex + 1);
             if (firstBracketIndex !== -1 && secondBracketIndex !== -1) {
                 path= path.substring(0, firstBracketIndex) + path.substring(secondBracketIndex);
             }
-            console.log(path);
             drawPath(mapData[0], path);
         })
     // rotate(mapData[0], mapData[1], path);
