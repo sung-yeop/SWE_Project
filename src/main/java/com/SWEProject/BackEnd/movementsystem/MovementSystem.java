@@ -21,22 +21,22 @@ public class MovementSystem {
         Random random = new Random();
         int percent = random.nextInt(1, 20);
 
-        if(percent == 1){ // 5% 확률로 2현재 Direction으로 2칸 이동
-            if(direction == Direction.Up){
-                currentPosition.y += 2;
-            }
-            if(direction == Direction.Right){
-                currentPosition.x += 2;
-            }
-            if(direction == Direction.Down){
-                currentPosition.y -= 2;
-            }
-            if (direction == Direction.Left) {
-                currentPosition.x -= 2;
-            }
-        }
+//        if(percent == 1){ // 5% 확률로 2현재 Direction으로 2칸 이동
+//            if(direction == Direction.Up){
+//                currentPosition.y += 2;
+//            }
+//            if(direction == Direction.Right){
+//                currentPosition.x += 2;
+//            }
+//            if(direction == Direction.Down){
+//                currentPosition.y -= 2;
+//            }
+//            if (direction == Direction.Left) {
+//                currentPosition.x -= 2;
+//            }
+//        }
 
-        if(percent > 1 && percent <= 19){ //90% 확률로 정상 동작
+        if(percent > 0 && percent <= 20){ //90% 확률로 정상 동작 //TODO: 현재 테스트를 위해 0, 20으로 설정 -> 추후 1, 19로 변경 필요
             if(direction == Direction.Up){
                 currentPosition.y += 1;
             }

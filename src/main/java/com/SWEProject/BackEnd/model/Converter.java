@@ -21,8 +21,9 @@ public class Converter {
     }
 
     public static List<Vector> convertStringToVector(String input) {
+        String replace = input.replace(",", "");
         Pattern p = Pattern.compile(vectorFormatRegex);
-        Matcher matcher = p.matcher(input);
+        Matcher matcher = p.matcher(replace);
         List<Vector> result = new ArrayList<>();
 
         while (matcher.find()) {

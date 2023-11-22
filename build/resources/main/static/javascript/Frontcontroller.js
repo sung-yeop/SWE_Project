@@ -54,9 +54,11 @@ function proceed(event) {
     document.getElementById('information').innerHTML = '이동중';
 
     //지금 가지고 있는 길 정보가 옳바른지 확인한다.
-    var jsonData = JSON.stringify(path.slice(1, 7));
+    // var jsonData = JSON.stringify(path.slice(1, 7));
+    var jsonData = JSON.stringify({path: path.slice(1, 7)});
 
-    fetch(' /api/move/', { //xx에 백엔드의 엔드포인트 URL
+
+    fetch('/api/move/', { //xx에 백엔드의 엔드포인트 URL
         method: 'POST',
         headers: {
             'Content-Type': 'application/json'
@@ -69,13 +71,11 @@ function proceed(event) {
             if (result.path != null) {
                 path = result.path;
             }
-
             mapData[1] = drawAfterMove(mapData[0], pos);
             path = path.slice(0, 1) + path.slice(9);
             drawPath(mapData[0], path);
         })
-
-    /* rotate(mapData[0], mapData[1], path); */
+    // rotate(mapData[0], mapData[1], path);
 }
 //update*********************************************************************************
 function update(event) {
