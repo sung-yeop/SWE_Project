@@ -63,6 +63,11 @@ public class Vector {
         if (this.neighbors.size() == 4){
             return;
         }
+//
+//        if((((x > 0 && x < size.x-1 || y > 0 && y <size.y-1))
+//                && this.neighbors.size() == 2 || this.neighbors.size() == 3)){
+//            return;
+//        }
 
         int x = getX() - 1;
         int y = getY() - 1;

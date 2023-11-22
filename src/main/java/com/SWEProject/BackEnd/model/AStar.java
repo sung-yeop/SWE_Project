@@ -37,7 +37,9 @@ public class AStar {
 
             closedList.add(current);
 
-            current.addNeighbors(size, mapInit); //neighbor 추가는 이미 추가가 안되어있으면 추가해야됨
+            current.addNeighbors(size, mapInit);
+
+            //neighbor 추가는 이미 추가가 안되어있으면 추가해야됨
 
             if (!fMaps.containsKey(current)) {
                 fMaps.put(current, hscore(current, end) + gscore(start, current));
@@ -57,7 +59,7 @@ public class AStar {
 
                     neighbor.setParent(current);
 
-                    if (fMaps.get(current) > fMaps.get(neighbor)) {
+                    if (fMaps.get(current) > fMaps.get(neighbor) && distance(current, neighbor)) {
                         current = neighbor;
                     }
                 }
@@ -72,6 +74,13 @@ public class AStar {
 
 
         return closedList;
+    }
+
+    private boolean distance(Vector current, Vector neighbor){
+        if (Math.abs(current.getX() - neighbor.getX()) > 1 || Math.abs(current.getY() - neighbor.getY()) > 1) {
+            return false;
+        }
+        return true;
     }
 
     private boolean contain(Vector neighbor, List<Vector> hazards) {
