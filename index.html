@@ -39,7 +39,21 @@
 	};
 
 
+	function FixError(str) {
+		let numStr = ""
+        numStr = str.replace(/일/gi, "1");
+        numStr = str.replace(/이/gi, "2");
+        numStr = str.replace(/삼/gi, "3");
+        numStr = str.replace(/사/gi, "4");
+		numStr = str.replace(/오/gi, "5");
+		numStr = str.replace(/우/gi, "5");
+        numStr = str.replace(/육/gi, "6");
+        numStr = str.replace(/칠/gi, "7");
+        numStr = str.replace(/팔/gi, "8");
+		numStr = str.replace(/구/gi, "9");
 
+		return numStr;
+	}
 
 	(() => {
 		/* Speech API start */
@@ -65,22 +79,11 @@
 
 				const textArr = store.texts.split(" ");
 				store.type = textArr[0];
-				store.pos = textArr[2];
-
-				// 오류 수정
-                store.pos = store.pos.replace(/일/gi, "1");
-                store.pos = store.pos.replace(/이/gi, "2");
-                store.pos = store.pos.replace(/삼/gi, "3");
-                store.pos = store.pos.replace(/사/gi, "4");
-                store.pos = store.pos.replace(/오/gi, "5");
-                store.pos = store.pos.replace(/우/gi, "5");
-                store.pos = store.pos.replace(/육/gi, "6");
-                store.pos = store.pos.replace(/칠/gi, "7");
-                store.pos = store.pos.replace(/팔/gi, "8");
-                store.pos = store.pos.replace(/구/gi, "9");
-
+				store.pos = FixError(textArr[2]);
 
 				store.texts = store.type + textArr[1] + store.pos;
+
+				//TODO: store의 type 과 pos 를 JSON으로 백엔드에 전송할것
 				console.log(store.texts)
 				$('input').value = store.texts;
 			};
