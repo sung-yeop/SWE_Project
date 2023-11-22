@@ -78,6 +78,7 @@ function proceed(event) {
                 mapData[4] = mapData[4].concat(result.colorBlobList.match(/\d+/g).map(Number));
             }
             drawUnit(mapData);
+            rotate(path, pos);
             drawAfterMove(mapData[0], pos);
             var firstBracketIndex = path.indexOf('(');
             var secondBracketIndex = path.indexOf(')', firstBracketIndex + 1);
