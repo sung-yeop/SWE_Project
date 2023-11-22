@@ -36,7 +36,7 @@ public class MovementSystem {
             }
         }
 
-        if(percent > 1 && percent <= 19){ //90% 확률로 정상 동작
+        if(percent > 1 && percent <= 19){ //90% 확률로 정상 동작 //TODO: 현재 테스트를 위해 0, 20으로 설정 -> 추후 1, 19로 변경 필요
             if(direction == Direction.Up){
                 currentPosition.y += 1;
             }

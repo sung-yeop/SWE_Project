@@ -6,11 +6,11 @@ import lombok.Data;
 import java.util.List;
 
 @Data
-public class ResponsePathDto {
+public class ResponseStringDto {
 
-    private List<ResponseVectorDto> path;
+    private String path;
 
-    public ResponsePathDto(List<ResponseVectorDto> path) {
+    public ResponseStringDto(String path) {
         this.path = path;
     }
 }

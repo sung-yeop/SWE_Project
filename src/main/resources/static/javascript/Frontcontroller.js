@@ -3,7 +3,8 @@ document.write('<script src="javascript/DrawMap.js"></script>');
 document.write('<script src="javascript/DrawRobot.js"></script>');
 //mapData*********************************************************************************
 var mapData;
-var path;
+let path;
+// = "[(3, 1), (4, 1), (5, 1), (6, 1), (6, 2), (6, 3), (6, 4), (6, 5), (6, 5), (6, 5), (6, 5)]";
 var count = 0;
 //initialize*********************************************************************************
 function initialize(event) {
@@ -13,14 +14,14 @@ function initialize(event) {
     var start = document.getElementById("start").value;
     var spot = document.getElementById("spot").value;
     var hazard = document.getElementById("hazard").value;
-    var colorBlob = document.getElementById("colorBlob").value;
+    var colorBlob = document.getElementById("color").value;
     // 데이터를 JavaScript 객체로 구성
     var data = {
         "map": map,
         "start": start,
         "spot": spot,
-        "colorBlob": colorBlob,
-        "hazard": hazard
+        "hazard": hazard,
+        "colorBlob": colorBlob
     };
 
     //json data로 전환
@@ -36,14 +37,14 @@ function initialize(event) {
     })
         .then(response => response.json())
         .then(result => {
-            path = result.path.map(item => `(${extractIntegers(item.vector)})`).join(', ');
-        })
+            path = result.path;
 
-    //setMap을 통하여 텍스트를 정수 배열로 전환
-    mapData = setMap(map, start, spot, hazard, colorBlob);
-    drawGrid(mapData[0]);
-    drawPath(mapData[0], path);
-    drawUnit(mapData);
+            //setMap을 통하여 텍스트를 정수 배열로 전환
+            mapData = setMap(map, start, spot, hazard, colorBlob);
+            drawGrid(mapData[0]);
+            drawPath(mapData[0], path);
+            drawUnit(mapData);
+        })
 }
 //initialize*********************************************************************************
 //proceed*********************************************************************************
@@ -53,9 +54,11 @@ function proceed(event) {
     document.getElementById('information').innerHTML = '이동중';
 
     //지금 가지고 있는 길 정보가 옳바른지 확인한다.
-    var jsonData = JSON.stringify(path);
+    // var jsonData = JSON.stringify(path.slice(1, 7));
+    var jsonData = JSON.stringify({path: path.slice(0, 12)});
 
-    /* fetch(' /api/move/', { //xx에 백엔드의 엔드포인트 URL
+
+    fetch('/api/move/', { //xx에 백엔드의 엔드포인트 URL
         method: 'POST',
         headers: {
             'Content-Type': 'application/json'
@@ -64,16 +67,15 @@ function proceed(event) {
     })
         .then(response => response.json())
         .then(result => {
-            pos = result.currentPosition.map(item => `(${extractIntegers(item.vector)})`).join(', ');
+            pos = result.currentPosition;
             if (result.path != null) {
-                path = result.path.map(item => `(${extractIntegers(item.vector)})`).join(', ');
+                path = result.path;
             }
-        }) */
-
-    /* rotate(mapData[0], mapData[1], path); */
-    mapData[1] = drawAfterMove(mapData[0], pos);
-    path = path.slice(0, 1) + path.slice(9);
-    drawPath(mapData[0], path);
+            mapData[1] = drawAfterMove(mapData[0], pos);
+            path = path.slice(0, 1) + path.slice(9);
+            drawPath(mapData[0], path);
+        })
+    // rotate(mapData[0], mapData[1], path);
 }
 //update*********************************************************************************
 function update(event) {

@@ -26,17 +26,17 @@ public class AddOn {
         return sim.getPosition();
     }
 
+    public void setCheckSpot(Vector checkSpot) {
+        this.checkSpot.add(checkSpot);
+    }
+
     // 예상 이동 경로 추출
     public List<Vector> pathFind(Map map) {
         Vector start = sim.getPosition();
         List<Vector> result = new ArrayList<>();
         AStar aStar = new AStar(map.getSize(), map.createMapInit());
 
-        //실제로 확인해야할 Spot List
-        List<Vector> checkSpotList = map.getSpotList().stream()
-                .filter(vector -> !checkSpot.contains(vector)).collect(Collectors.toList());
-
-        for (Vector end : checkSpotList) {
+        for (Vector end : map.getSpotList()) {
             ArrayList<Vector> search = aStar.search(start, end, map.getHazardList());
             for (Vector vector : search) {
                 if (!end.equals(vector)) {
@@ -44,7 +44,7 @@ public class AddOn {
                 }
             }
             start = end;
-            if (end == checkSpotList.get(checkSpotList.size() - 1)) {
+            if (end == map.getSpotList().get(map.getSpotList().size() - 1)) {
                 result.add(end);
             }
         }

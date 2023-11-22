@@ -19,7 +19,7 @@ function drawAfterMove(mapdata, path) {
 }
 //drawAfterMove*********************************************************************************
 //rotate*********************************************************************************
-/* function rotate(currpos, path) {
+function rotate(currpos, path) {
     var patharr = path.replace(/[^\d\s]/g, '').trim().split(/\s+/).map(Number);
     var left = patharr[0] - currpos[0];
     var top = patharr[1] - currpos[1];
@@ -28,4 +28,4 @@ function drawAfterMove(mapdata, path) {
     var desiredAngle = -90; // 이미지가 왼쪽을 향하도록 -90도 회전
 
     image.style.transform = 'rotate(' + desiredAngle + 'deg)';
-} */
+}

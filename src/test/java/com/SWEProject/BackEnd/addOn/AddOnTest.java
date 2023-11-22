@@ -10,6 +10,9 @@ import org.junit.jupiter.api.Test;
 
 import java.util.ArrayList;
 import java.util.List;
+import java.util.stream.Collectors;
+
+import static com.SWEProject.BackEnd.model.Converter.convertVectorToString;
 
 class AddOnTest {
 
@@ -35,6 +38,57 @@ class AddOnTest {
 
         map = new Map(Vector.of(11, 11), Vector.of(2, 3), hazards, spots, colorBlobs);
         addOn = new AddOn(map.getStartPoint());
+    }
+
+    @DisplayName("이동 경로 중 문제 발생 / 오작동 없는 경우")
+    @Test
+    void pathFinding_기능_테스트_Hidden_존재_O(){
+        List<Vector> initPath = addOn.pathFind(map);
+        int cnt= 0;
+        while(cnt < 100){
+            for (Vector vector : initPath) {
+
+                if (vector.equals(map.getSpotList().get(map.getSpotList().size() - 1))) {
+                    return;
+                }
+
+                boolean moveFlag = true;
+                addOn.directionSetting(vector);
+                System.out.println(String.format("현재 위치 : (%d, %d)",
+                        addOn.getCurrentPosition().getX(), addOn.getCurrentPosition().getY()));
+                System.out.println(String.format("목표 위치 : (%d, %d)\n============", vector.getX(), vector.getY()));
+
+                if (addOn.moveWithHazardSense(map)) {
+                    map.getHazardList().add(vector);
+                    if(map.getHazardList().stream().anyMatch(v -> v.equals(vector))){
+                        initPath = addOn.pathFind(map);
+                        String outPath = initPath.stream()
+                                .map(v -> convertVectorToString(v)).collect(Collectors.joining("\n"));
+                        System.out.println(outPath);
+                    }
+                    moveFlag = false;
+                    break;
+                }
+
+                if (addOn.getCurrentPosition().equals(vector)) {
+                    moveFlag = false;
+                } // 현재 위치와 목표 위치가 동일하다면 작동 X
+
+                if(moveFlag){
+                    addOn.move();
+                }
+
+                if (map.getSpotList().stream().anyMatch(v -> v.equals(addOn.getCurrentPosition()))) { //탐지했으면 찾아야할 Spotlist에서 삭제
+                    addOn.setCheckSpot(addOn.getCurrentPosition());
+                }
+
+            }
+            cnt++; //총 100번 동작
+        }
+
+
+
+
     }
 
     @DisplayName("이동 경로 생성 / Hidden 없는 경우")
