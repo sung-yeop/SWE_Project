@@ -51,7 +51,7 @@ public class AStar {
             for (Vector neighbor : current.getNeighbors()) {
                 if (contain(neighbor, hazards)) {
                     continue b;
-                } else if (!openList.contains(neighbor)) {
+                } else if (!openList.stream().anyMatch(vector -> vector.equals(neighbor))) {
                     fMaps.put(neighbor, hscore(neighbor, end) + gscore(current, neighbor));
                     openList.add(neighbor);
 
@@ -80,14 +80,14 @@ public class AStar {
         int flag_hazards = 0;
 
         for (Vector vector : openList) {
-            if (vector == neighbor) {
+            if (vector.equals(neighbor)) {
                 flag_openList = 1;
                 break;
             }
         }
 
         for (Vector vector : closedList) {
-            if (vector == neighbor) {
+            if (vector.equals(neighbor)) {
                 flag_closedList = 1;
                 break;
             }

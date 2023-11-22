@@ -28,6 +28,7 @@ public class Controller {
     @PostMapping("/api/init/")
     public ResponseStringDto init(@RequestBody @Validated createMapRequest request) {
 
+
         createMap(request);
 
         addOn = new AddOn(map.getStartPoint());
@@ -57,7 +58,6 @@ public class Controller {
         log.info(String.valueOf(request));
 
         if (nextPosition.equals(addOn.getCurrentPosition())) {
-
             ResponseDataDto responseDataDto = new ResponseDataDto(null, null, null,
                     (convertVectorToString(addOn.getCurrentPosition())));
             return responseDataDto;
@@ -84,7 +84,7 @@ public class Controller {
 
             if (map.getHazardList().stream().anyMatch(v -> v.equals(nextPosition))) {
                 path = addOn.pathFind(map);
-                path.remove(path.stream().findFirst().get());
+//                path.remove(path.stream().findFirst().get());
                 responsePathDtos = "[" + path.stream().map(v -> convertVectorToString(v))
                         .collect(Collectors.joining(", ")) + "]";
             }
@@ -96,10 +96,6 @@ public class Controller {
                     .collect(Collectors.joining(", ")) + "]";
         }
 
-//        if (nextPosition.equals(addOn.getCurrentPosition())) {
-//            moveFlag = false;
-//        }
-
         if (addOn.getCurrentPosition().equals(nextPosition)) {
             moveFlag = false;
         }
@@ -107,20 +103,22 @@ public class Controller {
         //문제 없으면 이동
         if (moveFlag) {
             addOn.move();
-//            addOn.addCheckSpot(map.getSpotList());
         }
 
-        if (map.getSpotList().stream().anyMatch(v -> v.equals(addOn.getCurrentPosition()))) { //탐지했으면 찾아야할 Spotlist에서 삭제
-            addOn.setCheckSpot(addOn.getCurrentPosition());
+        if (map.getSpotList().stream().anyMatch(v -> v.equals(addOn.getCurrentPosition()))) {
+            Vector vector = map.getSpotList().stream()
+                    .filter(v -> v.equals(addOn.getCurrentPosition())).findFirst().get();
+            map.getSpotList().remove(vector);
+            int a = 0;
         }
 
-//        //움직임 이후 문제가 존재하는지 확인
-//        if (addOn.moveWithError(nextPosition) && moveFlag) {
-//            path = addOn.pathFind(map);
+        //움직임 이후 문제가 존재하는지 확인
+        if (addOn.moveWithError(nextPosition) && moveFlag) {
+            path = addOn.pathFind(map);
 //            path.remove(path.stream().findFirst().get());
-//            responsePathDtos = "[" + path.stream().map(v -> convertVectorToString(v))
-//                    .collect(Collectors.joining(", ")) + "]";
-//        }
+            responsePathDtos = "[" + path.stream().map(v -> convertVectorToString(v))
+                    .collect(Collectors.joining(", ")) + "]";
+        }
 
         responseCurrentPosition = (convertVectorToString(addOn.getCurrentPosition()));
 

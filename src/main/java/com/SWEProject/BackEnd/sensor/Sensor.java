@@ -16,6 +16,9 @@ public class Sensor {
         // for Test
         hiddenHazards.add(Vector.of(7, 5));
         hiddenHazards.add(Vector.of(4, 4));
+        hiddenHazards.add(Vector.of(5, 9));
+        hiddenHazards.add(Vector.of(7, 8));
+
 
         hiddenColorblobs = new ArrayList<Vector>();
     }

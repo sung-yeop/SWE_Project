@@ -55,7 +55,7 @@ function proceed(event) {
 
     //지금 가지고 있는 길 정보가 옳바른지 확인한다.
     // var jsonData = JSON.stringify(path.slice(1, 7));
-    var jsonData = JSON.stringify({path: path.slice(1, 7)});
+    var jsonData = JSON.stringify({path: path.slice(0, 12)});
 
 
     fetch('/api/move/', { //xx에 백엔드의 엔드포인트 URL
