@@ -21,6 +21,15 @@ public class AStar {
         closedList = new ArrayList<Vector>();
         this.size = size;
         this.mapInit = mapInit;
+        addNeighbors(size, mapInit);
+    }
+
+    private void addNeighbors(Vector size, Vector[][] mapInit) {
+        for(int i=0; i<size.x; i++){
+            for(int j=0; j<size.y; j++){
+                mapInit[i][j].addNeighbors(size, mapInit);
+            }
+        }
     }
 
     // 현재 로봇의 위치와 Target 포인트를 넣어주면 된다.
@@ -29,6 +38,9 @@ public class AStar {
         openList.clear();
         closedList.clear();
 
+        start = mapInit[start.getX()][start.getY()];
+        end = mapInit[end.getX()][end.getY()];
+
         openList.add(start);
         gMaps.put(start, 0);
 
@@ -36,8 +48,6 @@ public class AStar {
             Vector current = openList.poll();
 
             closedList.add(current);
-
-            current.addNeighbors(size, mapInit);
 
             //neighbor 추가는 이미 추가가 안되어있으면 추가해야됨
 
