@@ -37,7 +37,7 @@ public class AStar {
 
             closedList.add(current);
 
-            current.addNeighbors(size, mapInit);
+            current.addNeighbors(size, mapInit); //neighbor 추가는 이미 추가가 안되어있으면 추가해야됨
 
             if (!fMaps.containsKey(current)) {
                 fMaps.put(current, hscore(current, end) + gscore(start, current));
