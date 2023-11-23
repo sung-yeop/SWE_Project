@@ -84,4 +84,8 @@ public class Sim {
 
         return sensor.GetPositioningSensor(currentPosition, intendedPosition);
     }
+
+    public void setPosition(Vector beforeMovePosition) {
+        movementSystem.setPosition(beforeMovePosition);
+    }
 }

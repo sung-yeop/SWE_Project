@@ -13,6 +13,8 @@ import java.util.Comparator;
 import java.util.List;
 import java.util.stream.Collectors;
 
+import static java.util.Arrays.stream;
+
 @Service
 @Slf4j
 public class AddOn {
@@ -43,18 +45,31 @@ public class AddOn {
         for (Vector end : map.getSpotList().stream().sorted(Comparator.comparing(Vector::getX))
                 .collect(Collectors.toList())) {
             ArrayList<Vector> search = aStar.search(start, end, map.getHazardList());
-            for (Vector vector : search) {
-                if (!end.equals(vector)) {
-                    result.add(vector);
-                }
+//            for (Vector vector : search) {
+//                if (!end.equals(vector)) {
+//                    result.add(vector);
+//                }
+//            }
+
+            Vector resultVector = search.get(search.size() - 1);
+
+            int inputSpot = result.size();
+            List<Vector> temp = new ArrayList<>();
+
+            while(!resultVector.getParent().equals(start)){
+                temp.add(0, resultVector.getParent());
+                resultVector = resultVector.getParent();
             }
+            temp.add(0, resultVector.getParent());
+
+            result.addAll(temp);
+
             start = end;
-            if (end == map.getSpotList().get(map.getSpotList().size() - 1)) {
-                result.add(end);
-            }
         }
-        List<Vector> output = result.stream().filter(v -> v.getNeighbors().stream().count() > 4).collect(Collectors.toList());
-        log.info("4개 이상 neightbor : " + output.stream().map(String::valueOf).collect(Collectors.joining(", ")) + "\n");
+
+            result.add(map.getSpotList().stream().sorted(Comparator.comparing(Vector::getX))
+                    .collect(Collectors.toList()).get(map.getSpotList().size()-1));
+
 
         return result;
     }
@@ -77,7 +92,7 @@ public class AddOn {
     }
 
     // 문제가 있으면 True
-    public boolean moveWithError(Vector intendPosition){
+    public boolean moveWithError(Vector intendPosition) {
         if (sim.checkPosition(intendPosition)) {
             return true;
         }
@@ -88,9 +103,12 @@ public class AddOn {
         sim.directionSetting(nextPosition);
     }
 
-    public void move(){
+    public void move() {
         sim.move();
     }
 
 
+    public void setPosition(Vector beforeMovePosition) {
+        sim.setPosition(beforeMovePosition);
+    }
 }

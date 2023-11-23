@@ -5,6 +5,7 @@ import com.SWEProject.BackEnd.constants.Direction;
 import com.SWEProject.BackEnd.domain.Map;
 import com.SWEProject.BackEnd.domain.Vector;
 import com.SWEProject.BackEnd.dto.*;
+import com.SWEProject.BackEnd.validate.ValidateMovement;
 import lombok.RequiredArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.validation.annotation.Validated;
@@ -15,6 +16,7 @@ import java.util.stream.Collectors;
 
 import static com.SWEProject.BackEnd.model.Converter.convertStringToVector;
 import static com.SWEProject.BackEnd.model.Converter.convertVectorToString;
+import static com.SWEProject.BackEnd.validate.ValidateMovement.validateMovement;
 
 @RestController
 @RequiredArgsConstructor
@@ -102,8 +104,14 @@ public class Controller {
 
         //문제 없으면 이동
         if (moveFlag) {
+            Vector beforeMovePosition = Vector.of(addOn.getCurrentPosition().getX(), addOn.getCurrentPosition().getY());
             addOn.move();
+            while(validateMovement(map, addOn.getCurrentPosition())){
+                addOn.setPosition(beforeMovePosition);
+                addOn.move();
+            }
         }
+
 
         if (map.getSpotList().stream().anyMatch(v -> v.equals(addOn.getCurrentPosition()))) {
             Vector vector = map.getSpotList().stream()
@@ -123,9 +131,9 @@ public class Controller {
 
         String cu = String.format("현재 위치 : (%d, %d)", addOn.getCurrentPosition().getX(), addOn.getCurrentPosition().getY());
         log.info(cu);
-//        log.info(responsePathDtos);
-        log.info(responseHazardList);
-        log.info(responseColorblobList);
+        log.info(responsePathDtos);
+//        log.info(responseHazardList);
+//        log.info(responseColorblobList);
 
         return new ResponseDataDto(responsePathDtos,
                 responseHazardList, responseColorblobList, responseCurrentPosition);

@@ -66,5 +66,8 @@ public class MovementSystem {
     }
 
 
+    public void setPosition(Vector beforeMovePosition) {
+        this.currentPosition = beforeMovePosition;
+    }
 }
 
