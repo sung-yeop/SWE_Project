@@ -109,7 +109,6 @@ public class Controller {
             Vector vector = map.getSpotList().stream()
                     .filter(v -> v.equals(addOn.getCurrentPosition())).findFirst().get();
             map.getSpotList().remove(vector);
-            int a = 0;
         }
 
         //움직임 이후 문제가 존재하는지 확인
@@ -124,7 +123,9 @@ public class Controller {
 
         String cu = String.format("현재 위치 : (%d, %d)", addOn.getCurrentPosition().getX(), addOn.getCurrentPosition().getY());
         log.info(cu);
-        log.info(responsePathDtos);
+//        log.info(responsePathDtos);
+        log.info(responseHazardList);
+        log.info(responseColorblobList);
 
         return new ResponseDataDto(responsePathDtos,
                 responseHazardList, responseColorblobList, responseCurrentPosition);

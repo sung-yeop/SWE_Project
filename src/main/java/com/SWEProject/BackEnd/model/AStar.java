@@ -49,8 +49,6 @@ public class AStar {
 
             closedList.add(current);
 
-            //neighbor 추가는 이미 추가가 안되어있으면 추가해야됨
-
             if (!fMaps.containsKey(current)) {
                 fMaps.put(current, hscore(current, end) + gscore(start, current));
             }
@@ -87,7 +85,8 @@ public class AStar {
     }
 
     private boolean distance(Vector current, Vector neighbor){
-        if (Math.abs(current.getX() - neighbor.getX()) > 1 || Math.abs(current.getY() - neighbor.getY()) > 1) {
+        if (Math.abs(current.getX() - neighbor.getX()) > 1 || Math.abs(current.getY() - neighbor.getY()) > 1
+        || (Math.abs(current.getX() - neighbor.getX()) + Math.abs(current.getY() - neighbor.getY())) > 1) {
             return false;
         }
         return true;

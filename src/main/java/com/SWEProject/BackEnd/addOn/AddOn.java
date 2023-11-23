@@ -9,6 +9,7 @@ import lombok.extern.slf4j.Slf4j;
 import org.springframework.stereotype.Service;
 
 import java.util.ArrayList;
+import java.util.Comparator;
 import java.util.List;
 import java.util.stream.Collectors;
 
@@ -38,7 +39,9 @@ public class AddOn {
         List<Vector> result = new ArrayList<>();
         AStar aStar = new AStar(map.getSize(), map.createMapInit());
 
-        for (Vector end : map.getSpotList()) {
+
+        for (Vector end : map.getSpotList().stream().sorted(Comparator.comparing(Vector::getX))
+                .collect(Collectors.toList())) {
             ArrayList<Vector> search = aStar.search(start, end, map.getHazardList());
             for (Vector vector : search) {
                 if (!end.equals(vector)) {
