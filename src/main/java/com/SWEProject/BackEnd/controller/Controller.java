@@ -46,7 +46,10 @@ public class Controller {
     }
 
     private void createMap(createMapRequest request) {
-        map = new Map(convertStringToVector(request.getMap()).stream().findFirst().get(),
+        Vector inputSize = convertStringToVector(request.getMap()).stream().findFirst().get();
+        Vector size = Vector.of(inputSize.getX()+1, inputSize.getY()+1);
+
+        map = new Map(size,
                 convertStringToVector(request.getStart()).stream().findFirst().get(),
                 convertStringToVector(request.getHazard()),
                 convertStringToVector(request.getSpot()),
