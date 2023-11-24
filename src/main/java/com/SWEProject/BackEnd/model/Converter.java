@@ -8,7 +8,6 @@ import java.util.regex.Matcher;
 import java.util.regex.Pattern;
 
 public class Converter {
-
     private final static String vectorFormatRegex = "(\\d{1,10} \\d{1,10})";
     private final static String vectorFormat = "(%d, %d)";
 

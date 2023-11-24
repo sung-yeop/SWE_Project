@@ -12,7 +12,6 @@ import java.util.Queue;
 @Getter
 @Setter
 public class Map {
-
     private Vector size;
     private List<Vector> hazardList;
     private Vector startPoint;
@@ -27,7 +26,7 @@ public class Map {
         this.colorblobList = colorblobList;
     }
 
-    public Queue<Vector> createMap() {
+    private Queue<Vector> createMap() {
         Queue<Vector> result = new LinkedList<>();
         for (int i = 0; i < size.getY(); i++) {
             for (int j = 0; j < size.getX(); j++) {

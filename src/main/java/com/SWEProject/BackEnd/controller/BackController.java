@@ -25,8 +25,7 @@ import static com.SWEProject.BackEnd.validate.ValidateMovement.validateMovement;
 @RestController
 @RequiredArgsConstructor
 @Slf4j
-public class Controller {
-
+public class BackController {
     private AddOn addOn;
     private Map map;
     private List<Vector> path;

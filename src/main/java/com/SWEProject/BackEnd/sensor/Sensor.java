@@ -10,7 +10,6 @@ public class Sensor {
     private List<Vector> hiddenHazards;
     private List<Vector> hiddenColorblobs;
 
-
     public Sensor() {
         hiddenHazards = new ArrayList<Vector>();
         // for Test

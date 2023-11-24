@@ -15,7 +15,6 @@ import java.util.stream.Collectors;
 @Service
 @Slf4j
 public class AddOn {
-
     private Sim sim;
     private List<Vector> checkSpot = new ArrayList<>(); //이미 확인 완료한 Spot 리스트 (오동작 이후 탐색했던 지점을 다시 탐색하면 안됨)
     private final static int INPUTPOINT = 0;
@@ -34,18 +33,14 @@ public class AddOn {
 
     // 예상 이동 경로 추출
     public List<Vector> pathFind(Map map) {
-
         Vector start = sim.getPosition();
         List<Vector> result = new ArrayList<>();
         AStar aStar = new AStar(map.getSize(), map.createMapInit());
 
-
         for (Vector end : map.getSpotList().stream().sorted(Comparator.comparing(Vector::getX))
                 .collect(Collectors.toList())) {
             ArrayList<Vector> search = aStar.search(start, end, map.getHazardList());
-
             Vector resultVector = search.get(search.size() - 1);
-
             List<Vector> temp = new ArrayList<>();
 
             while (!resultVector.getParent().equals(start)) {
@@ -53,15 +48,12 @@ public class AddOn {
                 resultVector = resultVector.getParent();
             }
             temp.add(INPUTPOINT, resultVector.getParent());
-
             result.addAll(temp);
-
             start = end;
         }
 
         result.add(map.getSpotList().stream().sorted(Comparator.comparing(Vector::getX))
                 .collect(Collectors.toList()).get(map.getSpotList().size() - 1));
-
 
         return result;
     }

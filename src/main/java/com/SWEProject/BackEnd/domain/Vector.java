@@ -15,7 +15,6 @@ import java.util.List;
 @Setter
 @Component
 public class Vector {
-
     public Vector parent;
     public List<Vector> neighbors;
     @JsonValue
