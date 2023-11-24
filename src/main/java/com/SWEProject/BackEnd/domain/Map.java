@@ -19,7 +19,6 @@ public class Map {
     private List<Vector> spotList;
     private List<Vector> colorblobList;
 
-
     public Map(Vector size, Vector startPoint, List<Vector> hazardList, List<Vector> spotList, List<Vector> colorblobList) {
         this.size = size;
         this.hazardList = hazardList;
@@ -40,7 +39,6 @@ public class Map {
 
     public Vector[][] createMapInit() {
         Vector[][] result = new Vector[size.getX()][size.getY()];
-
         Queue<Vector> mapqueue = createMap();
 
         for (int i = 0; i < size.getY(); i++) {
@@ -48,36 +46,6 @@ public class Map {
                 result[j][i] = mapqueue.poll();
             }
         }
-
         return result;
-    }
-
-
-    public Vector getSize() {
-        return size;
-    }
-
-    public boolean CheckHazard(Vector position) {
-        return hazardList.contains(position);
-    }
-
-    public boolean CheckSpot(Vector position) {
-        return spotList.contains(position);
-    }
-
-    public void AddHazard(Vector position) {
-        if (!hazardList.contains(position))
-            hazardList.add(position);
-    }
-
-    public void AddSpot(Vector position) {
-        if (!spotList.contains(position))
-            spotList.add(position);
-    }
-
-    public void AddColorBlob(Vector position) {
-        if (!colorblobList.contains(position)) {
-            colorblobList.add(position);
-        }
     }
 }

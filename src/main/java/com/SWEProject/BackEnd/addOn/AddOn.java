@@ -1,6 +1,5 @@
 package com.SWEProject.BackEnd.addOn;
 
-import com.SWEProject.BackEnd.constants.Direction;
 import com.SWEProject.BackEnd.domain.Map;
 import com.SWEProject.BackEnd.domain.Vector;
 import com.SWEProject.BackEnd.model.AStar;
@@ -13,15 +12,13 @@ import java.util.Comparator;
 import java.util.List;
 import java.util.stream.Collectors;
 
-import static java.util.Arrays.stream;
-
 @Service
 @Slf4j
 public class AddOn {
 
     private Sim sim;
     private List<Vector> checkSpot = new ArrayList<>(); //이미 확인 완료한 Spot 리스트 (오동작 이후 탐색했던 지점을 다시 탐색하면 안됨)
-    private Vector error = Vector.of(0, 0);
+    private final static int INPUTPOINT = 0;
 
     public AddOn(Vector startPoint) {
         this.sim = new Sim(startPoint);
@@ -37,6 +34,7 @@ public class AddOn {
 
     // 예상 이동 경로 추출
     public List<Vector> pathFind(Map map) {
+
         Vector start = sim.getPosition();
         List<Vector> result = new ArrayList<>();
         AStar aStar = new AStar(map.getSize(), map.createMapInit());
@@ -50,20 +48,19 @@ public class AddOn {
 
             List<Vector> temp = new ArrayList<>();
 
-            while(!resultVector.getParent().equals(start)){
-                temp.add(0, resultVector.getParent());
+            while (!resultVector.getParent().equals(start)) {
+                temp.add(INPUTPOINT, resultVector.getParent());
                 resultVector = resultVector.getParent();
             }
-            temp.add(0, resultVector.getParent());
+            temp.add(INPUTPOINT, resultVector.getParent());
 
             result.addAll(temp);
 
             start = end;
         }
 
-            result.add(map.getSpotList().stream().sorted(Comparator.comparing(Vector::getX))
-                    .collect(Collectors.toList()).get(map.getSpotList().size()-1));
-
+        result.add(map.getSpotList().stream().sorted(Comparator.comparing(Vector::getX))
+                .collect(Collectors.toList()).get(map.getSpotList().size() - 1));
 
 
         return result;

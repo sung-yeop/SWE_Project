@@ -1,9 +1,5 @@
 package com.SWEProject.BackEnd.constants;
 
-import lombok.Data;
-import lombok.RequiredArgsConstructor;
-import org.springframework.stereotype.Component;
-
 import java.util.Arrays;
 
 public enum Direction {
@@ -20,7 +16,7 @@ public enum Direction {
         this.after = after;
     }
 
-    public static Direction getAfterDirectionWithNow(Direction now){
+    public static Direction getAfterDirectionWithNow(Direction now) {
         return Arrays.stream(Direction.values()).filter(dir -> dir.now.equals(now.after))
                 .findFirst().get();
     }
