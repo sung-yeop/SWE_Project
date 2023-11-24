@@ -1,0 +1,11 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<testsuite name="com.SWEProject.BackEnd.movementsystem.MovementSystemTest" tests="1" skipped="0" failures="0" errors="0" timestamp="2023-11-24T01:20:18" hostname="jeongseong-yeobs-MacBook-Pro.local" time="0.065">
+  <properties/>
+  <testcase name="setPosition_테스트()" classname="com.SWEProject.BackEnd.movementsystem.MovementSystemTest" time="0.065"/>
+  <system-out><![CDATA[(3, 5)
+com.SWEProject.BackEnd.domain.Vector@4bbf6d0e
+(7, 7)
+com.SWEProject.BackEnd.domain.Vector@30b6ffe0
+]]></system-out>
+  <system-err><![CDATA[]]></system-err>
+</testsuite>

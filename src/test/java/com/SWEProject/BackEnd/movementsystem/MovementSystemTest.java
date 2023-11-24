@@ -17,6 +17,20 @@ class MovementSystemTest {
     }
 
     @Test
+    void setPosition_테스트(){
+        Vector currentPosition = Vector.of(3, 5);
+        Vector afterPosition = Vector.of(7, 7);
+        movementSystem.setPosition(currentPosition);
+        System.out.println(String.format(outputVectorFormat, movementSystem.getCurrentPosition().getX(),
+                movementSystem.getCurrentPosition().getY()));
+        System.out.println(movementSystem.getCurrentPosition().toString());
+        movementSystem.setPosition(afterPosition);
+        System.out.println(String.format(outputVectorFormat, movementSystem.getCurrentPosition().getX(),
+                movementSystem.getCurrentPosition().getY()));
+        System.out.println(movementSystem.getCurrentPosition().toString());
+    }
+
+    @Test
     void 이동_테스트(){
         movementSystem.move();
         Vector currentPosition1 = movementSystem.getCurrentPosition();

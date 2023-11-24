@@ -5,13 +5,17 @@ import com.SWEProject.BackEnd.constants.Direction;
 import com.SWEProject.BackEnd.domain.Map;
 import com.SWEProject.BackEnd.domain.Vector;
 import com.SWEProject.BackEnd.dto.*;
+import com.SWEProject.BackEnd.model.Converter;
 import com.SWEProject.BackEnd.validate.ValidateMovement;
 import lombok.RequiredArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.validation.annotation.Validated;
 import org.springframework.web.bind.annotation.*;
 
+import java.util.ArrayList;
+import java.util.LinkedList;
 import java.util.List;
+import java.util.Queue;
 import java.util.stream.Collectors;
 
 import static com.SWEProject.BackEnd.model.Converter.convertStringToVector;
@@ -29,8 +33,6 @@ public class Controller {
 
     @PostMapping("/api/init/")
     public ResponseStringDto init(@RequestBody @Validated createMapRequest request) {
-
-
         createMap(request);
 
         addOn = new AddOn(map.getStartPoint());
@@ -64,11 +66,9 @@ public class Controller {
 
         if (nextPosition.equals(addOn.getCurrentPosition())) {
             ResponseDataDto responseDataDto = new ResponseDataDto(null, null, null,
-                    (convertVectorToString(addOn.getCurrentPosition())));
+                    (convertVectorToString(addOn.getCurrentPosition())), null);
             return responseDataDto;
         }
-
-        //nextPosition에 맞춰서 로봇을 회전시키는 로직 추가 필요
 
         return problemWithCourse(nextPosition);
     }
@@ -79,25 +79,26 @@ public class Controller {
         String responseHazardList = null;
         String responseColorblobList = null;
         String responseCurrentPosition = null;
-
+        String responseComplete = null;
         addOn.directionSetting(nextPosition); //목표 지점으로 방향 전환
+        Vector beforePosition = Vector.deepClone(addOn.getCurrentPosition());
 
         //이후 센서 작동
         if (addOn.moveWithHazardSense(map)) {
             responseHazardList = "[" + map.getHazardList().stream()
-                    .map(v -> convertVectorToString(v)).collect(Collectors.joining(", ")) + "]";
+                    .map(Converter::convertVectorToString).collect(Collectors.joining(", ")) + "]";
 
             if (map.getHazardList().stream().anyMatch(v -> v.equals(nextPosition))) {
                 path = addOn.pathFind(map);
 //                path.remove(path.stream().findFirst().get());
-                responsePathDtos = "[" + path.stream().map(v -> convertVectorToString(v))
+                responsePathDtos = "[" + path.stream().map(Converter::convertVectorToString)
                         .collect(Collectors.joining(", ")) + "]";
             }
             moveFlag = false;
         }
 
         if (addOn.moveWithColorBlobSense(map)) {
-            responseColorblobList = "[" + map.getColorblobList().stream().map(v -> convertVectorToString(v))
+            responseColorblobList = "[" + map.getColorblobList().stream().map(Converter::convertVectorToString)
                     .collect(Collectors.joining(", ")) + "]";
         }
 
@@ -107,19 +108,22 @@ public class Controller {
 
         //문제 없으면 이동
         if (moveFlag) {
-            Vector beforeMovePosition = Vector.of(addOn.getCurrentPosition().getX(), addOn.getCurrentPosition().getY());
             addOn.move();
             while(validateMovement(map, addOn.getCurrentPosition())){
-                addOn.setPosition(beforeMovePosition);
+                addOn.setPosition(beforePosition);
                 addOn.move();
             }
         }
-
 
         if (map.getSpotList().stream().anyMatch(v -> v.equals(addOn.getCurrentPosition()))) {
             Vector vector = map.getSpotList().stream()
                     .filter(v -> v.equals(addOn.getCurrentPosition())).findFirst().get();
             map.getSpotList().remove(vector);
+        }
+
+        //프론트에서는 "Complete"가 넘어오면 완료되었음을 표시
+        if(map.getSpotList().size() == 0){
+            responseComplete = "Complete";
         }
 
         //움직임 이후 문제가 존재하는지 확인
@@ -139,7 +143,7 @@ public class Controller {
 //        log.info(responseColorblobList);
 
         return new ResponseDataDto(responsePathDtos,
-                responseHazardList, responseColorblobList, responseCurrentPosition);
+                responseHazardList, responseColorblobList, responseCurrentPosition, responseComplete);
     }
 }
 

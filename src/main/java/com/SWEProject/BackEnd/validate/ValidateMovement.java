@@ -14,8 +14,8 @@ public class ValidateMovement {
         if(map.getHazardList().stream().anyMatch(vector -> vector.equals(afterCurrentPosition))){
             return true;
         };
-        if (afterCurrentPosition.getX() > map.getSize().getX()
-                || afterCurrentPosition.getY() > map.getSize().getY()
+        if (afterCurrentPosition.getX() > map.getSize().getX()-1
+                || afterCurrentPosition.getY() > map.getSize().getY()-1
         || afterCurrentPosition.getX() < 0 || afterCurrentPosition.getY() < 0) {
             return true;
         }
