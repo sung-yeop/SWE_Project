@@ -17,8 +17,8 @@ import java.util.StringTokenizer;
 @Component
 public class Vector {
 
-    private Vector parent;
-    private List<Vector> neighbors;
+    public Vector parent;
+    public List<Vector> neighbors;
     @JsonValue
     public int x;
     public int y;
@@ -42,6 +42,15 @@ public class Vector {
 
     public static Vector of(int x, int y) {
         return new Vector(x, y);
+    }
+
+    public static Vector deepClone(Vector vector) {
+        Vector copy = new Vector();
+        copy.x = vector.x;
+        copy.y = vector.y;
+        copy.neighbors = vector.neighbors;
+        copy.parent = vector.parent;
+        return copy;
     }
 
 

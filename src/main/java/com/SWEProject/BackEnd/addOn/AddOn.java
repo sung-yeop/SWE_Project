@@ -45,15 +45,9 @@ public class AddOn {
         for (Vector end : map.getSpotList().stream().sorted(Comparator.comparing(Vector::getX))
                 .collect(Collectors.toList())) {
             ArrayList<Vector> search = aStar.search(start, end, map.getHazardList());
-//            for (Vector vector : search) {
-//                if (!end.equals(vector)) {
-//                    result.add(vector);
-//                }
-//            }
 
             Vector resultVector = search.get(search.size() - 1);
 
-            int inputSpot = result.size();
             List<Vector> temp = new ArrayList<>();
 
             while(!resultVector.getParent().equals(start)){
@@ -69,6 +63,7 @@ public class AddOn {
 
             result.add(map.getSpotList().stream().sorted(Comparator.comparing(Vector::getX))
                     .collect(Collectors.toList()).get(map.getSpotList().size()-1));
+
 
 
         return result;
