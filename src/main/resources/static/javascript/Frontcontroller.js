@@ -1,6 +1,7 @@
 document.write('<script src="javascript/InitialData.js"></script>');
 document.write('<script src="javascript/DrawMap.js"></script>');
 document.write('<script src="javascript/DrawRobot.js"></script>');
+document.write('<script src="javascript/VocalData.js"></script>');
 //mapData*********************************************************************************
 var mapData;
 let path;
