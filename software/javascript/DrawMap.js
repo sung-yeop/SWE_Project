@@ -161,10 +161,13 @@ function drawVoice(mapdata, colorBlob, hazard) {
 //drawPath*********************************************************************************
 function drawPath(mapdata, path) {
     //var path = [(3, 1), (4, 1), (5, 1), (6, 1), (6, 2), (6, 3), (6, 4), (6, 5)];
+    console.log(path);
     var elements = document.getElementsByClassName('path');
     for (var i = 0; i < elements.length; i++) {
         elements[i].style.display = 'none';
     }
+
+
 
     var patharr = path.replace(/[^\d\s]/g, '').trim().split(/\s+/).map(Number);
     cols = mapdata[0];
