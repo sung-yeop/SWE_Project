@@ -90,25 +90,26 @@ function proceed(event) {
 //update*********************************************************************************
 function update(event) {
     event.preventDefault();
-    var mike = document.getElementById("mike");
+    var mike = document.getElementById('mike');
     if (count == 0) {
         document.getElementById('information').innerHTML = '녹음중';
         mike.style.transform = 'rotate(' + -45 + 'deg)';
         mike.style.boxShadow = '5px 5px 5px rgba(0, 0, 0, 0.5)';
-        //음성 데이터 파일을 전환하는 부분은 추가되야함
-        // 그래서 colorBlob과 추가된 hazard는 임의로 설정하였음
-        var colorBlob = [2, 2, 3, 3];
-        var addhazard = [3, 4];
-        drawVoice(mapData, colorBlob, addhazard);
+
+        startRecording().then((voiceResult) => {
+            mapData[3] = mapData[3].concat(voiceResult[0]);
+            mapData[4] = mapData[4].concat(voiceResult[1]);
+            drawUnit(mapData);
+        });
+
         count++;
     } else {
         document.getElementById('information').innerHTML = '녹음 완료';
-
         mike.style.transform = 'rotate(' + 0 + 'deg)';
         mike.style.boxShadow = '0px 0px 0px rgba(0, 0, 0, 0)';
 
+        stopRecording();
         count = 0;
     }
-
 }
 //update*********************************************************************************
