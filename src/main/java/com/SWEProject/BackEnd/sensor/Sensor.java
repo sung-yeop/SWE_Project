@@ -83,7 +83,7 @@ public class Sensor {
     }
 
 
-    public boolean GetPositioningSensor(Vector currentPosition, Vector intendedPosition) {
+    public boolean getPositioningSensor(Vector currentPosition, Vector intendedPosition) {
         return !currentPosition.equals(intendedPosition);
     }
 }

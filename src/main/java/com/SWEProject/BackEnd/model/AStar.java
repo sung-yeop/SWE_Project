@@ -10,7 +10,6 @@ public class AStar {
     HashMap<Vector, Integer> gMaps;
     HashMap<Vector, Integer> fMaps;
     private int initialCapacity = 100; // 설정 필요
-    private int distanceBetweenVectors = 1;
     private Vector size = null;
     private Vector[][] mapInit = null;
 

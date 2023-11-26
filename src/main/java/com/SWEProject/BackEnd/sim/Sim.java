@@ -70,7 +70,7 @@ public class Sim {
     public boolean checkPosition(Vector intendedPosition) {
         Vector currentPosition = movementSystem.getCurrentPosition();
 
-        return sensor.GetPositioningSensor(currentPosition, intendedPosition);
+        return sensor.getPositioningSensor(currentPosition, intendedPosition);
     }
 
     public void setPosition(Vector beforeMovePosition) {

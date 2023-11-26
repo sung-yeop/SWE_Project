@@ -100,7 +100,6 @@ public class MovementSystem {
         return direction;
     }
 
-
     //깊은 복사
     public void setPosition(Vector beforeMovePosition) {
         this.currentPosition.x = beforeMovePosition.x;
