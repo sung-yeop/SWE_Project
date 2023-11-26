@@ -50,7 +50,6 @@ function initialize(event) {
 //proceed*********************************************************************************
 function proceed(event) {
     event.preventDefault();
-    var pos;
     document.getElementById('information').innerHTML = '이동중';
 
     //지금 가지고 있는 길 정보가 옳바른지 확인한다.
@@ -69,7 +68,7 @@ function proceed(event) {
         .then(result => {
             pos = result.currentPosition;
             if (result.path != null) {
-                path = result.path;
+                mapData[1] = result.path;
             }
             if (result.hazardList != null) {
                 mapData[3] = mapData[3].concat(result.hazardList.match(/\d+/g).map(Number));
@@ -78,8 +77,8 @@ function proceed(event) {
                 mapData[4] = mapData[4].concat(result.colorBlobList.match(/\d+/g).map(Number));
             }
             drawUnit(mapData);
-            rotate(path, pos);
-            drawAfterMove(mapData[0], pos);
+            rotate(path, mapData[1]);
+            drawAfterMove(mapData[0], mapData[1]);
             var firstBracketIndex = path.indexOf('(');
             var secondBracketIndex = path.indexOf(')', firstBracketIndex + 1);
             if (firstBracketIndex !== -1 && secondBracketIndex !== -1) {
@@ -87,7 +86,6 @@ function proceed(event) {
             }
             drawPath(mapData[0], path);
         })
-    // rotate(mapData[0], mapData[1], path);
 }
 //update*********************************************************************************
 function update(event) {
