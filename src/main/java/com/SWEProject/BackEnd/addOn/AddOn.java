@@ -1,6 +1,5 @@
 package com.SWEProject.BackEnd.addOn;
 
-import com.SWEProject.BackEnd.domain.Map;
 import com.SWEProject.BackEnd.domain.Vector;
 import com.SWEProject.BackEnd.model.AStar;
 import com.SWEProject.BackEnd.sim.Sim;
@@ -32,14 +31,15 @@ public class AddOn {
     }
 
     // 예상 이동 경로 추출
-    public List<Vector> pathFind(Map map) {
+//    public List<Vector> pathFind(Map map) {
+    public List<Vector> pathFind(Vector size, Vector[][] mapInit, List<Vector> spots, List<Vector> hazards) {
         Vector start = sim.getPosition();
         List<Vector> result = new ArrayList<>();
-        AStar aStar = new AStar(map.getSize(), map.createMapInit());
+        AStar aStar = new AStar(size, mapInit);
 
-        for (Vector end : map.getSpotList().stream().sorted(Comparator.comparing(Vector::getX))
+        for (Vector end : spots.stream().sorted(Comparator.comparing(Vector::getX))
                 .collect(Collectors.toList())) {
-            ArrayList<Vector> search = aStar.search(start, end, map.getHazardList());
+            ArrayList<Vector> search = aStar.search(start, end, hazards);
             Vector resultVector = search.get(search.size() - 1);
             List<Vector> temp = new ArrayList<>();
 
@@ -52,24 +52,24 @@ public class AddOn {
             start = end;
         }
 
-        result.add(map.getSpotList().stream().sorted(Comparator.comparing(Vector::getX))
-                .collect(Collectors.toList()).get(map.getSpotList().size() - 1));
+        result.add(spots.stream().sorted(Comparator.comparing(Vector::getX))
+                .collect(Collectors.toList()).get(spots.size() - 1));
 
         return result;
     }
 
     // 로봇의 한 칸 앞이 Hazard이면 True 반환
-    public boolean moveWithHazardSense(Map map) {
-        if (sim.checkHazard() != null && !map.getHazardList().contains(sim.checkHazard())) {
-            map.getHazardList().add(sim.checkHazard());
+    public boolean moveWithHazardSense(List<Vector> hazards) {
+        if (sim.checkHazard() != null && !hazards.contains(sim.checkHazard())) {
+            hazards.add(sim.checkHazard());
             return true;
         }
         return false;
     }
 
-    public boolean moveWithColorBlobSense(Map map) {
-        if (sim.checkColorblob() != null && map.getColorblobList().contains(sim.checkColorblob())) {
-            map.getColorblobList().add(sim.checkColorblob());
+    public boolean moveWithColorBlobSense(List<Vector> colors) {
+        if (sim.checkColorblob() != null && colors.contains(sim.checkColorblob())) {
+            colors.add(sim.checkColorblob());
             return true;
         }
         return false;

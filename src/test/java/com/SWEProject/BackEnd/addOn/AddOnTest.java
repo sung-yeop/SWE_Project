@@ -1,6 +1,5 @@
 package com.SWEProject.BackEnd.addOn;
 
-import com.SWEProject.BackEnd.constants.Direction;
 import com.SWEProject.BackEnd.domain.Map;
 import com.SWEProject.BackEnd.domain.Vector;
 import com.SWEProject.BackEnd.model.AStar;
@@ -42,10 +41,10 @@ class AddOnTest {
 
     @DisplayName("이동 경로 중 문제 발생 / 오작동 없는 경우")
     @Test
-    void pathFinding_기능_테스트_Hidden_존재_O(){
-        List<Vector> initPath = addOn.pathFind(map);
-        int cnt= 0;
-        while(cnt < 100){
+    void pathFinding_기능_테스트_Hidden_존재_O() {
+        List<Vector> initPath = addOn.pathFind(map.getSize(), map.getMapInit(), map.getSpotList(), map.getHazardList());
+        int cnt = 0;
+        while (cnt < 100) {
             for (Vector vector : initPath) {
 
                 if (vector.equals(map.getSpotList().get(map.getSpotList().size() - 1))) {
@@ -58,10 +57,10 @@ class AddOnTest {
                         addOn.getCurrentPosition().getX(), addOn.getCurrentPosition().getY()));
                 System.out.println(String.format("목표 위치 : (%d, %d)\n============", vector.getX(), vector.getY()));
 
-                if (addOn.moveWithHazardSense(map)) {
+                if (addOn.moveWithHazardSense(map.getHazardList())) {
                     map.getHazardList().add(vector);
-                    if(map.getHazardList().stream().anyMatch(v -> v.equals(vector))){
-                        initPath = addOn.pathFind(map);
+                    if (map.getHazardList().stream().anyMatch(v -> v.equals(vector))) {
+                        initPath = addOn.pathFind(map.getSize(), map.getMapInit(), map.getSpotList(), map.getHazardList());
                         String outPath = initPath.stream()
                                 .map(v -> convertVectorToString(v)).collect(Collectors.joining("\n"));
                         System.out.println(outPath);
@@ -74,7 +73,7 @@ class AddOnTest {
                     moveFlag = false;
                 } // 현재 위치와 목표 위치가 동일하다면 작동 X
 
-                if(moveFlag){
+                if (moveFlag) {
                     addOn.move();
                 }
 
@@ -87,14 +86,12 @@ class AddOnTest {
         }
 
 
-
-
     }
 
     @DisplayName("이동 경로 생성 / Hidden 없는 경우")
     @Test
     void pathFinding_기능_테스트_Hidden_존재_X() {
-        List<Vector> vectors = addOn.pathFind(map);
+        List<Vector> vectors = addOn.pathFind(map.getSize(), map.getMapInit(), map.getSpotList(), map.getHazardList());
         for (Vector vector : vectors) {
             System.out.println(String.format("%d %d", vector.getX(), vector.getY()));
         }
@@ -106,7 +103,7 @@ class AddOnTest {
     @DisplayName("Astar 기능 테스트")
     @Test
     void Astar_기능_테스트() {
-        AStar aStar = new AStar(map.getSize(), map.createMapInit());
+        AStar aStar = new AStar(map.getSize(), map.getMapInit());
         List<Vector> hazards = new ArrayList<>();
 
         hazards.add(Vector.of(3, 5));

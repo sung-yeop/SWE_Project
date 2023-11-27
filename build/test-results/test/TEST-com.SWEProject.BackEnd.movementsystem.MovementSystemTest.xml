@@ -1,11 +1,15 @@
 <?xml version="1.0" encoding="UTF-8"?>
-<testsuite name="com.SWEProject.BackEnd.movementsystem.MovementSystemTest" tests="1" skipped="0" failures="0" errors="0" timestamp="2023-11-24T01:20:18" hostname="jeongseong-yeobs-MacBook-Pro.local" time="0.065">
+<testsuite name="com.SWEProject.BackEnd.movementsystem.MovementSystemTest" tests="2" skipped="0" failures="0" errors="0" timestamp="2023-11-27T07:20:52" hostname="jeongseong-yeobs-MacBook-Pro.local" time="0.002">
   <properties/>
-  <testcase name="setPosition_테스트()" classname="com.SWEProject.BackEnd.movementsystem.MovementSystemTest" time="0.065"/>
+  <testcase name="setPosition_테스트()" classname="com.SWEProject.BackEnd.movementsystem.MovementSystemTest" time="0.001"/>
+  <testcase name="이동_테스트()" classname="com.SWEProject.BackEnd.movementsystem.MovementSystemTest" time="0.001"/>
   <system-out><![CDATA[(3, 5)
-com.SWEProject.BackEnd.domain.Vector@4bbf6d0e
+com.SWEProject.BackEnd.domain.Vector@1152900
 (7, 7)
-com.SWEProject.BackEnd.domain.Vector@30b6ffe0
+com.SWEProject.BackEnd.domain.Vector@1152900
+(2, 4)
+(2, 5)
+(2, 6)
 ]]></system-out>
   <system-err><![CDATA[]]></system-err>
 </testsuite>

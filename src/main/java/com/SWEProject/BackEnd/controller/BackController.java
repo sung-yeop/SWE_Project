@@ -3,10 +3,7 @@ package com.SWEProject.BackEnd.controller;
 import com.SWEProject.BackEnd.addOn.AddOn;
 import com.SWEProject.BackEnd.domain.Map;
 import com.SWEProject.BackEnd.domain.Vector;
-import com.SWEProject.BackEnd.dto.ResponseDataDto;
-import com.SWEProject.BackEnd.dto.ResponseStringDto;
-import com.SWEProject.BackEnd.dto.createMapRequest;
-import com.SWEProject.BackEnd.dto.moveRequest;
+import com.SWEProject.BackEnd.dto.*;
 import com.SWEProject.BackEnd.model.Converter;
 import lombok.RequiredArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
@@ -35,12 +32,17 @@ public class BackController {
     private final int NONE = 0;
     private final int SIZEVAL = 1;
 
+    @PostMapping("/api/vocal")
+    public void initHidden(@RequestBody @Validated VocalRequest request) {
+        log.info(request.toString());
+    }
+
     @PostMapping("/api/init/")
     public ResponseStringDto init(@RequestBody @Validated createMapRequest request) {
         createMap(request);
 
         addOn = new AddOn(map.getStartPoint());
-        path = addOn.pathFind(map);
+        path = addOn.pathFind(map.getSize(), map.getMapInit(), map.getSpotList(), map.getHazardList());
         path.remove(path.stream().findFirst().get());
 
         String output = "[" + this.path.stream()
@@ -82,22 +84,26 @@ public class BackController {
         String responseComplete = null;
         addOn.directionSetting(nextPosition); //목표 지점으로 방향 전환
         Vector beforePosition = Vector.deepClone(addOn.getCurrentPosition());
+        List<Vector> hazards = map.getHazardList();
+        List<Vector> colors = map.getColorblobList();
+        List<Vector> spots = map.getSpotList();
+        Vector size = map.getSize();
 
         //이후 센서 작동
-        if (addOn.moveWithHazardSense(map)) {
-            responseHazardList = "[" + map.getHazardList().stream()
+        if (addOn.moveWithHazardSense(hazards)) {
+            responseHazardList = "[" + hazards.stream()
                     .map(Converter::convertVectorToString).collect(Collectors.joining(COMMA)) + "]";
 
-            if (map.getHazardList().stream().anyMatch(v -> v.equals(nextPosition))) {
-                path = addOn.pathFind(map);
+            if (hazards.stream().anyMatch(v -> v.equals(nextPosition))) {
+                path = addOn.pathFind(size, map.getMapInit(), spots, hazards);
                 responsePathDtos = "[" + path.stream().map(Converter::convertVectorToString)
                         .collect(Collectors.joining(COMMA)) + "]";
             }
             moveFlag = false;
         }
 
-        if (addOn.moveWithColorBlobSense(map)) {
-            responseColorblobList = "[" + map.getColorblobList().stream().map(Converter::convertVectorToString)
+        if (addOn.moveWithColorBlobSense(colors)) {
+            responseColorblobList = "[" + colors.stream().map(Converter::convertVectorToString)
                     .collect(Collectors.joining(COMMA)) + "]";
         }
 
@@ -108,26 +114,26 @@ public class BackController {
         //문제 없으면 이동
         if (moveFlag) {
             addOn.move();
-            while (validateMovement(map, addOn.getCurrentPosition())) { //맵 밖으로 나가는 경우 및 Hazard로 이동하는 경우를 제어
+            while (validateMovement(size, hazards, addOn.getCurrentPosition())) { //맵 밖으로 나가는 경우 및 Hazard로 이동하는 경우를 제어
                 addOn.setPosition(beforePosition);
                 addOn.move();
             }
         }
 
-        if (map.getSpotList().stream().anyMatch(v -> v.equals(addOn.getCurrentPosition()))) {
-            Vector vector = map.getSpotList().stream()
+        if (spots.stream().anyMatch(v -> v.equals(addOn.getCurrentPosition()))) {
+            Vector vector = spots.stream()
                     .filter(v -> v.equals(addOn.getCurrentPosition())).findFirst().get();
-            map.getSpotList().remove(vector);
+            spots.remove(vector);
         }
 
         //프론트에서는 "Complete"가 넘어오면 완료되었음을 표시
-        if (map.getSpotList().size() == NONE) {
+        if (spots.size() == NONE) {
             responseComplete = COMPLETE;
         }
 
         //움직임 이후 문제가 존재하는지 확인
         if (addOn.moveWithError(nextPosition) && moveFlag) {
-            path = addOn.pathFind(map);
+            path = addOn.pathFind(size, map.getMapInit(), spots, hazards);
             responsePathDtos = "[" + path.stream().map(v -> convertVectorToString(v))
                     .collect(Collectors.joining(COMMA)) + "]";
         }
