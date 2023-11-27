@@ -7,6 +7,7 @@ var mapData;
 let path;
 // = "[(3, 1), (4, 1), (5, 1), (6, 1), (6, 2), (6, 3), (6, 4), (6, 5), (6, 5), (6, 5), (6, 5)]";
 var count = 0;
+let recognition = null;
 //initialize*********************************************************************************
 function initialize(event) {
     event.preventDefault();
