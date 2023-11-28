@@ -2,11 +2,8 @@ package com.SWEProject.BackEnd.dto;
 
 import lombok.Data;
 
-import java.util.List;
-
 @Data
 public class ResponseDataDto {
-
     private String path;
     private String hazardList;
     private String colorBlobList;
@@ -15,7 +12,7 @@ public class ResponseDataDto {
 
 
     public ResponseDataDto(String path, String hazardList, String colorBlobList, String currentPosition
-    , String complete) {
+            , String complete) {
         this.path = path;
         this.hazardList = hazardList;
         this.colorBlobList = colorBlobList;

@@ -12,13 +12,12 @@ import java.util.Queue;
 @Getter
 @Setter
 public class Map {
-
     private Vector size;
     private List<Vector> hazardList;
     private Vector startPoint;
     private List<Vector> spotList;
     private List<Vector> colorblobList;
-
+    private Vector[][] mapInit;
 
     public Map(Vector size, Vector startPoint, List<Vector> hazardList, List<Vector> spotList, List<Vector> colorblobList) {
         this.size = size;
@@ -26,9 +25,20 @@ public class Map {
         this.startPoint = startPoint;
         this.spotList = spotList;
         this.colorblobList = colorblobList;
+        mapInit = new Vector[size.getX()][size.getY()];
+        createMapInit(size);
     }
 
-    public Queue<Vector> createMap() {
+    private void createMapInit(Vector size) {
+        Queue<Vector> mapqueue = createMap();
+        for (int i = 0; i < size.getY(); i++) {
+            for (int j = 0; j < size.getX(); j++) {
+                mapInit[j][i] = mapqueue.poll();
+            }
+        }
+    }
+
+    private Queue<Vector> createMap() {
         Queue<Vector> result = new LinkedList<>();
         for (int i = 0; i < size.getY(); i++) {
             for (int j = 0; j < size.getX(); j++) {
@@ -36,48 +46,5 @@ public class Map {
             }
         }
         return result;
-    }
-
-    public Vector[][] createMapInit() {
-        Vector[][] result = new Vector[size.getX()][size.getY()];
-
-        Queue<Vector> mapqueue = createMap();
-
-        for (int i = 0; i < size.getY(); i++) {
-            for (int j = 0; j < size.getX(); j++) {
-                result[j][i] = mapqueue.poll();
-            }
-        }
-
-        return result;
-    }
-
-
-    public Vector getSize() {
-        return size;
-    }
-
-    public boolean CheckHazard(Vector position) {
-        return hazardList.contains(position);
-    }
-
-    public boolean CheckSpot(Vector position) {
-        return spotList.contains(position);
-    }
-
-    public void AddHazard(Vector position) {
-        if (!hazardList.contains(position))
-            hazardList.add(position);
-    }
-
-    public void AddSpot(Vector position) {
-        if (!spotList.contains(position))
-            spotList.add(position);
-    }
-
-    public void AddColorBlob(Vector position) {
-        if (!colorblobList.contains(position)) {
-            colorblobList.add(position);
-        }
     }
 }

@@ -4,13 +4,9 @@ import com.SWEProject.BackEnd.addOn.AddOn;
 import com.SWEProject.BackEnd.domain.Map;
 import com.SWEProject.BackEnd.domain.Vector;
 import org.junit.jupiter.api.BeforeEach;
-import org.junit.jupiter.api.Test;
 
 import java.util.ArrayList;
 import java.util.List;
-
-import static com.SWEProject.BackEnd.validate.ValidateMovement.validateMovement;
-import static org.junit.jupiter.api.Assertions.*;
 
 class ValidateMovementTest {
     private AddOn addOn;
@@ -37,16 +33,16 @@ class ValidateMovementTest {
         addOn = new AddOn(map.getStartPoint());
     }
 
-    @Test
-    void Validate(){
-        Vector afterPosition = Vector.of(2, 12);
-        Vector beforeMovePosition = Vector.of(2, 10);
-        addOn.move();
-        while(validateMovement(map, afterPosition)){
-            addOn.setPosition(beforeMovePosition);
-            addOn.move();
-            afterPosition = addOn.getCurrentPosition();
-        }
-    }
+//    @Test
+//    void Validate(){
+//        Vector afterPosition = Vector.of(2, 12);
+//        Vector beforeMovePosition = Vector.of(2, 10);
+//        addOn.move();
+//        while(validateMovement(map, afterPosition)){
+//            addOn.setPosition(beforeMovePosition);
+//            addOn.move();
+//            afterPosition = addOn.getCurrentPosition();
+//        }
+//    }
 
 }

@@ -16,6 +16,7 @@ function drawAfterMove(mapdata, path) {
     robotpos.style.top = -robotheight + cellheight * (rows - patharr[1]) + "px";
 
 }
+
 //drawAfterMove*********************************************************************************
 //rotate*********************************************************************************
 function rotate(path, current) {
@@ -25,21 +26,21 @@ function rotate(path, current) {
 
     var image = document.getElementById('robot');
 
-    if(top > 0){
+    if (top > 0) {
         var degree = -90;
         image.style.transform = 'rotate(' + degree + 'deg)';
     }
-    if(top < 0){
+    if (top < 0) {
         var degree = 90;
         image.style.transform = 'rotate(' + degree + 'deg)';
     }
-    if(left > 0){
+    if (left > 0) {
         var degree = 0;
         image.style.transform = 'rotate(' + degree + 'deg)';
     }
-    if(left < 0){
+    if (left < 0) {
         var degree = -180;
         image.style.transform = 'rotate(' + degree + 'deg)';
     }
-    
+
 }

@@ -1,7 +1,5 @@
 package com.SWEProject.BackEnd.addOn;
 
-import com.SWEProject.BackEnd.constants.Direction;
-import com.SWEProject.BackEnd.domain.Map;
 import com.SWEProject.BackEnd.domain.Vector;
 import com.SWEProject.BackEnd.model.AStar;
 import com.SWEProject.BackEnd.sim.Sim;
@@ -13,15 +11,12 @@ import java.util.Comparator;
 import java.util.List;
 import java.util.stream.Collectors;
 
-import static java.util.Arrays.stream;
-
 @Service
 @Slf4j
 public class AddOn {
-
     private Sim sim;
     private List<Vector> checkSpot = new ArrayList<>(); //이미 확인 완료한 Spot 리스트 (오동작 이후 탐색했던 지점을 다시 탐색하면 안됨)
-    private Vector error = Vector.of(0, 0);
+    private final static int INPUTPOINT = 0;
 
     public AddOn(Vector startPoint) {
         this.sim = new Sim(startPoint);
@@ -36,51 +31,45 @@ public class AddOn {
     }
 
     // 예상 이동 경로 추출
-    public List<Vector> pathFind(Map map) {
+//    public List<Vector> pathFind(Map map) {
+    public List<Vector> pathFind(Vector size, Vector[][] mapInit, List<Vector> spots, List<Vector> hazards) {
         Vector start = sim.getPosition();
         List<Vector> result = new ArrayList<>();
-        AStar aStar = new AStar(map.getSize(), map.createMapInit());
+        AStar aStar = new AStar(size, mapInit);
 
-
-        for (Vector end : map.getSpotList().stream().sorted(Comparator.comparing(Vector::getX))
+        for (Vector end : spots.stream().sorted(Comparator.comparing(Vector::getX))
                 .collect(Collectors.toList())) {
-            ArrayList<Vector> search = aStar.search(start, end, map.getHazardList());
-
+            ArrayList<Vector> search = aStar.search(start, end, hazards);
             Vector resultVector = search.get(search.size() - 1);
-
             List<Vector> temp = new ArrayList<>();
 
-            while(!resultVector.getParent().equals(start)){
-                temp.add(0, resultVector.getParent());
+            while (!resultVector.getParent().equals(start)) {
+                temp.add(INPUTPOINT, resultVector.getParent());
                 resultVector = resultVector.getParent();
             }
-            temp.add(0, resultVector.getParent());
-
+            temp.add(INPUTPOINT, resultVector.getParent());
             result.addAll(temp);
-
             start = end;
         }
 
-            result.add(map.getSpotList().stream().sorted(Comparator.comparing(Vector::getX))
-                    .collect(Collectors.toList()).get(map.getSpotList().size()-1));
-
-
+        result.add(spots.stream().sorted(Comparator.comparing(Vector::getX))
+                .collect(Collectors.toList()).get(spots.size() - 1));
 
         return result;
     }
 
     // 로봇의 한 칸 앞이 Hazard이면 True 반환
-    public boolean moveWithHazardSense(Map map) {
-        if (sim.checkHazard() != null && !map.getHazardList().contains(sim.checkHazard())) {
-            map.getHazardList().add(sim.checkHazard());
+    public boolean moveWithHazardSense(List<Vector> hazards) {
+        if (sim.checkHazard() != null && !hazards.contains(sim.checkHazard())) {
+            hazards.add(sim.checkHazard());
             return true;
         }
         return false;
     }
 
-    public boolean moveWithColorBlobSense(Map map) {
-        if (sim.checkColorblob() != null && map.getColorblobList().contains(sim.checkColorblob())) {
-            map.getColorblobList().add(sim.checkColorblob());
+    public boolean moveWithColorBlobSense(List<Vector> colors) {
+        if (sim.checkColorblob() != null && colors.contains(sim.checkColorblob())) {
+            colors.add(sim.checkColorblob());
             return true;
         }
         return false;

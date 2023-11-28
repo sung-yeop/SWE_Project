@@ -10,7 +10,6 @@ public class AStar {
     HashMap<Vector, Integer> gMaps;
     HashMap<Vector, Integer> fMaps;
     private int initialCapacity = 100; // 설정 필요
-    private int distanceBetweenVectors = 1;
     private Vector size = null;
     private Vector[][] mapInit = null;
 
@@ -25,8 +24,8 @@ public class AStar {
     }
 
     private void addNeighbors(Vector size, Vector[][] mapInit) {
-        for(int i=0; i<size.x; i++){
-            for(int j=0; j<size.y; j++){
+        for (int i = 0; i < size.x; i++) {
+            for (int j = 0; j < size.y; j++) {
                 mapInit[i][j].addNeighbors(size, mapInit);
             }
         }
@@ -34,7 +33,6 @@ public class AStar {
 
     // 현재 로봇의 위치와 Target 포인트를 넣어주면 된다.
     public ArrayList<Vector> search(Vector start, Vector end, List<Vector> hazards) {
-
         openList.clear();
         closedList.clear();
 
@@ -67,29 +65,18 @@ public class AStar {
 
                     neighbor.setParent(current);
 
-                    if (fMaps.get(current) > fMaps.get(neighbor) && distance(current, neighbor)) {
+                    if (fMaps.get(current) > fMaps.get(neighbor)) {
                         current = neighbor;
                     }
                 }
             }
-
 
             if (openList.isEmpty()) {
                 System.out.println("경로 없음");
                 break;
             }
         }
-
-
         return closedList;
-    }
-
-    private boolean distance(Vector current, Vector neighbor){
-        if (Math.abs(current.getX() - neighbor.getX()) > 1 || Math.abs(current.getY() - neighbor.getY()) > 1
-        || (Math.abs(current.getX() - neighbor.getX()) + Math.abs(current.getY() - neighbor.getY())) > 1) {
-            return false;
-        }
-        return true;
     }
 
     private boolean contain(Vector neighbor, List<Vector> hazards) {

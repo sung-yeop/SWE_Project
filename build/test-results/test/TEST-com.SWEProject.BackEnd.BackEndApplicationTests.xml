@@ -1,0 +1,22 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<testsuite name="com.SWEProject.BackEnd.BackEndApplicationTests" tests="1" skipped="0" failures="0" errors="0" timestamp="2023-11-27T07:20:52" hostname="jeongseong-yeobs-MacBook-Pro.local" time="0.478">
+  <properties/>
+  <testcase name="contextLoads()" classname="com.SWEProject.BackEnd.BackEndApplicationTests" time="0.478"/>
+  <system-out><![CDATA[16:20:51.388 [Test worker] INFO org.springframework.test.context.support.AnnotationConfigContextLoaderUtils -- Could not detect default configuration classes for test class [com.SWEProject.BackEnd.BackEndApplicationTests]: BackEndApplicationTests does not declare any static, non-private, non-final, nested classes annotated with @Configuration.
+16:20:51.447 [Test worker] INFO org.springframework.boot.test.context.SpringBootTestContextBootstrapper -- Found @SpringBootConfiguration com.SWEProject.BackEnd.BackEndApplication for test class com.SWEProject.BackEnd.BackEndApplicationTests
+
+  .   ____          _            __ _ _
+ /\\ / ___'_ __ _ _(_)_ __  __ _ \ \ \ \
+( ( )\___ | '_ | '_| | '_ \/ _` | \ \ \ \
+ \\/  ___)| |_)| | | | | || (_| |  ) ) ) )
+  '  |____| .__|_| |_|_| |_\__, | / / / /
+ =========|_|==============|___/=/_/_/_/
+ :: Spring Boot ::                (v3.1.5)
+
+2023-11-27T16:20:51.656+09:00  INFO 60624 --- [    Test worker] c.S.BackEnd.BackEndApplicationTests      : Starting BackEndApplicationTests using Java 17.0.9 with PID 60624 (started by yeop in /Users/yeop/Desktop/Study/univ/SWE_Project)
+2023-11-27T16:20:51.657+09:00  INFO 60624 --- [    Test worker] c.S.BackEnd.BackEndApplicationTests      : No active profile set, falling back to 1 default profile: "default"
+2023-11-27T16:20:52.192+09:00  INFO 60624 --- [    Test worker] o.s.b.a.w.s.WelcomePageHandlerMapping    : Adding welcome page: class path resource [static/index.html]
+2023-11-27T16:20:52.284+09:00  INFO 60624 --- [    Test worker] c.S.BackEnd.BackEndApplicationTests      : Started BackEndApplicationTests in 0.76 seconds (process running for 1.413)
+]]></system-out>
+  <system-err><![CDATA[]]></system-err>
+</testsuite>
