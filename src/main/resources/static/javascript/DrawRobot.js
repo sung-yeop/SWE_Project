@@ -16,15 +16,31 @@ function drawAfterMove(mapdata, path) {
     robotpos.style.top = -robotheight + cellheight * (rows - patharr[1]) + "px";
 
 }
+
 //drawAfterMove*********************************************************************************
 //rotate*********************************************************************************
-function rotate(currpos, path) {
+function rotate(path, current) {
     var patharr = path.replace(/[^\d\s]/g, '').trim().split(/\s+/).map(Number);
-    var left = patharr[0] - currpos[0];
-    var top = patharr[1] - currpos[1];
+    var left = patharr[0] - current[0];
+    var top = patharr[1] - current[1];
 
     var image = document.getElementById('robot');
-    var desiredAngle = -90; // 이미지가 왼쪽을 향하도록 -90도 회전
 
-    image.style.transform = 'rotate(' + desiredAngle + 'deg)';
+    if (top > 0) {
+        var degree = -90;
+        image.style.transform = 'rotate(' + degree + 'deg)';
+    }
+    if (top < 0) {
+        var degree = 90;
+        image.style.transform = 'rotate(' + degree + 'deg)';
+    }
+    if (left > 0) {
+        var degree = 0;
+        image.style.transform = 'rotate(' + degree + 'deg)';
+    }
+    if (left < 0) {
+        var degree = -180;
+        image.style.transform = 'rotate(' + degree + 'deg)';
+    }
+
 }

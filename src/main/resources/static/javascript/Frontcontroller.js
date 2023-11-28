@@ -1,11 +1,12 @@
 document.write('<script src="javascript/InitialData.js"></script>');
 document.write('<script src="javascript/DrawMap.js"></script>');
 document.write('<script src="javascript/DrawRobot.js"></script>');
+document.write('<script src="javascript/VocalData.js"></script>');
 //mapData*********************************************************************************
 var mapData;
 let path;
-// = "[(3, 1), (4, 1), (5, 1), (6, 1), (6, 2), (6, 3), (6, 4), (6, 5), (6, 5), (6, 5), (6, 5)]";
 var count = 0;
+
 //initialize*********************************************************************************
 function initialize(event) {
     event.preventDefault();
@@ -46,15 +47,14 @@ function initialize(event) {
             drawUnit(mapData);
         })
 }
-//initialize*********************************************************************************
+
 //proceed*********************************************************************************
 function proceed(event) {
     event.preventDefault();
-    var pos;
     document.getElementById('information').innerHTML = '이동중';
 
     //지금 가지고 있는 길 정보가 옳바른지 확인한다.
-    var jsonData = JSON.stringify({"path" : path.match(/\([^)]+\)/g)[0]});
+    var jsonData = JSON.stringify({"path": path.match(/\([^)]+\)/g)[0]});
     // var jsonData = JSON.stringify({path: path.slice()});
 
 
@@ -69,7 +69,7 @@ function proceed(event) {
         .then(result => {
             pos = result.currentPosition;
             if (result.path != null) {
-                path = result.path;
+                mapData[1] = result.path;
             }
             if (result.hazardList != null) {
                 mapData[3] = mapData[3].concat(result.hazardList.match(/\d+/g).map(Number));
@@ -78,38 +78,41 @@ function proceed(event) {
                 mapData[4] = mapData[4].concat(result.colorBlobList.match(/\d+/g).map(Number));
             }
             drawUnit(mapData);
-            drawAfterMove(mapData[0], pos);
+            rotate(path, mapData[1]);
+            drawAfterMove(mapData[0], mapData[1]);
             var firstBracketIndex = path.indexOf('(');
             var secondBracketIndex = path.indexOf(')', firstBracketIndex + 1);
             if (firstBracketIndex !== -1 && secondBracketIndex !== -1) {
-                path= path.substring(0, firstBracketIndex) + path.substring(secondBracketIndex);
+                path = path.substring(0, firstBracketIndex) + path.substring(secondBracketIndex);
             }
             drawPath(mapData[0], path);
         })
-    // rotate(mapData[0], mapData[1], path);
 }
+
 //update*********************************************************************************
 function update(event) {
     event.preventDefault();
-    var mike = document.getElementById("mike");
+    var mike = document.getElementById('mike');
     if (count == 0) {
         document.getElementById('information').innerHTML = '녹음중';
         mike.style.transform = 'rotate(' + -45 + 'deg)';
         mike.style.boxShadow = '5px 5px 5px rgba(0, 0, 0, 0.5)';
-        //음성 데이터 파일을 전환하는 부분은 추가되야함
-        // 그래서 colorBlob과 추가된 hazard는 임의로 설정하였음
-        var colorBlob = [2, 2, 3, 3];
-        var addhazard = [3, 4];
-        drawVoice(mapData, colorBlob, addhazard);
+
+        startRecording().then((voiceResult) => {
+            mapData[3] = mapData[3].concat(voiceResult[0]);
+            mapData[4] = mapData[4].concat(voiceResult[1]);
+            drawUnit(mapData);
+        });
+
         count++;
     } else {
         document.getElementById('information').innerHTML = '녹음 완료';
-
         mike.style.transform = 'rotate(' + 0 + 'deg)';
         mike.style.boxShadow = '0px 0px 0px rgba(0, 0, 0, 0)';
 
+        stopRecording();
         count = 0;
     }
-
 }
+
 //update*********************************************************************************

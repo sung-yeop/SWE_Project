@@ -10,7 +10,6 @@ public class Sensor {
     private List<Vector> hiddenHazards;
     private List<Vector> hiddenColorblobs;
 
-
     public Sensor() {
         hiddenHazards = new ArrayList<Vector>();
         // for Test
@@ -21,14 +20,6 @@ public class Sensor {
 
 
         hiddenColorblobs = new ArrayList<Vector>();
-    }
-
-    public void addHazard(Vector position) {
-        hiddenHazards.add(position);
-    }
-
-    public void addSpot(Vector position) {
-        hiddenColorblobs.add(position);
     }
 
     public Vector getHazardSensor(Vector position, Direction dir) {
@@ -56,7 +47,7 @@ public class Sensor {
         return null;
     }
 
-    public Vector GetColorblobSensor(Vector position) {
+    public Vector getColorblobSensor(Vector position) {
         int x = position.x;
         int y = position.y;
         Vector compareVector = new Vector(x, y);
@@ -92,7 +83,7 @@ public class Sensor {
     }
 
 
-    public boolean GetPositioningSensor(Vector currentPosition, Vector intendedPosition) {
+    public boolean getPositioningSensor(Vector currentPosition, Vector intendedPosition) {
         return !currentPosition.equals(intendedPosition);
     }
 }
