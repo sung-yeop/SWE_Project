@@ -5,7 +5,10 @@ document.write('<script src="javascript/VocalData.js"></script>');
 //mapData*********************************************************************************
 var mapData;
 let path;
+// = "[(3, 1), (4, 1), (5, 1), (6, 1), (6, 2), (6, 3), (6, 4), (6, 5), (6, 5), (6, 5), (6, 5)]";
 var count = 0;
+
+let isRecognizing = true;
 
 //initialize*********************************************************************************
 function initialize(event) {
@@ -48,6 +51,7 @@ function initialize(event) {
         })
 }
 
+//initialize*********************************************************************************
 //proceed*********************************************************************************
 function proceed(event) {
     event.preventDefault();
@@ -93,25 +97,31 @@ function proceed(event) {
 function update(event) {
     event.preventDefault();
     var mike = document.getElementById('mike');
-    if (count == 0) {
+    if (isRecognizing) {
         document.getElementById('information').innerHTML = '녹음중';
         mike.style.transform = 'rotate(' + -45 + 'deg)';
         mike.style.boxShadow = '5px 5px 5px rgba(0, 0, 0, 0.5)';
-
-        startRecording().then((voiceResult) => {
-            mapData[3] = mapData[3].concat(voiceResult[0]);
-            mapData[4] = mapData[4].concat(voiceResult[1]);
-            drawUnit(mapData);
-        });
-
-        count++;
-    } else {
-        document.getElementById('information').innerHTML = '녹음 완료';
+        startRecording();
+        isRecognizing = false;
+    }
+    else {
+       // document.getElementById('information').innerHTML = '녹음 완료';
         mike.style.transform = 'rotate(' + 0 + 'deg)';
         mike.style.boxShadow = '0px 0px 0px rgba(0, 0, 0, 0)';
 
-        stopRecording();
-        count = 0;
+        let vocalData = stopRecording();
+        var jsonData = JSON.stringify(vocalData);
+
+        fetch('/api/vocal/', { //xx에 백엔드의 엔드포인트 URL
+            method: 'POST',
+            headers: {
+                'Content-Type': 'application/json'
+            },
+            body: jsonData
+        })
+            .then(response => response.json())
+        
+        isRecognizing = true;
     }
 }
 
