@@ -10,7 +10,7 @@ function startRecording() {
 
                 const voiceData = {speechText: transcript};
 
-                fetch('init/vocal', {
+                fetch('XX', {
                     method: 'POST',
                     headers: {
                         'Content-Type': 'application/json',

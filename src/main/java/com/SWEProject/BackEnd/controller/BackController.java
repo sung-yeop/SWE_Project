@@ -71,7 +71,6 @@ public class BackController {
                     (convertVectorToString(addOn.getCurrentPosition())), null);
             return responseDataDto;
         }
-
         return problemWithCourse(nextPosition);
     }
 
