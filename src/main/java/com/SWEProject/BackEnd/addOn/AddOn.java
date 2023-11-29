@@ -68,7 +68,7 @@ public class AddOn {
     }
 
     public boolean moveWithColorBlobSense(List<Vector> colors) {
-        if (sim.checkColorblob() != null && colors.contains(sim.checkColorblob())) {
+        if (sim.checkColorblob() != null && !colors.contains(sim.checkColorblob())) {
             colors.add(sim.checkColorblob());
             return true;
         }

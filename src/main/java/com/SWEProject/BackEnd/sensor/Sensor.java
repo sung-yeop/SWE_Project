@@ -18,6 +18,8 @@ public class Sensor {
 //        hiddenHazards.add(Vector.of(4, 4));
 //        hiddenHazards.add(Vector.of(5, 9));
 //        hiddenHazards.add(Vector.of(7, 8));
+        hiddenColorblobs.add(Vector.of(2, 9));
+//        hiddenHazards.add(Vector.of(2, 9));
     }
 
     public Vector getHazardSensor(Vector position, Direction dir) {
