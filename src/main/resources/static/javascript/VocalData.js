@@ -21,25 +21,12 @@ function startRecording() {
 //stopRecording*********************************************************************************
 function stopRecording() {
     recognition.stop();
-<<<<<<< Updated upstream
-    // const textArr = vocalText.split(" ");
 
     console.log(vocalText);
-    // let type = textArr[0];
-    // let position = textArr[2];
     let type = vocalText.match(/([가-힣]+\s[가-힣]*)/g)[0];
     let position = vocalText.match((/\d+(\s\d+)*/g))[0];
     console.log(type);
     console.log(position);
-    console.log(vocalText);
-=======
-    const textArr = vocalText.split(" ");
-
-    console.log(vocalText);
-    let type = textArr[0];
-    let position = textArr[2];
-
->>>>>>> Stashed changes
     document.getElementById('information').innerHTML = type + position;
 
 
