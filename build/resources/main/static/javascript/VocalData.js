@@ -21,6 +21,7 @@ function startRecording() {
 //stopRecording*********************************************************************************
 function stopRecording() {
     recognition.stop();
+<<<<<<< Updated upstream
     // const textArr = vocalText.split(" ");
 
     console.log(vocalText);
@@ -31,6 +32,14 @@ function stopRecording() {
     console.log(type);
     console.log(position);
     console.log(vocalText);
+=======
+    const textArr = vocalText.split(" ");
+
+    console.log(vocalText);
+    let type = textArr[0];
+    let position = textArr[2];
+
+>>>>>>> Stashed changes
     document.getElementById('information').innerHTML = type + position;
 
 

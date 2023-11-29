@@ -76,4 +76,12 @@ public class Sim {
     public void setPosition(Vector beforeMovePosition) {
         movementSystem.setPosition(beforeMovePosition);
     }
+
+    public void addHiddenHazard(Vector vector) {
+        sensor.addHiddenHazard(vector);
+    }
+
+    public void addHiddenColor(Vector vector) {
+        sensor.addHiddenColor(vector);
+    }
 }

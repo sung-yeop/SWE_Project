@@ -34,8 +34,14 @@ public class BackController {
 
     @PostMapping("/api/vocal/")
     public void initHidden(@RequestBody @Validated VocalRequest request) {
+        Vector position = convertStringToVector(request.getPosition()).stream().findFirst().get();
+        if (request.getType().contains("중요")) {
+            addOn.addHiddenColor(position);
+        }
+        if (request.getType().contains("위험")) {
+            addOn.addHiddenHazard(position);
+        }
 
-        int a = 0;
         log.info(request.toString());
     }
 

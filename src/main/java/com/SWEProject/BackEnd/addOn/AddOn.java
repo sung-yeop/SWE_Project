@@ -91,8 +91,15 @@ public class AddOn {
         sim.move();
     }
 
-
     public void setPosition(Vector beforeMovePosition) {
         sim.setPosition(beforeMovePosition);
+    }
+
+    public void addHiddenHazard(Vector vector) {
+        sim.addHiddenHazard(vector);
+    }
+
+    public void addHiddenColor(Vector vector) {
+        sim.addHiddenColor(vector);
     }
 }
