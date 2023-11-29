@@ -5,9 +5,6 @@ document.write('<script src="javascript/VocalData.js"></script>');
 //mapData*********************************************************************************
 var mapData;
 let path;
-// = "[(3, 1), (4, 1), (5, 1), (6, 1), (6, 2), (6, 3), (6, 4), (6, 5), (6, 5), (6, 5), (6, 5)]";
-var count = 0;
-
 let isRecognizing = true;
 
 //initialize*********************************************************************************
@@ -55,6 +52,7 @@ function initialize(event) {
 //proceed*********************************************************************************
 function proceed(event) {
     event.preventDefault();
+    var pos;
     document.getElementById('information').innerHTML = '이동중';
 
     //지금 가지고 있는 길 정보가 옳바른지 확인한다.
@@ -73,7 +71,7 @@ function proceed(event) {
         .then(result => {
             pos = result.currentPosition;
             if (result.path != null) {
-                mapData[1] = result.path;
+                path = result.path;
             }
             if (result.hazardList != null) {
                 mapData[3] = mapData[3].concat(result.hazardList.match(/\d+/g).map(Number));
@@ -82,8 +80,8 @@ function proceed(event) {
                 mapData[4] = mapData[4].concat(result.colorBlobList.match(/\d+/g).map(Number));
             }
             drawUnit(mapData);
-            rotate(path, mapData[1]);
-            drawAfterMove(mapData[0], mapData[1]);
+            rotate(path, pos);
+            drawAfterMove(mapData[0], pos);
             var firstBracketIndex = path.indexOf('(');
             var secondBracketIndex = path.indexOf(')', firstBracketIndex + 1);
             if (firstBracketIndex !== -1 && secondBracketIndex !== -1) {
@@ -91,21 +89,22 @@ function proceed(event) {
             }
             drawPath(mapData[0], path);
         })
+    // rotate(mapData[0], mapData[1], path);
 }
 
 //update*********************************************************************************
 function update(event) {
     event.preventDefault();
     var mike = document.getElementById('mike');
+
     if (isRecognizing) {
         document.getElementById('information').innerHTML = '녹음중';
         mike.style.transform = 'rotate(' + -45 + 'deg)';
         mike.style.boxShadow = '5px 5px 5px rgba(0, 0, 0, 0.5)';
         startRecording();
         isRecognizing = false;
-    }
-    else {
-       // document.getElementById('information').innerHTML = '녹음 완료';
+    } else {
+        // document.getElementById('information').innerHTML = '녹음 완료';
         mike.style.transform = 'rotate(' + 0 + 'deg)';
         mike.style.boxShadow = '0px 0px 0px rgba(0, 0, 0, 0)';
 
@@ -120,9 +119,12 @@ function update(event) {
             body: jsonData
         })
             .then(response => response.json())
-        
+
         isRecognizing = true;
     }
 }
 
 //update*********************************************************************************
+
+
+

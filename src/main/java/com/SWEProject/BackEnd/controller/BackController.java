@@ -32,8 +32,10 @@ public class BackController {
     private final int NONE = 0;
     private final int SIZEVAL = 1;
 
-    @PostMapping("/api/vocal")
+    @PostMapping("/api/vocal/")
     public void initHidden(@RequestBody @Validated VocalRequest request) {
+
+        int a = 0;
         log.info(request.toString());
     }
 

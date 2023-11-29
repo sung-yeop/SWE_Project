@@ -3,7 +3,7 @@
 let recognition = new (window.SpeechRecognition || window.webkitSpeechRecognition)();
 recognition.lang = 'ko-KR';
 recognition.maxAlternatives = 10000;
-recognition.interimResults = true; // true¸é À½ÀýÀ» ¿¬¼ÓÀûÀ¸·Î ÀÎ½ÄÇÏ³ª false¸é ÇÑ À½Àý¸¸ ±â·ÏÇÔ
+recognition.interimResults = true; // trueï¿½ï¿½ ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ ï¿½Î½ï¿½ï¿½Ï³ï¿½ falseï¿½ï¿½ ï¿½ï¿½ ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ ï¿½ï¿½ï¿½ï¿½ï¿½
 
 
 let vocalText = "";
@@ -13,6 +13,7 @@ recognition.onresult = function (event) {
     vocalText = Array.from(event.results)
         .map(results => results[0].transcript).join("");
 }
+
 function startRecording() {
     recognition.start();
 }
@@ -25,11 +26,11 @@ function stopRecording() {
     console.log(vocalText);
     let type = textArr[0];
     let position = textArr[2];
-
+    console.log(vocalText);
     document.getElementById('information').innerHTML = type + position;
 
 
-    let vocaldata = { 'type': type, 'position': position };
+    let vocaldata = {'type': type, 'position': position};
 
     return vocaldata;
 }
