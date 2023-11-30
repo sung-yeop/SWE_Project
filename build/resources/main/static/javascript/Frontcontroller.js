@@ -75,6 +75,7 @@ function proceed(event) {
             }
             if (result.hazardList != null) {
                 mapData[3] = mapData[3].concat(result.hazardList.match(/\d+/g).map(Number));
+                console.log(result.hazardList);
             }
             if (result.colorBlobList != null) {
                 mapData[4] = mapData[4].concat(result.colorBlobList.match(/\d+/g).map(Number));

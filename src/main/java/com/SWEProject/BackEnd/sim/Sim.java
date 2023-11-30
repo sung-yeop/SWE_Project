@@ -5,13 +5,15 @@ import com.SWEProject.BackEnd.domain.Vector;
 import com.SWEProject.BackEnd.movementsystem.MovementSystem;
 import com.SWEProject.BackEnd.sensor.Sensor;
 
+import java.util.List;
+
 public class Sim {
     private Sensor sensor;
     private MovementSystem movementSystem;
 
 
-    public Sim(Vector startPoint) {
-        sensor = new Sensor();
+    public Sim(Vector startPoint, List<Vector> preHazards, List<Vector> preColors) {
+        sensor = new Sensor(preHazards, preColors);
         movementSystem = new MovementSystem(startPoint);
     }
 
@@ -52,6 +54,10 @@ public class Sim {
 
     public Vector getPosition() {
         return movementSystem.getCurrentPosition();
+    }
+
+    public Direction getDirection() {
+        return movementSystem.getDirection();
     }
 
     public Vector checkHazard() {

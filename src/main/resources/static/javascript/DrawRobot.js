@@ -21,8 +21,9 @@ function drawAfterMove(mapdata, path) {
 //rotate*********************************************************************************
 function rotate(path, current) {
     var patharr = path.replace(/[^\d\s]/g, '').trim().split(/\s+/).map(Number);
-    var left = patharr[0] - current[0];
-    var top = patharr[1] - current[1];
+    var currentarr = current.replace(/[^\d\s]/g, '').trim().split(/\s+/).map(Number);
+    var left = patharr[0] - currentarr[0];
+    var top = patharr[1] - currentarr[1];
 
     var image = document.getElementById('robot');
 

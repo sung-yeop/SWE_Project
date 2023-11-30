@@ -30,7 +30,7 @@ class ValidateMovementTest {
         colorBlobs.add(Vector.of(10, 10));
 
         map = new Map(Vector.of(11, 11), Vector.of(2, 3), hazards, spots, colorBlobs);
-        addOn = new AddOn(map.getStartPoint());
+        addOn = new AddOn(map.getStartPoint(), map.getHazardList(), map.getColorblobList());
     }
 
 //    @Test

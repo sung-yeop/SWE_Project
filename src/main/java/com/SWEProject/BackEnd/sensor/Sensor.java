@@ -3,23 +3,22 @@ package com.SWEProject.BackEnd.sensor;
 import com.SWEProject.BackEnd.constants.Direction;
 import com.SWEProject.BackEnd.domain.Vector;
 
-import java.util.ArrayList;
 import java.util.List;
 
 public class Sensor {
-    private List<Vector> hiddenHazards;
-    private List<Vector> hiddenColorblobs;
+    private List<Vector> Hazards;
+    private List<Vector> Colorblobs;
 
-    public Sensor() {
-        hiddenHazards = new ArrayList<Vector>();
-        hiddenColorblobs = new ArrayList<Vector>();
+    public Sensor(List<Vector> hazards, List<Vector> colors) {
+        Hazards = hazards;
+        Colorblobs = colors;
 //        // for Test
-//        hiddenHazards.add(Vector.of(7, 5));
-//        hiddenHazards.add(Vector.of(4, 4));
-//        hiddenHazards.add(Vector.of(5, 9));
-//        hiddenHazards.add(Vector.of(7, 8));
-        hiddenColorblobs.add(Vector.of(2, 9));
-//        hiddenHazards.add(Vector.of(2, 9));
+//        Hazards.add(Vector.of(7, 5));
+//        Hazards.add(Vector.of(4, 4));
+//        Hazards.add(Vector.of(5, 9));
+//        Hazards.add(Vector.of(7, 8));
+//        Colorblobs.add(Vector.of(2, 9));
+        Hazards.add(Vector.of(2, 9));
     }
 
     public Vector getHazardSensor(Vector position, Direction dir) {
@@ -38,8 +37,8 @@ public class Sensor {
                 compareVector.x += 1;
                 break;
         }
-        if (!hiddenHazards.isEmpty()) {
-            for (Vector hazard : hiddenHazards) {
+        if (!Hazards.isEmpty()) {
+            for (Vector hazard : Hazards) {
                 if (compareVector.equals(hazard))
                     return hazard;
             }
@@ -52,28 +51,28 @@ public class Sensor {
         int y = position.y;
         Vector compareVector = new Vector(x, y);
 
-        if (!hiddenColorblobs.isEmpty()) {
+        if (!Colorblobs.isEmpty()) {
             compareVector.x = x;
             compareVector.y = y + 1; // 상
-            for (Vector colorblob : hiddenColorblobs) {
+            for (Vector colorblob : Colorblobs) {
                 if (compareVector.equals(colorblob))
                     return colorblob;
             }
             compareVector.x = x;
             compareVector.y = y - 1; // 하
-            for (Vector colorblob : hiddenColorblobs) {
+            for (Vector colorblob : Colorblobs) {
                 if (compareVector.equals(colorblob))
                     return colorblob;
             }
             compareVector.x = x - 1;
             compareVector.y = y; // 좌
-            for (Vector colorblob : hiddenColorblobs) {
+            for (Vector colorblob : Colorblobs) {
                 if (compareVector.equals(colorblob))
                     return colorblob;
             }
             compareVector.x = x + 1;
             compareVector.y = y; // 우
-            for (Vector colorblob : hiddenColorblobs) {
+            for (Vector colorblob : Colorblobs) {
                 if (compareVector.equals(colorblob))
                     return colorblob;
             }
@@ -87,10 +86,10 @@ public class Sensor {
     }
 
     public void addHiddenHazard(Vector vector) {
-        hiddenHazards.add(vector);
+        Hazards.add(vector);
     }
 
     public void addHiddenColor(Vector vector) {
-        hiddenColorblobs.add(vector);
+        Colorblobs.add(vector);
     }
 }
