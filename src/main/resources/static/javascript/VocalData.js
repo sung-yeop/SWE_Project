@@ -8,7 +8,6 @@ recognition.interimResults = true; // true면 음절을 연속적으로 인식하나 false면 
 
 let vocalText = "";
 
-console.log('vd go');
 recognition.onresult = function (event) {
     vocalText = Array.from(event.results)
         .map(results => results[0].transcript).join("");
