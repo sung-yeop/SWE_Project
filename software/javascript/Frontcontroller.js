@@ -53,6 +53,7 @@ function initialize(event) {
 function proceed(event) {
     event.preventDefault();
     var pos;
+    var direction;
     document.getElementById('information').innerHTML = '이동중';
 
     //지금 가지고 있는 길 정보가 옳바른지 확인한다.
@@ -70,6 +71,7 @@ function proceed(event) {
         .then(response => response.json())
         .then(result => {
             pos = result.currentPosition;
+            direction = result.direction
             if (result.path != null) {
                 path = result.path;
             }
@@ -80,7 +82,7 @@ function proceed(event) {
                 mapData[4] = mapData[4].concat(result.colorBlobList.match(/\d+/g).map(Number));
             }
             drawUnit(mapData);
-            rotate(path, pos);
+            rotate(direction);
             drawAfterMove(mapData[0], pos);
             var firstBracketIndex = path.indexOf('(');
             var secondBracketIndex = path.indexOf(')', firstBracketIndex + 1);
