@@ -45,6 +45,8 @@ function initialize(event) {
             drawGrid(mapData[0]);
             drawPath(mapData[0], path);
             drawUnit(mapData);
+            mapData[3] = [];
+            mapData[4] = [];
         })
 }
 
@@ -57,7 +59,7 @@ function proceed(event) {
     document.getElementById('information').innerHTML = '이동중';
 
     //지금 가지고 있는 길 정보가 옳바른지 확인한다.
-    var jsonData = JSON.stringify({"path": path.match(/\([^)]+\)/g)[0]});
+    var jsonData = JSON.stringify({ "path": path.match(/\([^)]+\)/g)[0] });
     // var jsonData = JSON.stringify({path: path.slice()});
 
 
@@ -81,7 +83,7 @@ function proceed(event) {
             if (result.colorBlobList != null) {
                 mapData[4] = mapData[4].concat(result.colorBlobList.match(/\d+/g).map(Number));
             }
-            drawUnit(mapData);
+            drawHC(mapdata, mapData[4], mapData[3])
             rotate(direction);
             drawAfterMove(mapData[0], pos);
             var firstBracketIndex = path.indexOf('(');

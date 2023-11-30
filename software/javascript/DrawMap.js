@@ -28,15 +28,13 @@ function drawGrid(mapdata) {
     }
 }
 //drawGrid*********************************************************************************
-
 //drawUnit*********************************************************************************
 function drawUnit(mapdata) {
     cols = mapdata[0][0];
     rows = mapdata[0][1];
     start = mapdata[1];
     spot = mapdata[2];
-    hazard = mapdata[3];
-    colorBlob= mapdata[4];
+    gray = mapdata[3].concat(mapdata[4]);
 
     var mapgrid = document.getElementById("myGrid");
     var cellwidth = mapgrid.offsetWidth / cols;
@@ -70,51 +68,31 @@ function drawUnit(mapdata) {
             mapgrid.appendChild(clonedspot);
         }
     }
+    //gray
+    var graypos = document.getElementById("gray");
+    graypos.style.display = "block";
+    graywidth = graypos.offsetWidth / 2;
+    grayheight = graypos.offsetHeight / 2;
+    graypos.style.left = -graywidth + cellwidth * gray[0] + "px";
+    graypos.style.top = -grayheight + cellheight * (rows - gray[1]) + "px";
 
-    var hazardpos = document.getElementById("hazard15");
-    hazardpos.style.display = "block";
-    hazardwidth = hazardpos.offsetWidth / 2;
-    hazardheight = hazardpos.offsetHeight / 2;
-    hazardpos.style.left = -hazardwidth + cellwidth * hazard[0] + "px";
-    hazardpos.style.top = -hazardheight + cellheight * (rows - hazard[1]) + "px";
-
-    var hazardlen = hazard.length / 2;
-    if (hazardlen > 1) {
-        for (var i = 1; i < hazardlen; i++) {
-            var clonedhazard = document.createElement('img');
-            clonedhazard.src = hazardpos.src;
-            clonedhazard.classList.add('hazard');
-            clonedhazard.style.display = "block";
-            clonedhazard.style.left = -hazardwidth + cellwidth * hazard[i * 2] + "px";
-            clonedhazard.style.top = -hazardheight + cellheight * (rows - hazard[i * 2 + 1]) + "px";
-            mapgrid.appendChild(clonedhazard);
-        }
-    }
-
-    var colorBlobpos = document.getElementById("colorBlob");
-    colorBlobpos.style.display = "block";
-    colorBlobwidth = colorBlobpos.offsetWidth / 2;
-    colorBlobheight = colorBlobpos.offsetHeight / 2;
-    colorBlobpos.style.left = -colorBlobwidth + cellwidth * colorBlob[0] + "px";
-    colorBlobpos.style.top = -colorBlobheight + cellheight * (rows - colorBlob[1]) + "px";
-
-    var colorBloblen = colorBlob.length / 2;
-    if (colorBloblen > 1) {
-        for (var i = 1; i < colorBloblen; i++) {
-            var clonedcolorBlob = document.createElement('img');
-            clonedcolorBlob.src = colorBlobpos.src;
-            clonedcolorBlob.classList.add('colorBlob');
-            clonedcolorBlob.style.display = "block";
-            clonedcolorBlob.style.left = -colorBlobwidth + cellwidth * colorBlob[i * 2] + "px";
-            clonedcolorBlob.style.top = -colorBlobheight + cellheight * (rows - colorBlob[i * 2 + 1]) + "px";
-            mapgrid.appendChild(clonedcolorBlob);
+    var graylen = gray.length / 2;
+    if (graylen > 1) {
+        for (var i = 1; i < graylen; i++) {
+            var clonedgray = document.createElement('img');
+            clonedgray.src = graypos.src;
+            clonedgray.classList.add('gray');
+            clonedgray.style.display = "block";
+            clonedgray.style.left = -graywidth + cellwidth * gray[i * 2] + "px";
+            clonedgray.style.top = -grayheight + cellheight * (rows - gray[i * 2 + 1]) + "px";
+            mapgrid.appendChild(clonedgray);
         }
     }
 
 }
 //drawUnit*********************************************************************************
-//drawVoice*********************************************************************************
-function drawVoice(mapdata, colorBlob, hazard) {
+//drawHC*********************************************************************************
+function drawHC(mapdata, colorBlob, hazard) {
     cols = mapdata[0][0];
     rows = mapdata[0][1];
 
@@ -157,17 +135,14 @@ function drawVoice(mapdata, colorBlob, hazard) {
     }
 
 }
-//drawVoice*********************************************************************************
+//drawHC*********************************************************************************
 //drawPath*********************************************************************************
 function drawPath(mapdata, path) {
     //var path = [(3, 1), (4, 1), (5, 1), (6, 1), (6, 2), (6, 3), (6, 4), (6, 5)];
-    console.log(path);
     var elements = document.getElementsByClassName('path');
     for (var i = 0; i < elements.length; i++) {
         elements[i].style.display = 'none';
     }
-
-
 
     var patharr = path.replace(/[^\d\s]/g, '').trim().split(/\s+/).map(Number);
     cols = mapdata[0];
