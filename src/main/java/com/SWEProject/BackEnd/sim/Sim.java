@@ -67,7 +67,7 @@ public class Sim {
         return sensor.getHazardSensor(position, direction);
     }
 
-    public Vector checkColorblob() {
+    public List<Vector> checkColorblob() {
         Vector position = movementSystem.getCurrentPosition();
 
         return sensor.getColorblobSensor(position);

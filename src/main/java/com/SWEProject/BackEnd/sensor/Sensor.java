@@ -3,6 +3,7 @@ package com.SWEProject.BackEnd.sensor;
 import com.SWEProject.BackEnd.constants.Direction;
 import com.SWEProject.BackEnd.domain.Vector;
 
+import java.util.ArrayList;
 import java.util.List;
 
 public class Sensor {
@@ -46,39 +47,39 @@ public class Sensor {
         return null;
     }
 
-    public Vector getColorblobSensor(Vector position) {
+    public List<Vector> getColorblobSensor(Vector position) {
         int x = position.x;
         int y = position.y;
         Vector compareVector = new Vector(x, y);
+        List<Vector> result = new ArrayList<>();
 
         if (!Colorblobs.isEmpty()) {
             compareVector.x = x;
             compareVector.y = y + 1; // 상
             for (Vector colorblob : Colorblobs) {
                 if (compareVector.equals(colorblob))
-                    return colorblob;
+                    result.add(colorblob);
             }
             compareVector.x = x;
             compareVector.y = y - 1; // 하
             for (Vector colorblob : Colorblobs) {
                 if (compareVector.equals(colorblob))
-                    return colorblob;
+                    result.add(colorblob);
             }
             compareVector.x = x - 1;
             compareVector.y = y; // 좌
             for (Vector colorblob : Colorblobs) {
                 if (compareVector.equals(colorblob))
-                    return colorblob;
+                    result.add(colorblob);
             }
             compareVector.x = x + 1;
             compareVector.y = y; // 우
             for (Vector colorblob : Colorblobs) {
                 if (compareVector.equals(colorblob))
-                    return colorblob;
+                    result.add(colorblob);
             }
         }
-        return null;
-
+        return result;
     }
 
     public boolean getPositioningSensor(Vector currentPosition, Vector intendedPosition) {
