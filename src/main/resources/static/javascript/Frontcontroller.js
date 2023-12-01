@@ -119,17 +119,21 @@ function update(event) {
         isRecognizing = true;
     }
 }
-
 function sendVocalData(event) {
 
     if (vocalData != null) {
+        const posArr = [vocaldata.position[0], vocaldata.position[1]];
 
         if (vocalData.type == "위험") {
             //TODO : unfound hazard spot에 저장
+            mapData[3].concat(posArr);
         }
         else if (vocalData.type == "중요") {
             //TODO : unfound colorbloc spot에 저장
+            mapData[4].concat(posArr);
         }
+
+        drawUnit(mapdata);
 
 
         var jsonData = JSON.stringify(vocalData);
@@ -144,7 +148,4 @@ function sendVocalData(event) {
         vocalData = null;
     }
 }
-
-//update*********************************************************************************
-
 
