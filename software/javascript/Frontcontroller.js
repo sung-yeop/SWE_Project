@@ -83,7 +83,7 @@ function proceed(event) {
             if (result.colorBlobList != null) {
                 mapData[4] = mapData[4].concat(result.colorBlobList.match(/\d+/g).map(Number));
             }
-            drawHC(mapdata, mapData[4], mapData[3])
+            drawHC(mapData, mapData[4], mapData[3])
             rotate(direction);
             drawAfterMove(mapData[0], pos);
             var firstBracketIndex = path.indexOf('(');
