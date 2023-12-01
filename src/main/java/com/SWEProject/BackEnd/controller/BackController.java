@@ -32,8 +32,16 @@ public class BackController {
     private final int NONE = 0;
     private final int SIZEVAL = 1;
 
-    @PostMapping("/api/vocal")
+    @PostMapping("/api/vocal/")
     public void initHidden(@RequestBody @Validated VocalRequest request) {
+        Vector position = convertStringToVector(request.getPosition()).stream().findFirst().get();
+        if (request.getType().contains("중요")) {
+            addOn.addHiddenColor(position);
+        }
+        if (request.getType().contains("위험")) {
+            addOn.addHiddenHazard(position);
+        }
+
         log.info(request.toString());
     }
 
@@ -41,8 +49,8 @@ public class BackController {
     public ResponseStringDto init(@RequestBody @Validated createMapRequest request) {
         createMap(request);
 
-        addOn = new AddOn(map.getStartPoint());
-        path = addOn.pathFind(map.getSize(), map.getMapInit(), map.getSpotList(), map.getHazardList());
+        addOn = new AddOn(map.getStartPoint(), map.getHazardList(), map.getColorblobList());
+        path = addOn.pathFind(map.getSize(), map.getMapInit(), map.getSpotList());
         path.remove(path.stream().findFirst().get());
 
         String output = "[" + this.path.stream()
@@ -80,28 +88,28 @@ public class BackController {
         String responseHazardList = null;
         String responseColorblobList = null;
         String responseCurrentPosition = null;
-        String responseComplete = null;
+        String responseDirection = null;
         addOn.directionSetting(nextPosition); //목표 지점으로 방향 전환
         Vector beforePosition = Vector.deepClone(addOn.getCurrentPosition());
-        List<Vector> hazards = map.getHazardList();
-        List<Vector> colors = map.getColorblobList();
+        List<Vector> hazards = addOn.getCheckHazards();
+        List<Vector> colors = addOn.getCheckColorblobs();
         List<Vector> spots = map.getSpotList();
         Vector size = map.getSize();
 
         //이후 센서 작동
-        if (addOn.moveWithHazardSense(hazards)) {
+        if (addOn.moveWithHazardSense()) {
             responseHazardList = "[" + hazards.stream()
                     .map(Converter::convertVectorToString).collect(Collectors.joining(COMMA)) + "]";
 
             if (hazards.stream().anyMatch(v -> v.equals(nextPosition))) {
-                path = addOn.pathFind(size, map.getMapInit(), spots, hazards);
+                path = addOn.pathFind(size, map.getMapInit(), spots);
                 responsePathDtos = "[" + path.stream().map(Converter::convertVectorToString)
                         .collect(Collectors.joining(COMMA)) + "]";
             }
             moveFlag = false;
         }
 
-        if (addOn.moveWithColorBlobSense(colors)) {
+        if (addOn.moveWithColorBlobSense()) {
             responseColorblobList = "[" + colors.stream().map(Converter::convertVectorToString)
                     .collect(Collectors.joining(COMMA)) + "]";
         }
@@ -125,22 +133,18 @@ public class BackController {
             spots.remove(vector);
         }
 
-        //프론트에서는 "Complete"가 넘어오면 완료되었음을 표시
-        if (spots.size() == NONE) {
-            responseComplete = COMPLETE;
-        }
-
         //움직임 이후 문제가 존재하는지 확인
         if (addOn.moveWithError(nextPosition) && moveFlag) {
-            path = addOn.pathFind(size, map.getMapInit(), spots, hazards);
+            path = addOn.pathFind(size, map.getMapInit(), spots);
             responsePathDtos = "[" + path.stream().map(v -> convertVectorToString(v))
                     .collect(Collectors.joining(COMMA)) + "]";
         }
 
         responseCurrentPosition = (convertVectorToString(addOn.getCurrentPosition()));
+        responseDirection = addOn.getDirection().toString();
 
         return new ResponseDataDto(responsePathDtos,
-                responseHazardList, responseColorblobList, responseCurrentPosition, responseComplete);
+                responseHazardList, responseColorblobList, responseCurrentPosition, responseDirection);
     }
 }
 

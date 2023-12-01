@@ -36,13 +36,13 @@ class AddOnTest {
         colorBlobs.add(Vector.of(10, 10));
 
         map = new Map(Vector.of(11, 11), Vector.of(2, 3), hazards, spots, colorBlobs);
-        addOn = new AddOn(map.getStartPoint());
+        addOn = new AddOn(map.getStartPoint(), map.getHazardList(), map.getColorblobList());
     }
 
     @DisplayName("이동 경로 중 문제 발생 / 오작동 없는 경우")
     @Test
     void pathFinding_기능_테스트_Hidden_존재_O() {
-        List<Vector> initPath = addOn.pathFind(map.getSize(), map.getMapInit(), map.getSpotList(), map.getHazardList());
+        List<Vector> initPath = addOn.pathFind(map.getSize(), map.getMapInit(), map.getSpotList());
         int cnt = 0;
         while (cnt < 100) {
             for (Vector vector : initPath) {
@@ -57,10 +57,10 @@ class AddOnTest {
                         addOn.getCurrentPosition().getX(), addOn.getCurrentPosition().getY()));
                 System.out.println(String.format("목표 위치 : (%d, %d)\n============", vector.getX(), vector.getY()));
 
-                if (addOn.moveWithHazardSense(map.getHazardList())) {
+                if (addOn.moveWithHazardSense()) {
                     map.getHazardList().add(vector);
                     if (map.getHazardList().stream().anyMatch(v -> v.equals(vector))) {
-                        initPath = addOn.pathFind(map.getSize(), map.getMapInit(), map.getSpotList(), map.getHazardList());
+                        initPath = addOn.pathFind(map.getSize(), map.getMapInit(), map.getSpotList());
                         String outPath = initPath.stream()
                                 .map(v -> convertVectorToString(v)).collect(Collectors.joining("\n"));
                         System.out.println(outPath);
@@ -91,7 +91,7 @@ class AddOnTest {
     @DisplayName("이동 경로 생성 / Hidden 없는 경우")
     @Test
     void pathFinding_기능_테스트_Hidden_존재_X() {
-        List<Vector> vectors = addOn.pathFind(map.getSize(), map.getMapInit(), map.getSpotList(), map.getHazardList());
+        List<Vector> vectors = addOn.pathFind(map.getSize(), map.getMapInit(), map.getSpotList());
         for (Vector vector : vectors) {
             System.out.println(String.format("%d %d", vector.getX(), vector.getY()));
         }
