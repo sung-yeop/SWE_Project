@@ -1,10 +1,12 @@
 package com.SWEProject.BackEnd.sim;
 
 import com.SWEProject.BackEnd.addOn.Vector;
+import lombok.Getter;
 
 import java.util.ArrayList;
 import java.util.List;
 
+@Getter
 public class Sensor {
     private List<Vector> Hazards;
     private List<Vector> Colorblobs;

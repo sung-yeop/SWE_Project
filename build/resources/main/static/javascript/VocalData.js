@@ -20,15 +20,17 @@ function startRecording() {
 //stopRecording*********************************************************************************
 function stopRecording() {
     recognition.stop();
-    const textArr = vocalText.split(" ");
-    vocalText = vocalText.replace(",", "");
-    console.log(vocalText);
-    let type = textArr[0];
-    let position = "";
-    if (textArr.length < 4)
-        position = textArr[2];
-    else
-        position = textArr[2] + textArr[textArr.length - 1];
+    let type = vocalText.match(/([가-힣]+\s[가-힣]*)/g)[0];
+    const positionArr = vocalText.match((/\d+(\s\d+)*/g));
+    let position
+
+    console.log(positionArr);
+
+    if (positionArr.length == 1) {
+        position = positionArr[0];
+    } else {
+        position = positionArr[0] + " " + positionArr[1];
+    }
 
     console.log(type);
     console.log(position);

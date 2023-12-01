@@ -111,4 +111,8 @@ public class AddOn {
     public void addHiddenColor(Vector vector) {
         sim.addHiddenColor(vector);
     }
+
+    public List<Vector> getHazards() {
+        return sim.getHazards();
+    }
 }

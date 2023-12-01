@@ -61,6 +61,10 @@ public class Sim {
         movementSystem.setPosition(beforeMovePosition);
     }
 
+    public List<Vector> getHazards() {
+        return sensor.getHazards();
+    }
+
     public Vector checkHazard() {
         Vector position = movementSystem.getCurrentPosition();
         Direction direction = movementSystem.getDirection();

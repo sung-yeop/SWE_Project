@@ -93,6 +93,7 @@ public class BackController {
         List<Vector> hazards = addOn.getCheckHazards();
         List<Vector> colors = addOn.getCheckColorblobs();
         List<Vector> spots = map.getSpotList();
+        List<Vector> validateHazards = addOn.getHazards();
         Vector size = map.getSize();
 
         //이후 센서 작동
@@ -120,7 +121,7 @@ public class BackController {
         //문제 없으면 이동
         if (moveFlag) {
             addOn.move();
-            while (validateMovement(size, hazards, addOn.getCurrentPosition())) { //맵 밖으로 나가는 경우 및 Hazard로 이동하는 경우를 제어
+            while (validateMovement(size, validateHazards, addOn.getCurrentPosition())) { //맵 밖으로 나가는 경우 및 Hazard로 이동하는 경우를 제어
                 addOn.setPosition(beforePosition);
                 addOn.move();
             }
