@@ -1,10 +1,7 @@
-package com.SWEProject.BackEnd.controller;
+package com.SWEProject.BackEnd.addOn;
 
-import com.SWEProject.BackEnd.addOn.AddOn;
 import com.SWEProject.BackEnd.domain.Map;
 import com.SWEProject.BackEnd.domain.Vector;
-import com.SWEProject.BackEnd.dto.*;
-import com.SWEProject.BackEnd.model.Converter;
 import lombok.RequiredArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.validation.annotation.Validated;
@@ -15,9 +12,9 @@ import org.springframework.web.bind.annotation.RestController;
 import java.util.List;
 import java.util.stream.Collectors;
 
-import static com.SWEProject.BackEnd.model.Converter.convertStringToVector;
-import static com.SWEProject.BackEnd.model.Converter.convertVectorToString;
-import static com.SWEProject.BackEnd.validate.ValidateMovement.validateMovement;
+import static com.SWEProject.BackEnd.addOn.Converter.convertStringToVector;
+import static com.SWEProject.BackEnd.addOn.Converter.convertVectorToString;
+import static com.SWEProject.BackEnd.addOn.ValidateMovement.validateMovement;
 
 @RestController
 @RequiredArgsConstructor
@@ -27,23 +24,8 @@ public class BackController {
     private Map map;
     private List<Vector> path;
     private final String COMMA = ", ";
-    private final String COMPLETE = "complete";
     private final int FIRST = 0;
-    private final int NONE = 0;
     private final int SIZEVAL = 1;
-
-    @PostMapping("/api/vocal/")
-    public void initHidden(@RequestBody @Validated VocalRequest request) {
-        Vector position = convertStringToVector(request.getPosition()).stream().findFirst().get();
-        if (request.getType().contains("중요")) {
-            addOn.addHiddenColor(position);
-        }
-        if (request.getType().contains("위험")) {
-            addOn.addHiddenHazard(position);
-        }
-
-        log.info(request.toString());
-    }
 
     @PostMapping("/api/init/")
     public ResponseStringDto init(@RequestBody @Validated createMapRequest request) {
@@ -57,6 +39,19 @@ public class BackController {
                 .map(Converter::convertVectorToString).collect(Collectors.joining(COMMA)) + "]";
 
         return new ResponseStringDto(output);
+    }
+
+    @PostMapping("/api/vocal/")
+    public void initHidden(@RequestBody @Validated VocalRequest request) {
+        Vector position = convertStringToVector(request.getPosition()).stream().findFirst().get();
+        if (request.getType().contains("중요")) {
+            addOn.addHiddenColor(position);
+        }
+        if (request.getType().contains("위험")) {
+            addOn.addHiddenHazard(position);
+        }
+
+        log.info(request.toString());
     }
 
     private void createMap(createMapRequest request) {

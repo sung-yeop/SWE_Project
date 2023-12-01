@@ -99,6 +99,7 @@ function proceed(event) {
 //update*********************************************************************************
 
 let vocalData = "";
+
 function update(event) {
     event.preventDefault();
     var mike = document.getElementById('mike');
@@ -123,13 +124,17 @@ function update(event) {
 function sendVocalData(event) {
 
     if (vocalData != null) {
+        const posArr = [vocalData.position[0], vocalData.position[1]];
 
         if (vocalData.type == "위험") {
             //TODO : unfound hazard spot에 저장
-        }
-        else if (vocalData.type == "중요") {
+            mapData[3].concat(posArr);
+        } else if (vocalData.type == "중요") {
             //TODO : unfound colorbloc spot에 저장
+            mapData[4].concat(posArr);
         }
+
+        drawUnit(mapData);
 
 
         var jsonData = JSON.stringify(vocalData);
@@ -144,7 +149,3 @@ function sendVocalData(event) {
         vocalData = null;
     }
 }
-
-//update*********************************************************************************
-
-

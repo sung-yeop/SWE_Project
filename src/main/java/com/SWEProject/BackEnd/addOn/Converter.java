@@ -1,4 +1,4 @@
-package com.SWEProject.BackEnd.model;
+package com.SWEProject.BackEnd.addOn;
 
 import com.SWEProject.BackEnd.domain.Vector;
 

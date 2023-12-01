@@ -1,11 +1,11 @@
-package com.SWEProject.BackEnd.dto;
+package com.SWEProject.BackEnd.addOn;
 
 import lombok.Data;
 
 @Data
 public class VocalRequest {
-    String type;
-    String position;
+    private String type;
+    private String position;
 
     public VocalRequest(String type, String position) {
         this.type = type;

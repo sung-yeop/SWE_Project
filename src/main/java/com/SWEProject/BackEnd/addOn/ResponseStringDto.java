@@ -1,4 +1,4 @@
-package com.SWEProject.BackEnd.dto;
+package com.SWEProject.BackEnd.addOn;
 
 import lombok.Data;
 

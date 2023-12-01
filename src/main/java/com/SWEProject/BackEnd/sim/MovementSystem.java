@@ -1,6 +1,5 @@
-package com.SWEProject.BackEnd.movementsystem;
+package com.SWEProject.BackEnd.sim;
 
-import com.SWEProject.BackEnd.constants.Direction;
 import com.SWEProject.BackEnd.domain.Vector;
 import lombok.Getter;
 
