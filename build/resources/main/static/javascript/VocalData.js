@@ -8,7 +8,6 @@ recognition.interimResults = true; // true�� ������ ����
 
 let vocalText = "";
 
-console.log('vd go');
 recognition.onresult = function (event) {
     vocalText = Array.from(event.results)
         .map(results => results[0].transcript).join("");
