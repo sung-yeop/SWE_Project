@@ -38,7 +38,9 @@ function stopRecording() {
     document.getElementById('information').innerHTML = vocalText;
 
 
-    let vocaldata = {'type': type, 'position': position};
+    let vocaldata = { 'type': type, 'position': position };
+
+    vocalText = "";
 
     vocalText = "";
 
