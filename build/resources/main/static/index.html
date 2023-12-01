@@ -2,59 +2,60 @@
 <html>
 
 <head lang="ko">
-  <meta charset="UTF-8">
-  <title>로봇 움직이기</title>
-  <link rel="stylesheet" href="css/css.css">
+    <meta charset="UTF-8">
+    <title>로봇 움직이기</title>
+    <link rel="stylesheet" href="css/css.css">
 </head>
 
 <body>
 <div id="float">
-  <!-- text 데이터를 입력받는 창 -->
-  <div id="getData">
-    <form onsubmit="initialize(event)">
-      <ul>
-        <li>
-          <label for="map">Map&nbsp;&nbsp;&nbsp; : </label>
-          <input type="text" id="map" autofocus required>
-        </li>
-        <li>
-          <label for="start">Start&nbsp;&nbsp;&nbsp; : </label>
-          <input type="text" id="start" required>
-        </li>
-        <li>
-          <label for="spot">Spot&nbsp;&nbsp;&nbsp; : </label>
-          <input type="text" id="spot" required>
-        </li>
-        <li>
-          <label for="color">color&nbsp;&nbsp;&nbsp; : </label>
-          <input type="text" id="color" required>
-        </li>
-        <li>
-          <label for="hazard">Hazard : </label>
-          <input type="text" id="hazard" required>
-        </li>
-      </ul>
+    <!-- text 데이터를 입력받는 창 -->
+    <div id="getData">
+        <form onsubmit="initialize(event)">
+            <ul>
+                <li>
+                    <label for="map">Map&nbsp;&nbsp;&nbsp; : </label>
+                    <input type="text" id="map" autofocus required>
+                </li>
+                <li>
+                    <label for="start">Start&nbsp;&nbsp;&nbsp; : </label>
+                    <input type="text" id="start" required>
+                </li>
+                <li>
+                    <label for="spot">Spot&nbsp;&nbsp;&nbsp; : </label>
+                    <input type="text" id="spot" required>
+                </li>
+                <li>
+                    <label for="color">color&nbsp;&nbsp;&nbsp; : </label>
+                    <input type="text" id="color" required>
+                </li>
+                <li>
+                    <label for="hazard">Hazard : </label>
+                    <input type="text" id="hazard" required>
+                </li>
+            </ul>
 
-      <!-- 제출 버튼 -->
-      <button type="button" onclick="initialize(event)">제출</button>
-    </form>
-  </div>
-  <!-- 정보를 알려주는 창 -->
-  <div>
-    <p id="information">정보를 입력하세요.</p>
-  </div>
-  <div>
-    <img src="images/mike.png" width="100" height="100" alt="마이크" id="mike" onclick="update(event)">
-    <button type="button" onclick="proceed(event)" id="move">이동</button>
-  </div>
+            <!-- 제출 버튼 -->
+            <button type="button" onclick="initialize(event)">제출</button>
+        </form>
+    </div>
+    <!-- 정보를 알려주는 창 -->
+    <div>
+        <p id="information">정보를 입력하세요.</p>
+    </div>
+    <div>
+        <img src="images/mike.png" width="100" height="100" alt="마이크" id="mike" onclick="update(event)">
+        <button type="button" onclick="proceed(event)" id="move">이동</button>
+    </div>
 </div>
 <!-- 격자점 -->
 <div class="grid" id="myGrid">
-  <div id="robot"><img src="images/robot.png" alt="로봇"></div>
-  <img src="images/predefinedSpot.png" id="predefinedSpot" class="predefinedSpot">
-  <img src="images/hazard.png" id="hazard15" class="hazard">
-  <img src="images/nextpoint.png" id="path" class="path">
-  <img src="images/colorBlob.png" id="colorBlob" class="colorBlob">
+    <div id="robot"><img src="images/robot.png" alt="로봇"></div>
+    <img src="images/gray.png" id="gray" class="gray">
+    <img src="images/predefinedSpot.png" id="predefinedSpot" class="predefinedSpot">
+    <img src="images/hazard.png" id="hazard15" class="hazard">
+    <img src="images/nextpoint.png" id="path" class="path">
+    <img src="images/colorBlob.png" id="colorBlob" class="colorBlob">
 </div>
 <hr id="line">
 
