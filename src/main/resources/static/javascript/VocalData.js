@@ -20,12 +20,12 @@ function startRecording() {
 //stopRecording*********************************************************************************
 function stopRecording() {
     recognition.stop();
+    const textArr = vocalText.split(" ");
 
     console.log(vocalText);
-    let type = vocalText.match(/([가-힣]+\s[가-힣]*)/g)[0];
-    let position = vocalText.match((/\d+(\s\d+)*/g))[0];
-    console.log(type);
-    console.log(position);
+    let type = textArr[0];
+    let position = textArr[2];
+
     document.getElementById('information').innerHTML = type + position;
 
 
