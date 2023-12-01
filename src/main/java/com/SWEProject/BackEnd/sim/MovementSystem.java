@@ -1,6 +1,6 @@
 package com.SWEProject.BackEnd.sim;
 
-import com.SWEProject.BackEnd.domain.Vector;
+import com.SWEProject.BackEnd.addOn.Vector;
 import lombok.Getter;
 
 import java.util.Random;

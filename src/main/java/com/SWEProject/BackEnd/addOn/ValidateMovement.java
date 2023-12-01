@@ -1,7 +1,5 @@
 package com.SWEProject.BackEnd.addOn;
 
-import com.SWEProject.BackEnd.domain.Vector;
-
 import java.util.List;
 
 public class ValidateMovement {

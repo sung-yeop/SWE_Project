@@ -1,4 +1,4 @@
-package com.SWEProject.BackEnd.domain;
+package com.SWEProject.BackEnd.addOn;
 
 import lombok.AllArgsConstructor;
 import lombok.Getter;

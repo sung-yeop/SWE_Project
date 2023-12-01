@@ -1,7 +1,5 @@
 package com.SWEProject.BackEnd.addOn;
 
-import com.SWEProject.BackEnd.domain.Map;
-import com.SWEProject.BackEnd.domain.Vector;
 import lombok.RequiredArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.validation.annotation.Validated;
@@ -43,7 +41,13 @@ public class BackController {
 
     @PostMapping("/api/vocal/")
     public void initHidden(@RequestBody @Validated VocalRequest request) {
-        Vector position = convertStringToVector(request.getPosition()).stream().findFirst().get();
+        Vector position;
+        if (request.getPosition().length() == 2) {
+            position = Vector.of(request.getPosition().charAt(0) - 48, request.getPosition().charAt(1) - 48);
+        } else {
+            position = convertStringToVector(request.getPosition()).stream().findFirst().get();
+        }
+
         if (request.getType().contains("중요")) {
             addOn.addHiddenColor(position);
         }

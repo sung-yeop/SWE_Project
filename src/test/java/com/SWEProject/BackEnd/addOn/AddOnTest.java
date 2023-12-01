@@ -1,7 +1,5 @@
 package com.SWEProject.BackEnd.addOn;
 
-import com.SWEProject.BackEnd.domain.Map;
-import com.SWEProject.BackEnd.domain.Vector;
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.DisplayName;
 import org.junit.jupiter.api.Test;

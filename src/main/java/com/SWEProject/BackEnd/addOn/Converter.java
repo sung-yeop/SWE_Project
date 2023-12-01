@@ -1,7 +1,5 @@
 package com.SWEProject.BackEnd.addOn;
 
-import com.SWEProject.BackEnd.domain.Vector;
-
 import java.util.ArrayList;
 import java.util.List;
 import java.util.regex.Matcher;

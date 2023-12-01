@@ -1,7 +1,5 @@
 package com.SWEProject.BackEnd.addOn;
 
-import com.SWEProject.BackEnd.domain.Vector;
-
 import java.util.*;
 
 public class AStar {

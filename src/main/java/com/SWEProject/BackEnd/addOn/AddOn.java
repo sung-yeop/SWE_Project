@@ -1,6 +1,5 @@
 package com.SWEProject.BackEnd.addOn;
 
-import com.SWEProject.BackEnd.domain.Vector;
 import com.SWEProject.BackEnd.sim.Direction;
 import com.SWEProject.BackEnd.sim.Sim;
 import lombok.Getter;

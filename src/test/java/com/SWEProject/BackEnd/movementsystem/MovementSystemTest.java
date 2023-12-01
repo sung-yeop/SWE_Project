@@ -1,6 +1,6 @@
 package com.SWEProject.BackEnd.movementsystem;
 
-import com.SWEProject.BackEnd.domain.Vector;
+import com.SWEProject.BackEnd.addOn.Vector;
 import com.SWEProject.BackEnd.sim.MovementSystem;
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;

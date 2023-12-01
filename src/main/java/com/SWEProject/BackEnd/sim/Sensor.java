@@ -1,6 +1,6 @@
 package com.SWEProject.BackEnd.sim;
 
-import com.SWEProject.BackEnd.domain.Vector;
+import com.SWEProject.BackEnd.addOn.Vector;
 
 import java.util.ArrayList;
 import java.util.List;

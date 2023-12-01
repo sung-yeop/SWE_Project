@@ -1,4 +1,4 @@
-package com.SWEProject.BackEnd.domain;
+package com.SWEProject.BackEnd.addOn;
 
 import com.fasterxml.jackson.annotation.JsonValue;
 import lombok.Getter;
