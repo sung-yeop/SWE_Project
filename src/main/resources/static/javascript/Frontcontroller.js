@@ -97,6 +97,8 @@ function proceed(event) {
 }
 
 //update*********************************************************************************
+
+let vocalData = "";
 function update(event) {
     event.preventDefault();
     var mike = document.getElementById('mike');
@@ -112,9 +114,25 @@ function update(event) {
         mike.style.transform = 'rotate(' + 0 + 'deg)';
         mike.style.boxShadow = '0px 0px 0px rgba(0, 0, 0, 0)';
 
-        let vocalData = stopRecording();
-        var jsonData = JSON.stringify(vocalData);
+        vocalData = stopRecording();
 
+        isRecognizing = true;
+    }
+}
+
+function sendVocalData(event) {
+
+    if (vocalData != null) {
+
+        if (vocalData.type == "위험") {
+            //TODO : unfound hazard spot에 저장
+        }
+        else if (vocalData.type == "중요") {
+            //TODO : unfound colorbloc spot에 저장
+        }
+
+
+        var jsonData = JSON.stringify(vocalData);
         fetch('/api/vocal/', { //xx에 백엔드의 엔드포인트 URL
             method: 'POST',
             headers: {
@@ -123,8 +141,7 @@ function update(event) {
             body: jsonData
         })
             .then(response => response.json())
-
-        isRecognizing = true;
+        vocalData = null;
     }
 }
 
