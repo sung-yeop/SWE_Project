@@ -1,6 +1,5 @@
 package com.SWEProject.BackEnd.sim;
 
-import com.SWEProject.BackEnd.domain.Vector;
 import org.junit.jupiter.api.BeforeEach;
 
 class SimTest {
@@ -9,7 +8,7 @@ class SimTest {
 
     @BeforeEach
     void setSim() {
-        sim = new Sim(Vector.of(2, 3));
+//        sim = new Sim(Vector.of(2, 3));
     }
 
 //    @Test

@@ -8,16 +8,16 @@ public class ResponseDataDto {
     private String hazardList;
     private String colorBlobList;
     private String currentPosition;
-    private String complete;
+    private String direction;
 
 
     public ResponseDataDto(String path, String hazardList, String colorBlobList, String currentPosition
-            , String complete) {
+            , String direction) {
         this.path = path;
         this.hazardList = hazardList;
         this.colorBlobList = colorBlobList;
         this.currentPosition = currentPosition;
-        this.complete = complete;
+        this.direction = direction;
     }
 }
 

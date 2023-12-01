@@ -5,13 +5,15 @@ import com.SWEProject.BackEnd.domain.Vector;
 import com.SWEProject.BackEnd.movementsystem.MovementSystem;
 import com.SWEProject.BackEnd.sensor.Sensor;
 
+import java.util.List;
+
 public class Sim {
     private Sensor sensor;
     private MovementSystem movementSystem;
 
 
-    public Sim(Vector startPoint) {
-        sensor = new Sensor();
+    public Sim(Vector startPoint, List<Vector> preHazards, List<Vector> preColors) {
+        sensor = new Sensor(preHazards, preColors);
         movementSystem = new MovementSystem(startPoint);
     }
 
@@ -54,6 +56,10 @@ public class Sim {
         return movementSystem.getCurrentPosition();
     }
 
+    public Direction getDirection() {
+        return movementSystem.getDirection();
+    }
+
     public Vector checkHazard() {
         Vector position = movementSystem.getCurrentPosition();
         Direction direction = movementSystem.getDirection();
@@ -75,5 +81,13 @@ public class Sim {
 
     public void setPosition(Vector beforeMovePosition) {
         movementSystem.setPosition(beforeMovePosition);
+    }
+
+    public void addHiddenHazard(Vector vector) {
+        sensor.addHiddenHazard(vector);
+    }
+
+    public void addHiddenColor(Vector vector) {
+        sensor.addHiddenColor(vector);
     }
 }

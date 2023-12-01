@@ -21,7 +21,7 @@
     font-size: 30px;
 }
 
-#mike{
+#mike {
     width: 100px;
     height: 100px;
     float: left;
@@ -29,7 +29,7 @@
     transition: transform 0.5s ease;
 }
 
-#move{
+#move {
     width: 50px;
     height: 50px;
     float: left;
@@ -66,7 +66,7 @@
     width: 3px;
 }
 
-#line{
+#line {
     clear: left;
     border: 3px solid white;
 }
@@ -78,10 +78,9 @@
     display: none;
     z-index: 9999;
     transition: left 1s, top 1s;
-    transition: transform 0.2s ease-in-out;
 }
 
-.predefinedSpot{
+.predefinedSpot {
     position: absolute;
     width: 60px;
     height: 60px;
@@ -89,7 +88,7 @@
     z-index: 9998;
 }
 
-.hazard{
+.hazard {
     position: absolute;
     width: 60px;
     height: 60px;
@@ -97,7 +96,7 @@
     z-index: 9998;
 }
 
-.path{
+.path {
     position: absolute;
     width: 40px;
     height: 20px;
@@ -105,10 +104,18 @@
     z-index: 9000;
 }
 
-.colorBlob{
+.colorBlob {
     position: absolute;
     width: 60px;
     height: 60px;
     display: none;
     z-index: 9998;
+}
+
+.gray {
+    position: absolute;
+    width: 60px;
+    height: 60px;
+    display: none;
+    z-index: 9000;
 }
