@@ -1,8 +1,8 @@
 package com.SWEProject.BackEnd.validate;
 
 import com.SWEProject.BackEnd.addOn.AddOn;
-import com.SWEProject.BackEnd.domain.Map;
-import com.SWEProject.BackEnd.domain.Vector;
+import com.SWEProject.BackEnd.addOn.Map;
+import com.SWEProject.BackEnd.addOn.Vector;
 import org.junit.jupiter.api.BeforeEach;
 
 import java.util.ArrayList;

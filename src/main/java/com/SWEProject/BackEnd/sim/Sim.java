@@ -1,9 +1,6 @@
 package com.SWEProject.BackEnd.sim;
 
-import com.SWEProject.BackEnd.constants.Direction;
-import com.SWEProject.BackEnd.domain.Vector;
-import com.SWEProject.BackEnd.movementsystem.MovementSystem;
-import com.SWEProject.BackEnd.sensor.Sensor;
+import com.SWEProject.BackEnd.addOn.Vector;
 
 import java.util.List;
 
@@ -60,6 +57,14 @@ public class Sim {
         return movementSystem.getDirection();
     }
 
+    public void setPosition(Vector beforeMovePosition) {
+        movementSystem.setPosition(beforeMovePosition);
+    }
+
+    public List<Vector> getHazards() {
+        return sensor.getHazards();
+    }
+
     public Vector checkHazard() {
         Vector position = movementSystem.getCurrentPosition();
         Direction direction = movementSystem.getDirection();
@@ -77,10 +82,6 @@ public class Sim {
         Vector currentPosition = movementSystem.getCurrentPosition();
 
         return sensor.getPositioningSensor(currentPosition, intendedPosition);
-    }
-
-    public void setPosition(Vector beforeMovePosition) {
-        movementSystem.setPosition(beforeMovePosition);
     }
 
     public void addHiddenHazard(Vector vector) {

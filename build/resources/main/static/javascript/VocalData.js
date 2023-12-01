@@ -2,7 +2,7 @@
 
 let recognition = new (window.SpeechRecognition || window.webkitSpeechRecognition)();
 recognition.lang = 'ko-KR';
-recognition.maxAlternatives = 10000;
+recognition.maxAlternatives = 20000;
 recognition.interimResults = true; // true�� ������ ���������� �ν��ϳ� false�� �� ������ �����
 
 
@@ -20,16 +20,27 @@ function startRecording() {
 //stopRecording*********************************************************************************
 function stopRecording() {
     recognition.stop();
-
-    console.log(vocalText);
     let type = vocalText.match(/([가-힣]+\s[가-힣]*)/g)[0];
-    let position = vocalText.match((/\d+(\s\d+)*/g))[0];
+    const positionArr = vocalText.match((/\d+(\s\d+)*/g));
+    let position
+
+    console.log(positionArr);
+
+    if (positionArr.length == 1) {
+        position = positionArr[0];
+    } else {
+        position = positionArr[0] + " " + positionArr[1];
+    }
+
     console.log(type);
     console.log(position);
-    document.getElementById('information').innerHTML = type + position;
+
+    document.getElementById('information').innerHTML = vocalText;
 
 
     let vocaldata = {'type': type, 'position': position};
+
+    vocalText = "";
 
     return vocaldata;
 }

@@ -1,10 +1,9 @@
 package com.SWEProject.BackEnd.movementsystem;
 
-import com.SWEProject.BackEnd.domain.Vector;
+import com.SWEProject.BackEnd.addOn.Vector;
+import com.SWEProject.BackEnd.sim.MovementSystem;
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;
-
-import static org.junit.jupiter.api.Assertions.*;
 
 class MovementSystemTest {
 
@@ -12,12 +11,12 @@ class MovementSystemTest {
     private String outputVectorFormat = "(%d, %d)";
 
     @BeforeEach
-    void setMovementSystem(){
+    void setMovementSystem() {
         movementSystem = new MovementSystem(Vector.of(2, 3)); //초기 위치는 (2, 3) | Direction은 UP
     }
 
     @Test
-    void setPosition_테스트(){
+    void setPosition_테스트() {
         Vector currentPosition = Vector.of(3, 5);
         Vector afterPosition = Vector.of(7, 7);
         movementSystem.setPosition(currentPosition);
@@ -31,7 +30,7 @@ class MovementSystemTest {
     }
 
     @Test
-    void 이동_테스트(){
+    void 이동_테스트() {
         movementSystem.move();
         Vector currentPosition1 = movementSystem.getCurrentPosition();
         String output1 = String.format(outputVectorFormat, currentPosition1.getX(), currentPosition1.getY());
@@ -46,7 +45,6 @@ class MovementSystemTest {
         Vector currentPosition3 = movementSystem.getCurrentPosition();
         String output3 = String.format(outputVectorFormat, currentPosition3.getX(), currentPosition3.getY());
         System.out.println(output3);
-
 
 
     }
