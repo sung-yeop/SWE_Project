@@ -20,13 +20,16 @@ function startRecording() {
 //stopRecording*********************************************************************************
 function stopRecording() {
     recognition.stop();
+    console.log(vocalText);
     let type = vocalText.match(/([가-힣]+\s[가-힣]*)/g)[0];
     const positionArr = vocalText.match((/\d+(\s\d+)*/g));
     let position
 
     console.log(positionArr);
 
-    if (positionArr.length == 1) {
+    if (type == null || positionArr == null) {
+        vocalText = "다시 입력";
+    } else if (positionArr.length == 1) {
         position = positionArr[0];
     } else {
         position = positionArr[0] + " " + positionArr[1];

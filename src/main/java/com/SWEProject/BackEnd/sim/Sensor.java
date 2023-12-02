@@ -14,13 +14,6 @@ public class Sensor {
     public Sensor(List<Vector> hazards, List<Vector> colors) {
         Hazards = hazards;
         Colorblobs = colors;
-//        // for Test
-//        Hazards.add(Vector.of(7, 5));
-//        Hazards.add(Vector.of(4, 4));
-//        Hazards.add(Vector.of(5, 9));
-//        Hazards.add(Vector.of(7, 8));
-//        Colorblobs.add(Vector.of(2, 9));
-        Hazards.add(Vector.of(6, 4));
     }
 
     public Vector getHazardSensor(Vector position, Direction dir) {
