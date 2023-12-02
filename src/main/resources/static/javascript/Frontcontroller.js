@@ -126,15 +126,7 @@ function sendVocalData(event) {
     if (vocalData != null) {
         const posArr = [vocalData.position[0], vocalData.position[1]];
 
-        if (vocalData.type == "위험") {
-            //TODO : unfound hazard spot에 저장
-            mapData[3].concat(posArr);
-        } else if (vocalData.type == "중요") {
-            //TODO : unfound colorbloc spot에 저장
-            mapData[4].concat(posArr);
-        }
-
-        drawUnit(mapData);
+        addGray(mapData, posArr);
 
 
         var jsonData = JSON.stringify(vocalData);
