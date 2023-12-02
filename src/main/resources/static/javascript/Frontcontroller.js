@@ -128,7 +128,6 @@ function sendVocalData(event) {
 
         addGray(mapData, posArr);
 
-
         var jsonData = JSON.stringify(vocalData);
         fetch('/api/vocal/', { //xx에 백엔드의 엔드포인트 URL
             method: 'POST',
