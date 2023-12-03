@@ -21,7 +21,10 @@ function startRecording() {
 function stopRecording() {
     recognition.stop();
     console.log(vocalText);
-    let type = vocalText.match(/([가-힣]+\s[가-힣]*)/g)[0];
+    let type = vocalText.match(/([가-힣]+\s[가-힣]*)/g);
+    if (type != null) {
+        type = type[0];
+    }
     const positionArr = vocalText.match((/\d+(\s\d+)*/g));
     let position
 
@@ -41,7 +44,7 @@ function stopRecording() {
     document.getElementById('information').innerHTML = vocalText;
 
 
-    let vocaldata = { 'type': type, 'position': position };
+    let vocaldata = {'type': type, 'position': position};
 
     vocalText = "";
 

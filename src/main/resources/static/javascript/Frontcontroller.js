@@ -124,9 +124,20 @@ function update(event) {
 function sendVocalData(event) {
 
     if (vocalData != null) {
-        const posArr = [vocalData.position[0], vocalData.position[1]];
+        console.log("sendVocalData : " + vocalData.position);
+        //sendVocalData : [object Object]
+        var posArr = vocalData.position.split(" ");
 
-        addGray(mapData, posArr);
+        if (posArr.length < 2) {
+            var newArr = [posArr[0][0], posArr[0][1]];
+            newArr = newArr.map(Number);
+
+            addGray(mapData, newArr);
+        } else {
+            posArr = posArr.map(Number);
+
+            addGray(mapData, posArr);
+        }
 
 
         var jsonData = JSON.stringify(vocalData);
@@ -137,7 +148,6 @@ function sendVocalData(event) {
             },
             body: jsonData
         })
-            .then(response => response.json())
         vocalData = null;
     }
 }
