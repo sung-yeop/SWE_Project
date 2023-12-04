@@ -1,8 +1,6 @@
 package com.SWEProject.BackEnd.addOn;
 
-import com.SWEProject.BackEnd.constants.Direction;
-import com.SWEProject.BackEnd.domain.Vector;
-import com.SWEProject.BackEnd.model.AStar;
+import com.SWEProject.BackEnd.sim.Direction;
 import com.SWEProject.BackEnd.sim.Sim;
 import lombok.Getter;
 import lombok.extern.slf4j.Slf4j;
@@ -39,6 +37,14 @@ public class AddOn {
         this.checkSpot.add(checkSpot);
     }
 
+    public void setPosition(Vector beforeMovePosition) {
+        sim.setPosition(beforeMovePosition);
+    }
+
+    public void directionSetting(Vector nextPosition) {
+        sim.directionSetting(nextPosition);
+    }
+
     // 예상 이동 경로 추출
 //    public List<Vector> pathFind(Map map) {
     public List<Vector> pathFind(Vector size, Vector[][] mapInit, List<Vector> spots) {
@@ -65,6 +71,10 @@ public class AddOn {
                 .collect(Collectors.toList()).get(spots.size() - 1));
 
         return result;
+    }
+
+    public void move() {
+        sim.move();
     }
 
     // 로봇의 한 칸 앞이 Hazard이면 True 반환
@@ -94,23 +104,15 @@ public class AddOn {
         return false;
     }
 
-    public void directionSetting(Vector nextPosition) {
-        sim.directionSetting(nextPosition);
-    }
-
-    public void move() {
-        sim.move();
-    }
-
-    public void setPosition(Vector beforeMovePosition) {
-        sim.setPosition(beforeMovePosition);
-    }
-
     public void addHiddenHazard(Vector vector) {
         sim.addHiddenHazard(vector);
     }
 
     public void addHiddenColor(Vector vector) {
         sim.addHiddenColor(vector);
+    }
+
+    public List<Vector> getHazards() {
+        return sim.getHazards();
     }
 }

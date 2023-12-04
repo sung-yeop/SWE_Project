@@ -1,6 +1,7 @@
 package com.SWEProject.BackEnd.model;
 
-import com.SWEProject.BackEnd.domain.Vector;
+import com.SWEProject.BackEnd.addOn.Converter;
+import com.SWEProject.BackEnd.addOn.Vector;
 import org.assertj.core.api.Assertions;
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.DisplayName;

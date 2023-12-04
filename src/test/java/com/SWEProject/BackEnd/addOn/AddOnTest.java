@@ -1,8 +1,5 @@
 package com.SWEProject.BackEnd.addOn;
 
-import com.SWEProject.BackEnd.domain.Map;
-import com.SWEProject.BackEnd.domain.Vector;
-import com.SWEProject.BackEnd.model.AStar;
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.DisplayName;
 import org.junit.jupiter.api.Test;
@@ -11,7 +8,7 @@ import java.util.ArrayList;
 import java.util.List;
 import java.util.stream.Collectors;
 
-import static com.SWEProject.BackEnd.model.Converter.convertVectorToString;
+import static com.SWEProject.BackEnd.addOn.Converter.convertVectorToString;
 
 class AddOnTest {
 

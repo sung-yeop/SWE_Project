@@ -27,7 +27,6 @@ function drawGrid(mapdata) {
         box.appendChild(verticalLine);
     }
 }
-
 //drawGrid*********************************************************************************
 //drawUnit*********************************************************************************
 function drawUnit(mapdata) {
@@ -91,8 +90,35 @@ function drawUnit(mapdata) {
     }
 
 }
-
 //drawUnit*********************************************************************************
+
+//addGray*********************************************************************************
+function addGray(mapdata, gray) {
+    cols = mapdata[0][0];
+    rows = mapdata[0][1];
+
+    var mapgrid = document.getElementById("myGrid");
+    var cellwidth = mapgrid.offsetWidth / cols;
+    var cellheight = mapgrid.offsetHeight / rows;
+    var graypos = document.getElementById("gray");
+    graywidth = graypos.offsetWidth / 2;
+    grayheight = graypos.offsetHeight / 2;
+
+    var graylen = gray.length / 2;
+    if (graylen >= 1) {
+        for (var i = 0; i < graylen; i++) {
+            var clonedgray = document.createElement('img');
+            clonedgray.src = graypos.src;
+            clonedgray.classList.add('gray');
+            clonedgray.style.display = "block";
+            clonedgray.style.left = -graywidth + cellwidth * gray[i * 2] + "px";
+            clonedgray.style.top = -grayheight + cellheight * (rows - gray[i * 2 + 1]) + "px";
+            mapgrid.appendChild(clonedgray);
+        }
+    }
+
+}
+//addGray*********************************************************************************
 //drawHC*********************************************************************************
 function drawHC(mapdata, colorBlob, hazard) {
     cols = mapdata[0][0];
@@ -143,7 +169,6 @@ function drawHC(mapdata, colorBlob, hazard) {
     }
 
 }
-
 //drawHC*********************************************************************************
 //drawPath*********************************************************************************
 function drawPath(mapdata, path) {
@@ -181,5 +206,4 @@ function drawPath(mapdata, path) {
         }
     }
 }
-
 //drawPath*********************************************************************************
