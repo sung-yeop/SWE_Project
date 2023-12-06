@@ -49,6 +49,6 @@
   - update : 사용자가 음성인식으로 데이터를 입력하면 이를 정제하여 BackController로 기능을 호출한다.
 - **src/main/java/com/SWE_Project/BackEnd/AddOn/BackController.java** : FrontController를 통해 기능이 호출되면 AddOn, Sim의 기능을 활용하여 요청된 기능을 제공한다.
   - init : 사용자가 입력한 초기 데이터를 BackEnd의 Map 데이터에 저장한다.
-  - move : 사용자가 이동을 요청하면 FrontEnd로부터 받은 다음 지점으로 이동하도록 로봇의 방향을 세팅하고 움직이도록 명령한다. **다음 타겟 지점에 대한 Sensing을 진행하여 문제가 발생한다면 경로 재설정을 진행한다. 또한, 움직임 이후
+  - move : 사용자가 이동을 요청하면 FrontEnd로부터 받은 다음 지점으로 이동하도록 로봇의 방향을 세팅하고 움직이도록 명령한다. 다음 타겟 지점에 대한 Sensing을 진행하여 문제가 발생한다면 경로 재설정을 진행한다. 또한, 움직임 이후
     positioning senser를 통해 오작동을 감지하였다면 그에따른 경로를 재설정한다. 만약 경로가 재설정 되었거나 탐지된 새로운 지점이 존재한다면 이에 대한 정보를 반환 값에 추가하여 FrontEnd로 전달한다.
   - initHidden : 사용자가 입력한 음성 인식 데이터에 맞춰서 Hidden 좌표를 저장한다.
